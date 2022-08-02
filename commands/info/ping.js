@@ -5,6 +5,8 @@ module.exports = {
     .setName("ping")
     .setDescription(`Pong!`)
     .setDefaultMemberPermissions(PermissionFlagsBits.Administrator),
+
+    cooldown: "5s",
     /**
      * 
      * @param {CommandInteraction} interaction 
