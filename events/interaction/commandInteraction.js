@@ -52,6 +52,21 @@ module.exports = {
             if (!hasReqRole) return interaction.reply({ embeds: [notReqRoles], ephemeral: true });
         }
 
+        /***************************************
+         * Various command / permission checks *
+         ***************************************/
+        let reason = "";
+        let baseEmbed = new EmbedBuilder()
+        .setTitle(`❌ You cannot use this command.`)
+        .setDescription(`${reason}`)
+        .setColor(client.config.color)
+
+        if (command.serverOwnerOnly && interaction.member.id !== interaction.guild.ownerId) { reason = `This command can only be used by **the owner of the server**!`; return interaction.reply({ embeds: [baseEmbed] })};
+        if (command.permission && !interaction.member.permissions.has(command.permission)) { reason = `You need the \`${command.permission}\` permission to use this command!`; return interaction.reply({ embeds: [baseEmbed] })};
+        if (command.disabledChannels && command.disabledChannels.includes(interaction.channel.id)) { reason = `This command cannot be used in this channel`; return interaction.reply({ embeds: [baseEmbed], ephemeral: true })};
+        if (command.allowedChannels && !command.allowedChannels.includes(interaction.channel.id)) { reason = `This command cannot be used in this channel`; return interaction.reply({ embeds: [baseEmbed], ephemeral: true })};
+        if (command.nfsw && !interaction.channel.nsfw) { reason = `This command can only be used in an **NSFW Channel**`; return interaction.reply({ embeds: [baseEmbed] })};
+
         /*********************************
          * Check if user is on cooldown  *
          *********************************/
@@ -84,3 +99,6 @@ module.exports = {
         command.execute(interaction, client);
     }
 }
+
+// db: disabled commands?
+// db: disabled modules?
