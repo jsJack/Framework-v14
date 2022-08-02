@@ -9,9 +9,9 @@ module.exports = {
    *
    * @param {Client} client
    */
-  execute(client) {
+  async execute(client) {
     consola.info(chalk.greenBright(`Hello world!`), chalk.gray(`Connected to Discord as`), chalk.blueBright(`${client.user.tag}`));
-    
+
     await client.user.setActivity('Starting up... 🔴', {type: 'WATCHING'});
     await client.user.setStatus("dnd");
 
@@ -20,7 +20,7 @@ module.exports = {
         useNewUrlParser: true,
         useUnifiedTopology: true
       }).then(() => { consola.info(`Connected to MongoDB: ${mongoose.connection.name}`);
-      }).catch((err) => { console.log(err); });
+      }).catch(() => { console.error(new Error('MongoDB Error')); });
     };
 
     await client.user.setStatus("online");
