@@ -9,8 +9,8 @@ const { loadModals } = require("./handlers/modals");
 const consola = require("consola");
 
 const client = new Client({
-  intents: [Guilds, GuildMembers, GuildMessages],
-  partials: [User, Message, GuildMember, ThreadMember],
+    intents: [Guilds, GuildMembers, GuildMessages],
+    partials: [User, Message, GuildMember, ThreadMember],
 });
 
 client.commands = new Collection();
@@ -24,5 +24,5 @@ client.login(client.config.token).then(() => {
 }).catch((err) => console.log(err));
 
 client
-  .on('error', consola.error)
-  .on('warn', consola.warn)
+    .on('error', consola.error)
+    .on('warn', consola.warn)

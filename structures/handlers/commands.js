@@ -1,23 +1,24 @@
 function loadCommands(client) {
   const fs = require('fs');
+  const consola = require('consola');
 
   let commandsArray = [];
   let developerArray = [];
 
   const commandsFolders = fs.readdirSync("./commands");
   for (const folder of commandsFolders) {
-    const commandFiles = fs.readdirSync(`./commands/${folder}`).filter((file) => file.endsWith('.js'));
+      const commandFiles = fs.readdirSync(`./commands/${folder}`).filter((file) => file.endsWith('.js'));
 
-    for (const file of commandFiles) {
-      const commandFile = require(`../../commands/${folder}/${file}`);
+      for (const file of commandFiles) {
+          const commandFile = require(`../../commands/${folder}/${file}`);
 
-      client.commands.set(commandFile.data.name, commandFile);
+          client.commands.set(commandFile.data.name, commandFile);
 
-      if(commandFile.developer) developerArray.push(commandFile.data.toJSON())
-      else commandsArray.push(commandFile.data.toJSON());
+          if (commandFile.developer) developerArray.push(commandFile.data.toJSON())
+          else commandsArray.push(commandFile.data.toJSON());
 
-      continue;
-    }
+          continue;
+      }
   }
 
   client.application.commands.set(commandsArray);
