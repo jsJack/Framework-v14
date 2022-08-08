@@ -9,7 +9,7 @@ module.exports = (client) => {
         .setColor("Red");
     
     client.on("error", (err) => {
-        console.log(err);
+        consola.error(err);
 
         embed
             .setTitle("Discord API Error")
@@ -21,7 +21,7 @@ module.exports = (client) => {
     });
 
     process.on("unhandledRejection", (reason, promise) => {
-        console.log(reason, "\n", promise);
+        consola.error(reason, "\n", promise);
 
         embed
             .setTitle("Unhandled Rejection/Catch")
@@ -36,7 +36,7 @@ module.exports = (client) => {
     });
     
     process.on("uncaughtException", (err, origin) => {
-        console.log(err, "\n", origin);
+        consola.error(err, "\n", origin);
 
         embed
             .setTitle("Uncaught Exception/Catch")
@@ -51,7 +51,7 @@ module.exports = (client) => {
     });
     
     process.on("uncaughtExceptionMonitor", (err, origin) => {
-        console.log(err, "\n", origin);
+        consola.error(err, "\n", origin);
 
         embed
             .setTitle("Uncaught Exception Monitor")
@@ -66,7 +66,7 @@ module.exports = (client) => {
     });
     
     process.on("warn", (warn) => {
-        console.log(warn);
+        consola.error(warn);
 
         embed
             .setTitle("Uncaught Exception Monitor Warning")

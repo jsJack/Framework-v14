@@ -52,6 +52,6 @@ module.exports = {
             }
         }
 
-        return console.log(`[Reload] ${interaction.member.user.tag} reloaded all ${interaction.options.getSubcommand()}`);
+        return consola.warn(`[Reload] ${interaction.member.user.tag} reloaded all ${interaction.options.getSubcommand()}`);
     }
 }
