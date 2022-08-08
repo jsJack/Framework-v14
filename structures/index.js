@@ -19,13 +19,11 @@ client.modals = new Collection();
 client.buttons = new Collection();
 client.config = require("./config.json");
 
+require("./handlers/anticrash.js")(client);
+
 client.login(client.config.token).then(() => {
     loadEvents(client);
     loadCommands(client);
     loadModals(client);
     loadButtons(client);
 }).catch((err) => console.log(err));
-
-client
-    .on('error', consola.error)
-    .on('warn', consola.warn)
