@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, CommandInteraction, EmbedBuilder, PermissionFlagsBits } = require("discord.js");
+const { SlashCommandBuilder, CommandInteraction, EmbedBuilder, PermissionFlagsBits, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require("discord.js");
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -12,6 +12,15 @@ module.exports = {
      * @param {CommandInteraction} interaction 
      */
     async execute(interaction) {
-        interaction.reply({ embeds: [new EmbedBuilder().setTitle(`Pong!`)], ephemeral: true });
+        let newRow = new ActionRowBuilder()
+        .addComponents(
+            new ButtonBuilder()
+            .setCustomId(`exampleButton`)
+            .setStyle(ButtonStyle.Primary)
+            .setLabel(`Example Button`)
+            .setEmoji(`💎`)
+        )
+
+        return interaction.reply({ embeds: [new EmbedBuilder().setTitle(`Pong!`)], components: [newRow], ephemeral: true });
     }
 }

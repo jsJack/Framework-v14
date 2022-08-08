@@ -1,13 +1,15 @@
 const { EmbedBuilder, ModalSubmitInteraction, Client } = require('discord.js');
+const consola = require('consola');
 
 module.exports = {
-    name: "modalSubmit",
+    name: "interactionCreate",
     /**
      * 
      * @param {ModalSubmitInteraction} modal
      * @param {Client} client 
      */
     async execute(modal, client) {
+        if (!modal.isModalSubmit()) return;
         const getModal = client.modals.get(modal.customId);
 
         let e = new EmbedBuilder()
@@ -15,8 +17,9 @@ module.exports = {
         .setColor(client.config.color)
         .setFooter({ text: `Item code: ${modal.customId} - Infinity Development` });
 
-        if (!getModal) return modal.followUp({ embeds: [e], ephemeral: true });
+        if (!getModal) return modal.reply({ embeds: [e], ephemeral: true });
 
+        consola.log(`${modal.guild.name} | ${modal.user.tag} | 📋 ${modal.customId}`);
         getModal.execute(modal, client);
     }
 }

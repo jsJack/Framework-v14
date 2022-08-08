@@ -1,4 +1,4 @@
-const { Client } = require("discord.js");
+const { Client, ActivityType } = require("discord.js");
 const consola = require("consola");
 const chalk = require('chalk');
 
@@ -12,8 +12,8 @@ module.exports = {
     async execute(client) {
         consola.info(chalk.greenBright(`Hello world!`), chalk.gray(`Connected to Discord as`), chalk.blueBright(`${client.user.tag}`));
 
-        await client.user.setActivity('Starting up... 🔴', { type: 'WATCHING' });
-        await client.user.setStatus("dnd");
+        await client.user.setActivity('Starting up... 🔴', { type: ActivityType.Watching });
+        await client.user.setStatus('dnd');
 
         if (client.config.mongoURL) {
             await mongoose.connect(l.mongo, {
@@ -25,15 +25,15 @@ module.exports = {
         };
 
         await client.user.setStatus("online");
-        await client.user.setActivity(`you. 👁👄👁`, { type: 'WATCHING' });
+        await client.user.setActivity(`you. 👁👄👁`, { type: ActivityType.Watching });
+
+        consola.log(``); consola.info(`Interaction logging started`);
 
         let state = 0;
         let presences = [
-            { type: 'PLAYING', message: 'play.minespells.com 🧙‍♂️' },
-            { type: 'WATCHING', message: 'store.minespells.com 🛒' },
-            { type: 'LISTENING', message: 'minespells.com 💬' },
-            { type: 'COMPETING', message: 'the new Prisons map 🥇' },
-            { type: 'WATCHING', message: 'for the payouts 💎' },
+            { type: ActivityType.Playing, message: 'Minecraft' }, // Playing Minecaft
+            { type: ActivityType.Listening, message: 'Spotify' }, // Listening to Spotify
+            { type: ActivityType.Watching, message: 'Netflix' }, // Watching Netflix
         ];
 
         setInterval(() => {
@@ -42,4 +42,5 @@ module.exports = {
             client.user.setActivity(presence.message, { type: presence.type });
         }, 10000);
     },
+
 };
