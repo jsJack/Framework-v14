@@ -2,9 +2,10 @@ const { SlashCommandBuilder, CommandInteraction, EmbedBuilder, PermissionFlagsBi
 
 module.exports = {
     data: new SlashCommandBuilder()
-    .setName("ping")
-    .setDescription(`Pong!`)
-    .setDefaultMemberPermissions(PermissionFlagsBits.Administrator),
+    .setName("myfirstcommand")
+    .setDescription(`Very nice!`)
+    .setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
+    .setDMPermission(false), //Will this command appear in DMs?
 
     cooldown: "5s",
     /**
@@ -21,6 +22,6 @@ module.exports = {
             .setEmoji(`💎`)
         )
 
-        return interaction.reply({ embeds: [new EmbedBuilder().setTitle(`Pong!`)], components: [newRow], ephemeral: true });
+        return interaction.reply({ embeds: [new EmbedBuilder().setTitle(`ding dong this is jim and your opinion is wrong`)], components: [newRow], ephemeral: true });
     }
 }
