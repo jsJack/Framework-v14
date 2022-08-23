@@ -18,7 +18,7 @@
     },
     "homepage": "https://github.com/InfinityJxck/Framework-v14#readme",
     "dependencies": {
-        "chalk": "^4.0.0",
+        "chalk": "^5.0.1",
         "consola": "^2.15.3",
         "discord.js": "^14.3.0",
         "mongoose": "^6.5.0",
