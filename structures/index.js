@@ -2,28 +2,23 @@ const { Client, GatewayIntentBits, Partials, Collection } = require("discord.js"
 const { Guilds, GuildMembers, GuildMessages } = GatewayIntentBits;
 const { User, Message, GuildMember, ThreadMember } = Partials;
 
-const { loadEvents } = require("./handlers/events");
-const { loadCommands } = require("./handlers/commands");
-const { loadModals } = require("./handlers/modals");
-const { loadButtons } = require("./handlers/buttons");
-
-const consola = require("consola");
-
 const client = new Client({
     intents: [Guilds, GuildMembers, GuildMessages],
     partials: [User, Message, GuildMember, ThreadMember],
 });
 
+client.events = new Collection();
 client.commands = new Collection();
 client.modals = new Collection();
 client.buttons = new Collection();
 client.config = require("./config.json");
 
-require("./handlers/anticrash.js")(client);
+const { loadEvents } = require("./handlers/loadEvents");
+const { loadCommands } = require("./handlers/loadCommands");
 
-client.login(client.config.token).then(() => {
-    loadEvents(client);
-    loadCommands(client);
-    loadModals(client);
-    loadButtons(client);
+require("./handlers-dep/anticrash.js")(client);
+loadEvents(client);
+
+client.login(client.config.token).then(async () => {
+    await loadCommands(client);
 }).catch((err) => console.log(err));

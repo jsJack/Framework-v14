@@ -1,10 +1,10 @@
 const { SlashCommandBuilder, ChatInputCommandInteraction, PermissionFlagsBits, EmbedBuilder } = require('discord.js');
 const consola = require('consola');
 
-const { loadCommands } = require('../../structures/handlers/commands');
-const { loadEvents } = require('../../structures/handlers/events');
-const { loadModals } = require('../../structures/handlers/modals');
-const { loadButtons } = require('../../structures/handlers/buttons');
+const { loadCommands } = require('../../structures/handlers/loadCommands');
+const { loadEvents } = require('../../structures/handlers/loadEvents');
+//const { loadModals } = require('../../structures/handlers/loadModals');
+//const { loadButtons } = require('../../structures/handlers/loadButtons');
 
 module.exports = {
     data: new SlashCommandBuilder()

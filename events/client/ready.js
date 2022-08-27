@@ -1,6 +1,6 @@
 const { Client, ActivityType } = require("discord.js");
 const consola = require("consola");
-const chalk = require('chalk');
+const { greenBright, cyan, yellow } = require('chalk');
 
 module.exports = {
     name: "ready",
@@ -10,7 +10,8 @@ module.exports = {
      * @param {Client} client
      */
     async execute(client) {
-        consola.info(chalk.greenBright(`Hello world!`), chalk.gray(`Connected to Discord as`), chalk.blueBright(`${client.user.tag}`));
+        consola.success(`Connected to Discord as ${cyan(`${client.user.tag}`)}!`);
+        consola.info(`${yellow(`Warning!`)} Interaction Handlers are now starting... Please wait a few moments.`)
 
         await client.user.setActivity('Starting up... 🔴', { type: ActivityType.Watching });
         await client.user.setStatus('dnd');
@@ -20,14 +21,12 @@ module.exports = {
                 useNewUrlParser: true,
                 useUnifiedTopology: true
             }).then(() => {
-                consola.info(`Connected to MongoDB: ${mongoose.connection.name}`);
+                consola.info(`Connected to ${greenBright(`MongoDB`)}: ${cyan(mongoose.connection.name)}`);
             }).catch(() => { console.error(new Error('MongoDB Error')); });
         };
 
         await client.user.setStatus("online");
         await client.user.setActivity(`you. 👁👄👁`, { type: ActivityType.Watching });
-
-        consola.log(``); consola.info(`Interaction logging started`);
 
         let state = 0;
         let presences = [
