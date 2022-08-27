@@ -1,5 +1,6 @@
-const { Client, ActivityType } = require("discord.js");
-const consola = require("consola");
+const consola = require('consola');
+const mongoose = require('mongoose');
+const { Client, ActivityType } = require('discord.js');
 const { greenBright, cyan } = require('chalk');
 const { loadCommands } = require("../../structures/handlers/loadCommands");
 const { loadModals } = require("../../structures/handlers/loadModals");
@@ -24,7 +25,7 @@ module.exports = {
         await client.user.setStatus('dnd');
 
         if (client.config.mongoURL) {
-            await mongoose.connect(l.mongo, {
+            await mongoose.connect(client.config.mongoURL, {
                 useNewUrlParser: true,
                 useUnifiedTopology: true
             }).then(() => {
