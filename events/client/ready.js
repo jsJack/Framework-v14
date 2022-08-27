@@ -1,6 +1,9 @@
 const { Client, ActivityType } = require("discord.js");
 const consola = require("consola");
-const { greenBright, cyan, yellow } = require('chalk');
+const { greenBright, cyan } = require('chalk');
+const { loadCommands } = require("../../structures/handlers/loadCommands");
+const { loadModals } = require("../../structures/handlers/loadModals");
+const { loadButtons } = require("../../structures/handlers/loadButtons");
 
 module.exports = {
     name: "ready",
@@ -10,8 +13,12 @@ module.exports = {
      * @param {Client} client
      */
     async execute(client) {
-        consola.success(`Connected to Discord as ${cyan(`${client.user.tag}`)}!`);
-        consola.info(`${yellow(`Warning!`)} Interaction Handlers are now starting... Please wait a few moments.`)
+        await loadCommands(client);
+        await loadModals(client);
+        await loadButtons(client);
+
+        consola.success(`Connected to Discord as ${cyan(`${client.user.tag}`)}!\n`);
+        consola.info(`Interaction Logging started.`)
 
         await client.user.setActivity('Starting up... 🔴', { type: ActivityType.Watching });
         await client.user.setStatus('dnd');

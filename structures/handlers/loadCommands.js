@@ -20,7 +20,8 @@ async function loadCommands(client) {
     client.application.commands.set(commandsArray);
     client.guilds.cache.find(g=>g.id===client.config.developerGuildID).commands.set(developerArray);
 
-    return consola.success(`Successfully loaded ${cyan(`${commandsArray.length} application commands`)} // ${cyan(`${developerArray.length} developer-only commands`)}.`)
+    if (!commandsArray.length && !developerArray.length) return consola.error(`[Commands] None loaded - Folder empty.`)
+    else return consola.success(`Successfully loaded ${cyan(`${commandsArray.length} application commands`)} // ${cyan(`${developerArray.length} developer-only commands`)}.`)
 }
 
 module.exports = { loadCommands };
