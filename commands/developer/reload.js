@@ -3,8 +3,8 @@ const consola = require('consola');
 
 const { loadCommands } = require('../../structures/handlers/loadCommands');
 const { loadEvents } = require('../../structures/handlers/loadEvents');
-//const { loadModals } = require('../../structures/handlers/loadModals');
-//const { loadButtons } = require('../../structures/handlers/loadButtons');
+const { loadModals } = require('../../structures/handlers/loadModals');
+const { loadButtons } = require('../../structures/handlers/loadButtons');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -28,30 +28,20 @@ module.exports = {
         .setColor(client.config.color);
 
         switch(interaction.options.getSubcommand()) {
-            case "events": {
-                loadEvents(client);
-                interaction.reply({ embeds: [embed] });
-            }
+            case "events": loadEvents(client);
             break;
             
-            case "commands": {
-                loadCommands(client);
-                interaction.reply({ embeds: [embed] });
-            }
+            case "commands": await loadCommands(client);
             break;
 
-            case "modals": {
-                loadModals(client);
-                interaction.reply({ embeds: [embed] });
-            }
+            case "modals": await loadModals(client);
             break;
 
-            case "buttons": {
-                loadButtons(client);
-                interaction.reply({ embeds: [embed] });
-            }
+            case "buttons": await loadButtons(client);
+            break;
         }
 
+        await interaction.reply({ embeds: [embed], ephemeral: true });
         return consola.warn(`[Reload] ${interaction.member.user.tag} reloaded all ${interaction.options.getSubcommand()}`);
     }
 }

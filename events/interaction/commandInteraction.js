@@ -61,7 +61,7 @@ module.exports = {
         /*********************************
          * Check if user is on cooldown  *
          *********************************/
-        if(command.cooldown) {
+        if (command.cooldown) {
             if(Timeout.has(`${interaction.commandName}${interaction.member.id}`)) {
                 let lastUsage = Timeout.get(`${interaction.commandName}${interaction.member.id}`);
                 let msTimeout = ms(command.cooldown) / 1000;
