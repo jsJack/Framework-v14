@@ -1,9 +1,9 @@
 const { EmbedBuilder, WebhookClient } = require("discord.js");
 const { inspect } = require("util");
-const webhook = new WebhookClient({ url: "https://discord.com/api/webhooks/999450630940790864/ycogfD6th3xYvlay0v3jJMYEFTIQxj3k4eXLNWEovLB45VTReNE4AAOrM06lt1Xl1t_u" });
 const consola = require('consola');
 
 module.exports = (client) => {
+    const webhook = new WebhookClient({ url: `${client.config.anticrashWebhook}` });
     consola.success("Anticrash module loaded");
 
     const embed = new EmbedBuilder()
