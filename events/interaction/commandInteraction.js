@@ -44,7 +44,7 @@ module.exports = {
         /*************************************
          * Check if user has required roles  *
          *************************************/
-        if (command.reqRoles) {
+        if (command.reqRoles && !interaction.channel.isDMBased()) {
             hasReqRole = false;
             command.reqRoles.forEach((findRole) => {
               if (interaction.member.roles.cache.some((role) => role.id === findRole)) hasReqRole = true;
@@ -62,8 +62,8 @@ module.exports = {
          * Check if user is on cooldown  *
          *********************************/
         if (command.cooldown) {
-            if(Timeout.has(`${interaction.commandName}${interaction.member.id}`)) {
-                let lastUsage = Timeout.get(`${interaction.commandName}${interaction.member.id}`);
+            if(Timeout.has(`${interaction.commandName}${interaction.user.id}`)) {
+                let lastUsage = Timeout.get(`${interaction.commandName}${interaction.user.id}`);
                 let msTimeout = ms(command.cooldown) / 1000;
                 let timestamp = parseInt(lastUsage) + parseInt(msTimeout);
 
@@ -76,17 +76,17 @@ module.exports = {
                 return interaction.reply({ embeds: [cooldownEmbed], ephemeral: true });
             }
             
-            Timeout.set(`${interaction.commandName}${interaction.member.id}`, (Date.now() / 1000).toFixed(0));
+            Timeout.set(`${interaction.commandName}${interaction.user.id}`, (Date.now() / 1000).toFixed(0));
 
             setTimeout(() => {
-                Timeout.delete(`${interaction.commandName}${interaction.member.id}`)
+                Timeout.delete(`${interaction.commandName}${interaction.user.id}`)
             }, ms(command.cooldown));
         };
 
         /******************************
          * Log & execute the command  *
          ******************************/
-        consola.log(`${interaction.guild.name} | ${interaction.member.user.tag} | /${interaction.commandName}`);
+        consola.log(`${interaction.channel.isDMBased() ? `DMs` : `${interaction.guild.name}`} | ${interaction.user.tag} | /${interaction.commandName}`);
         command.execute(interaction, client);
     }
 }
