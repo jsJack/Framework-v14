@@ -24,14 +24,12 @@ module.exports = {
         await client.user.setActivity('Starting up... 🔴', { type: ActivityType.Watching });
         await client.user.setStatus('dnd');
 
-        if (client.config.mongoURL) {
-            await mongoose.connect(client.config.mongoURL, {
-                useNewUrlParser: true,
-                useUnifiedTopology: true
-            }).then(() => {
-                consola.info(`Connected to ${greenBright(`MongoDB`)}: ${cyan(mongoose.connection.name)}`);
-            }).catch(() => { console.error(new Error('MongoDB Error')); });
-        };
+        await mongoose.connect(client.config.mongoURL, {
+            useNewUrlParser: true,
+            useUnifiedTopology: true
+        }).then(() => {
+            consola.info(`Connected to ${greenBright(`MongoDB`)}: ${cyan(mongoose.connection.name)}`);
+        }).catch(() => { console.error(new Error('MongoDB Error')); });
 
         await client.user.setStatus("online");
         await client.user.setActivity(`you. 👁👄👁`, { type: ActivityType.Watching });
