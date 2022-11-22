@@ -19,6 +19,11 @@ client.customEmbedService = require('./funcs/tools/embedTools.js');
 
 module.exports = client;
 
+if (!client.config.mongoURL) {
+    consola.warn(`MongoDB is not configured, please set config.mongoURL to your MongoDB connection string.`);
+    return process.exit(1);
+}
+
 const { loadEvents } = require("./handlers/loadEvents");
 
 require("./handlers/loadAntiCrash")(client);
