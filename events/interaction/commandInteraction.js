@@ -3,7 +3,7 @@ const consola = require('consola');
 const { connection } = require('mongoose');
 const ms = require('ms');
 
-const Timeout = new Collection();
+const cmdTimeout = new Collection();
 
 module.exports = {
     name: "interactionCreate",
@@ -62,8 +62,8 @@ module.exports = {
          * Check if user is on cooldown  *
          *********************************/
         if (command.cooldown) {
-            if(Timeout.has(`${interaction.commandName}${interaction.user.id}`)) {
-                let lastUsage = Timeout.get(`${interaction.commandName}${interaction.user.id}`);
+            if(cmdTimeout.has(`${interaction.commandName}${interaction.user.id}`)) {
+                let lastUsage = cmdTimeout.get(`${interaction.commandName}${interaction.user.id}`);
                 let msTimeout = ms(command.cooldown) / 1000;
                 let timestamp = parseInt(lastUsage) + parseInt(msTimeout);
 
@@ -76,10 +76,10 @@ module.exports = {
                 return interaction.reply({ embeds: [cooldownEmbed], ephemeral: true });
             }
             
-            Timeout.set(`${interaction.commandName}${interaction.user.id}`, (Date.now() / 1000).toFixed(0));
+            cmdTimeout.set(`${interaction.commandName}${interaction.user.id}`, (Date.now() / 1000).toFixed(0));
 
             setTimeout(() => {
-                Timeout.delete(`${interaction.commandName}${interaction.user.id}`)
+                cmdTimeout.delete(`${interaction.commandName}${interaction.user.id}`)
             }, ms(command.cooldown));
         };
 
