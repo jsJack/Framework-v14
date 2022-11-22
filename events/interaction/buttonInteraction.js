@@ -1,4 +1,4 @@
-const { ButtonInteraction, EmbedBuilder } = require("discord.js");
+const { ButtonInteraction, EmbedBuilder, Collection } = require("discord.js");
 const consola = require('consola');
 const { connection } = require('mongoose');
 const ms = require('ms');
