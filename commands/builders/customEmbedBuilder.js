@@ -101,21 +101,6 @@ module.exports = {
      * @param {ChatInputCommandInteraction} interaction
      * @param {Client} client
      */
-
-    async autocomplete(interaction, client) {
-        const data = await db.findOne({
-            _id: interaction.guild.id
-        });
-        const categories = data.categories;
-        const choices = categories.map((category) => category.name);
-        const focusedValue = interaction.options.getFocused();
-        const filtered = choices.filter((choice) => choice.toLowerCase().startsWith(focusedValue));
-        await interaction.respond(filtered.map((choice) => ({
-            name: choice,
-            value: choice
-        })));
-    },
-
     async execute(interaction, client) {
         const {
             guild,
