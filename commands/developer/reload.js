@@ -17,6 +17,7 @@ module.exports = {
     .addSubcommand((options) => options.setName("buttons").setDescription("Reload your buttons")),
 
     developer: true,
+    usage: "/reload <type>",
     /**
      * 
      * @param {ChatInputCommandInteraction} interaction 
