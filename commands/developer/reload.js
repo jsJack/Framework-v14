@@ -5,16 +5,19 @@ const { loadCommands } = require('../../structures/handlers/loadCommands');
 const { loadEvents } = require('../../structures/handlers/loadEvents');
 const { loadModals } = require('../../structures/handlers/loadModals');
 const { loadButtons } = require('../../structures/handlers/loadButtons');
+const { loadSelectMenus } = require('../../structures/handlers/loadSelectMenus');
+
 
 module.exports = {
     data: new SlashCommandBuilder()
     .setName("reload")
     .setDescription("Reload available commands and events in the bot")
     .setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
-    .addSubcommand((options) => options.setName("events").setDescription("Reload your events"))
-    .addSubcommand((options) => options.setName("commands").setDescription("Reload your commands"))
-    .addSubcommand((options) => options.setName("modals").setDescription("Reload your modals"))
-    .addSubcommand((options) => options.setName("buttons").setDescription("Reload your buttons")),
+    .addSubcommand((options) => options.setName("events").setDescription("Reload events"))
+    .addSubcommand((options) => options.setName("commands").setDescription("Reload commands"))
+    .addSubcommand((options) => options.setName("modals").setDescription("Reload modals"))
+    .addSubcommand((options) => options.setName("buttons").setDescription("Reload buttons"))
+    .addSubcommand((options) => options.setName("selectmenus").setDescription("Reload selectmenus")),
 
     developer: true,
     usage: "/reload <type>",
@@ -39,6 +42,9 @@ module.exports = {
             break;
 
             case "buttons": await loadButtons(client);
+            break;
+
+            case "selectmenus": await loadSelectMenus(client);
             break;
         }
 

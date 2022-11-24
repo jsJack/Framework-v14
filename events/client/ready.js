@@ -5,6 +5,7 @@ const { greenBright, cyan } = require('chalk');
 const { loadCommands } = require("../../structures/handlers/loadCommands");
 const { loadModals } = require("../../structures/handlers/loadModals");
 const { loadButtons } = require("../../structures/handlers/loadButtons");
+const { loadSelectMenus } = require('../../structures/handlers/loadSelectMenus');
 
 module.exports = {
     name: "ready",
@@ -17,6 +18,7 @@ module.exports = {
         await loadCommands(client);
         await loadModals(client);
         await loadButtons(client);
+        await loadSelectMenus(client);
 
         consola.success(`Connected to Discord as ${cyan(`${client.user.tag}`)}!\n`);
         consola.info(`Interaction Logging started.`)
