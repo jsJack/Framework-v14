@@ -13,6 +13,12 @@ module.exports = {
     async execute(interaction, client) {
         if(!interaction.isSelectMenu()) return;
 
+        /**************************************
+         * Check if menu needs to be ignored  *
+         **************************************/
+         let blacklistedIDs = ["help-menus"];
+         if (blacklistedIDs.includes(interaction.customId)) return;
+
         /******************************
          * Check if the modal exists  *
          ******************************/
