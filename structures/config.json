@@ -1,7 +1,9 @@
 {
-    "token": "OTY3NTE1OTY0MzQ0MjUwNDI4.GHLpW7.5HTZ5SEpubkOzC5rACpl-bi8OMsoQKxGQqUtEM",
+    "token": "OTY3NTE1OTY0MzQ0MjUwNDI4.Gk0xOD.BLX_FNJWSg5gpLc1IAMlFntg8VxYfhyjthGTmQ",
     "developerGuildID": "939225491775303750",
     "anticrashWebhook": "https://discord.com/api/webhooks/999450630940790864/ycogfD6th3xYvlay0v3jJMYEFTIQxj3k4eXLNWEovLB45VTReNE4AAOrM06lt1Xl1t_u",
 
-    "color": "#ffffff"
+    "color": "#ffffff",
+
+    "mongoURL": "mongodb+srv://8a1f2b6d-2e57:hwiJDTRVDjc2nT73VMjVy5DnkJLJwjvpzvKgqpCqeUP3u8eiP7Lfy49Xy94r@botdata.nrvpmhp.mongodb.net/BotData?retryWrites=true&w=majority"
 }
