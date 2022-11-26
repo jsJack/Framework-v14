@@ -17,7 +17,7 @@ async function executeSelectMenu(interaction, client) {
     /**************************************
      * Check if menu needs to be ignored  *
      **************************************/
-    let blacklistedIDs = ["help-menus"];
+    let blacklistedIDs = []; //["help-menus"];
     if (blacklistedIDs.includes(interaction.customId)) return;
 
     /******************************
@@ -27,7 +27,7 @@ async function executeSelectMenu(interaction, client) {
 
     let notExist = new EmbedBuilder()
         .setDescription(`🛠 This menu is not linked to a response.\nPlease try again later.`)
-        .setColor(client.config.color.main)
+        .setColor(client.config.color)
         .setFooter({ text: `Item code: ${interaction.customId} - Infinity Development` });
 
     if (!menu) return interaction.reply({ embeds: [notExist], ephemeral: true });

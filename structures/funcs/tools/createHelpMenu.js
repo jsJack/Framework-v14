@@ -6,10 +6,12 @@ const createHelpMenu = (array) => {
     let select_menu;
     let id = `help-menus`;
     let menus = [];
+    
     const emo = {
         builders: `🛠️`,
         info: `ℹ️`,
         developer: `💻`,
+        systems: `⚙️`,
     };
     
     array.forEach(cca => {

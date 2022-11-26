@@ -5,7 +5,7 @@ const { RepeatMode } = require('discord-music-player');
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("music")
-        .setDescription("Music commands")
+        .setDescription("A full music system supporting many mainstream providers, tracks and playlists.")
         .addSubcommand(subcommand =>
             subcommand
                 .setName("play")
@@ -107,6 +107,8 @@ module.exports = {
                         .setRequired(true)
                 )
         ),
+
+    usage: `/music <options>`,
 
     /**
      * 

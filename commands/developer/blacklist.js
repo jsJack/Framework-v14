@@ -84,6 +84,9 @@ module.exports = {
                         .setRequired(true)
                 )
         ),
+
+    developer: true,
+    usage: `/blacklist <user|guild|remove>`,
     
     /**
      * 

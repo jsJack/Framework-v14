@@ -95,7 +95,7 @@ module.exports = {
 
     cooldown: "10s",
     dbDepend: true,
-    usage: `/embed new <channel> [message]\` | \`/embed setup <command>\` | \`/embed tools <command>`,
+    usage: `/embed <new|setup|tools>`,
 
     /**
      * @param {ChatInputCommandInteraction} interaction
