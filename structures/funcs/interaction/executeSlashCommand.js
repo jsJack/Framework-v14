@@ -1,19 +1,18 @@
-const { CommandInteraction, Collection, EmbedBuilder, Client } = require('discord.js');
 const consola = require('consola');
+const { EmbedBuilder, Collection, ChatInputCommandInteraction, Client } = require('discord.js');
 const { connection } = require('mongoose');
 const ms = require('ms');
 
 const cmdTimeout = new Collection();
 
-module.exports = {
-    name: "interactionCreate",
-    /**
-     * 
-     * @param {CommandInteraction} interaction 
-     * @param {Client} client
-     */
-    async execute(interaction, client) {
-        if (!interaction.isChatInputCommand()) return;
+/**
+ * 
+ * @param {ChatInputCommandInteraction} interaction 
+ * @param {Client} client 
+ * @returns 
+ */
+async function executeSlashCommand(interaction, client) {
+    if (!interaction.isChatInputCommand()) return;
 
         /********************************
          * Check if the command exists  *
@@ -88,5 +87,6 @@ module.exports = {
          ******************************/
         consola.log(`${interaction.channel.isDMBased() ? `DMs` : `${interaction.guild.name}`} | ${interaction.user.tag} | /${interaction.commandName}`);
         command.execute(interaction, client);
-    }
 }
+
+module.exports = { executeSlashCommand };

@@ -1,5 +1,5 @@
 const { PermissionFlagsBits } = require("discord.js");
-const db = require("../../structures/schema/embedSchema");
+const db = require("../../structures/schema/customEmbed");
 
 module.exports = {
   id: "CEsend",

@@ -1,5 +1,5 @@
 const { SlashCommandBuilder, ChatInputCommandInteraction, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, PermissionFlagsBits } = require("discord.js");
-const db = require("../../structures/schema/embedSchema");
+const db = require("../../structures/schema/customEmbed");
 
 function fetch(channel, msg) {
     return new Promise((resolve, reject) => {
