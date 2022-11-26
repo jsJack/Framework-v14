@@ -17,6 +17,17 @@ client.selectmenus = new Collection();
 client.config = require("./config.json");
 client.customEmbedService = require('./funcs/tools/embedTools.js');
 
+const { Player } = require("discord-music-player");
+const player = new Player(client, {
+    leaveOnEmpty: true,
+    leaveOnEnd: true,
+    deafenOnJoin: true,
+    volume: 100,
+    quality: "high",
+});
+
+client.player = player;
+
 module.exports = client;
 
 if (!client.config.mongoURL) {
