@@ -1,11 +1,11 @@
 const { Client, GatewayIntentBits, Partials, Collection } = require("discord.js");
-const { Guilds, GuildMembers, GuildMessages, MessageContent, GuildVoiceStates, GuildMessageReactions } = GatewayIntentBits;
+const { Guilds, GuildMembers, GuildMessages, MessageContent, GuildMessageReactions } = GatewayIntentBits;
 const { User, Message, GuildMember, ThreadMember, Channel } = Partials;
 
 const consola = require('consola');
 
 const client = new Client({
-    intents: [Guilds, GuildMembers, GuildMessages, MessageContent, GuildVoiceStates, GuildMessageReactions],
+    intents: [Guilds, GuildMembers, GuildMessages, MessageContent, GuildMessageReactions],
     partials: [User, Message, GuildMember, ThreadMember, Channel],
 });
 
@@ -15,25 +15,8 @@ client.modals = new Collection();
 client.buttons = new Collection();
 client.selectmenus = new Collection();
 client.config = require("./config.json");
-client.customEmbedService = require('./funcs/tools/embedTools.js');
-
-const { Player } = require("discord-music-player");
-const player = new Player(client, {
-    leaveOnEmpty: true,
-    leaveOnEnd: true,
-    deafenOnJoin: true,
-    volume: 100,
-    quality: "high",
-});
-
-client.player = player;
 
 module.exports = client;
-
-if (!client.config.mongoURL) {
-    consola.warn(`MongoDB is not configured, please set config.mongoURL to your MongoDB connection string.`);
-    return process.exit(1);
-}
 
 const { loadEvents } = require("./handlers/loadEvents");
 
