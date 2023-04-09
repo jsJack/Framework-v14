@@ -1,5 +1,5 @@
 const consola = require('consola');
-const { EmbedBuilder, Collection, ChatInputCommandInteraction, Client } = require('discord.js');
+const { EmbedBuilder, Collection, ChatInputCommandInteraction, Client, ApplicationCommandOptionType, CommandInteractionOptionResolver } = require('discord.js');
 const { connection } = require('mongoose');
 const ms = require('ms');
 
