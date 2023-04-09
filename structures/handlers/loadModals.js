@@ -14,7 +14,7 @@ async function loadModals(client) {
         modalsArray.push(modal);
     });
 
-    if (!modalsArray.length) return consola.error(`[Modals] None loaded - Folder empty.`);
+    if (!modalsArray.length) return consola.warn(`[Modals] None loaded - Folder empty.`);
     else return consola.success(`Loaded ${cyan(`${modalsArray.length} modals`)}.`);
 }
 

@@ -14,7 +14,7 @@ async function loadSelectMenus(client) {
         menusArray.push(menu);
     });
 
-    if (!menusArray.length) return consola.error(`[SelectMenus] None loaded - Folder empty.`);
+    if (!menusArray.length) return consola.warn(`[SelectMenus] None loaded - Folder empty.`);
     else return consola.success(`Loaded ${cyan(`${menusArray.length} select menus`)}.`);
 }
 

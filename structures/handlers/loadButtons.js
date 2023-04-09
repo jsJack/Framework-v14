@@ -14,7 +14,7 @@ async function loadButtons(client) {
         buttonsArray.push(button);
     });
 
-    if (!buttonsArray.length) return consola.error(`[Buttons] None loaded - Folder empty.`);
+    if (!buttonsArray.length) return consola.warn(`[Buttons] None loaded - Folder empty.`);
     else return consola.success(`Loaded ${cyan(`${buttonsArray.length} buttons`)}.`);
 }
 

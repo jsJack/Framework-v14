@@ -25,7 +25,7 @@ async function loadEvents(client) {
         eventsArray.push(event.name);
     });
 
-    if (!eventsArray.length) return consola.error(`[Events] None loaded - Folder empty.`)
+    if (!eventsArray.length) return consola.warn(`[Events] None loaded - Folder empty.`)
     else return consola.success(`Successfully loaded ${cyan(`${eventsArray.length} events`)}.`);
 };
 
