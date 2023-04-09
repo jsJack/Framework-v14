@@ -3,6 +3,7 @@ const { Guilds, GuildMembers, GuildMessages, MessageContent, GuildVoiceStates, G
 const { User, Message, GuildMember, ThreadMember, Channel } = Partials;
 
 const consola = require('consola');
+const { loadModuleStatus, updateModuleStatus } = require('./funcs/loadClientModules');
 
 const client = new Client({
     intents: [Guilds, GuildMembers, GuildMessages, MessageContent, GuildVoiceStates, GuildMessageReactions],
@@ -25,10 +26,12 @@ const player = new Player(client, {
     volume: 100,
     quality: "high",
 });
-
 client.player = player;
 
 module.exports = client;
+
+loadModuleStatus();
+updateModuleStatus("blacklist", client.config.modules.blacklist.enabled ?? true, true);
 
 if (!client.config.mongoURL) {
     consola.warn(`MongoDB is not configured, please set config.mongoURL to your MongoDB connection string.`);
