@@ -1,0 +1,78 @@
+const fs = require('fs');
+const path = require('path');
+
+// Base template for the modules.json file
+const baseTemplate = {
+    "blacklist": {
+        "enabled": true,
+        "available": true
+    },
+    "music": {
+        "enabled": true,
+        "available": true
+    }
+};
+
+/**
+ * Updates the status of a module in the modules.json file.
+ * @param {string} moduleName - The name of the module to update.
+ * @param {boolean} enabled - Whether the module is enabled or not.
+ * @param {boolean} available - Whether the module is available or not.
+ */
+function updateModuleStatus(moduleName, enabled, available) {
+    const filePath = path.join(__dirname, '../modules.json');
+    let modules = {};
+    if (fs.existsSync(filePath)) {
+        modules = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+    } else {
+        modules = baseTemplate;
+    }
+    modules[moduleName] = {
+        enabled: enabled,
+        available: available
+    };
+    fs.writeFileSync(filePath, JSON.stringify(modules, null, 4), 'utf8');
+}
+
+/**
+ * Loads the current module status from the modules.json file.
+ * If the file doesn't exist, it returns the base template.
+ * @returns {Object} The current module status as an object.
+ */
+async function loadModuleStatus() {
+    const filePath = path.join(__dirname, '../modules.json');
+
+    try {
+        const rawData = await fs.promises.readFile(filePath);
+        const moduleData = JSON.parse(rawData);
+        return moduleData;
+    } catch (err) {
+        if (err.code === 'ENOENT') {
+            console.log('modules.json not found, creating file...');
+            const defaultModules = ['blacklist', 'music'];
+            const moduleData = {};
+
+            defaultModules.forEach((module) => {
+                moduleData[module] = {
+                    enabled: true,
+                    available: true,
+                };
+            });
+
+            const writeStream = fs.createWriteStream(filePath);
+            writeStream.write(JSON.stringify(moduleData, null, 4));
+            writeStream.end();
+
+            console.log('modules.json created.');
+            return moduleData;
+        } else {
+            console.error('Error loading module status:', err);
+            return null;
+        }
+    }
+}
+
+module.exports = {
+    updateModuleStatus,
+    loadModuleStatus
+};
