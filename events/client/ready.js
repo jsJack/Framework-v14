@@ -31,7 +31,10 @@ module.exports = {
             useUnifiedTopology: true
         }).then(() => {
             consola.info(`Connected to ${greenBright(`MongoDB`)}: ${cyan(mongoose.connection.name)}`);
-        }).catch(() => { console.error(new Error('MongoDB Error')); });
+        }).catch(() => {
+            updateModuleStatus("blacklist", client.config.modules.blacklist.enabled, false);
+            console.error(new Error('MongoDB Error'));
+        });
 
         client.user.setStatus("online");
         client.user.setActivity(`you. 👁👄👁`, { type: ActivityType.Watching });
