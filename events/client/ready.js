@@ -23,8 +23,8 @@ module.exports = {
         consola.success(`Connected to Discord as ${cyan(`${client.user.tag}`)}!\n`);
         consola.info(`Interaction Logging started.`)
 
-        await client.user.setActivity('Starting up... 🔴', { type: ActivityType.Watching });
-        await client.user.setStatus('dnd');
+        client.user.setActivity('Starting up... 🔴', { type: ActivityType.Watching });
+        client.user.setStatus('dnd');
 
         await mongoose.connect(client.config.mongoURL, {
             useNewUrlParser: true,
@@ -33,8 +33,8 @@ module.exports = {
             consola.info(`Connected to ${greenBright(`MongoDB`)}: ${cyan(mongoose.connection.name)}`);
         }).catch(() => { console.error(new Error('MongoDB Error')); });
 
-        await client.user.setStatus("online");
-        await client.user.setActivity(`you. 👁👄👁`, { type: ActivityType.Watching });
+        client.user.setStatus("online");
+        client.user.setActivity(`you. 👁👄👁`, { type: ActivityType.Watching });
 
         let state = 0;
         let presences = [
