@@ -6,6 +6,8 @@ const { loadCommands } = require("../../structures/handlers/loadCommands");
 const { loadModals } = require("../../structures/handlers/loadModals");
 const { loadButtons } = require("../../structures/handlers/loadButtons");
 const { loadSelectMenus } = require('../../structures/handlers/loadSelectMenus');
+const { loadSubFolders } = require('../../structures/funcs/folderLoader');
+const { updateModuleStatus } = require('../../structures/funcs/loadClientModules');
 
 module.exports = {
     name: "ready",
