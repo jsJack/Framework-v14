@@ -2,7 +2,13 @@ const consola = require("consola");
 const { cyan } = require('chalk');
 const { loadFiles } = require("../funcs/fileLoader");
 const { loadSubFolders } = require("../funcs/folderLoader");
+const { Client } = require('discord.js');
 
+/**
+ * 
+ * @param {Client} client 
+ * @returns 
+ */
 async function loadCommands(client) {
     await client.commands.clear();
 
@@ -17,6 +23,19 @@ async function loadCommands(client) {
         if (command.developer) developerArray.push(command.data.toJSON());
         else commandsArray.push(command.data.toJSON());
     });
+
+    if (!files.length) consola.warn(`[Commands] None loaded - Folder empty.`)
+
+    const contextMenus = await loadFiles("apps");
+    contextMenus.forEach((file) => {
+        const app = require(file);
+        client.apps.set(app.data.name, app);
+
+        if (app.developer) developerArray.push(app.data.toJSON());
+        else commandsArray.push(app.data.toJSON());
+    });
+
+    if (!contextMenus.length) consola.warn(`[Context Menus] None loaded - Folder empty.`)
 
     client.application.commands.set(commandsArray);
     client.guilds.cache.find(g => g.id === client.config.developerGuildID).commands.set(developerArray);
