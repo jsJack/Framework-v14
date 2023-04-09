@@ -13,7 +13,9 @@ async function loadCommands(client) {
     await client.commands.clear();
 
     let commandsArray = [];
+    let appsArray = [];
     let developerArray = [];
+    let devAppsArray = [];
 
     const files = await loadFiles("commands");
     files.forEach((file) => {
@@ -31,11 +33,14 @@ async function loadCommands(client) {
         const app = require(file);
         client.apps.set(app.data.name, app);
 
-        if (app.developer) developerArray.push(app.data.toJSON());
-        else commandsArray.push(app.data.toJSON());
+        if (app.developer) devAppsArray.push(app.data.toJSON());
+        else appsArray.push(app.data.toJSON());
     });
 
     if (!contextMenus.length) consola.warn(`[Context Menus] None loaded - Folder empty.`)
+
+    commandsArray.push(...appsArray);
+    developerArray.push(...devAppsArray);
 
     client.application.commands.set(commandsArray);
     client.guilds.cache.find(g => g.id === client.config.developerGuildID).commands.set(developerArray);
@@ -44,7 +49,7 @@ async function loadCommands(client) {
     client.commandCategories = commandCats;
 
     if (!commandsArray.length && !developerArray.length) return consola.error(`[Commands] None loaded - Folder empty.`)
-    else return consola.success(`Successfully loaded ${cyan(`${commandsArray.length} application commands`)} // ${cyan(`${developerArray.length} developer-only commands`)}.`)
+    else return consola.success(`Successfully loaded commands:\n- ${cyan(`${commandsArray.length} slash commands`)} (${cyan(`${developerArray.length} developer slash commands`)})\n- ${cyan(`${appsArray.length} context menus`)} (${cyan(`${devAppsArray.length} developer context menus`)})\n- Across ${cyan(`${commandCats.length} categories`)}.`);
 }
 
 module.exports = { loadCommands };
