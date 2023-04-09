@@ -1,5 +1,4 @@
 const { EmbedBuilder, PermissionFlagsBits, ButtonBuilder, ActionRowBuilder, ButtonStyle } = require("discord.js");
-const { Promise } = require("mongoose");
 
 module.exports = {
   id: "CEfields",
