@@ -82,5 +82,55 @@ async function executeSlashCommand(interaction, client) {
         }, ms(command.cooldown));
     };
 
+    /******************************
+     * Log & execute the command  *
+     ******************************/
+    // get the subcommand used
+    let subcommand = interaction.options.getSubcommand(false); // false to avoid returning an error if no subcommand is used
+
+    // get all of the options used
+    let options = formatInteractionOptions(interaction.options);
+
+    consola.log(`${interaction.channel.isDMBased() ? `DMs` : `${interaction.guild.name}`} | ${interaction.user.tag} | /${interaction.commandName} ${subcommand ? subcommand : ``}${options ? options : ``}`);
+    command.execute(interaction, client);
+};
+
+function formatInteractionOptions(options) {
+    const acot = ApplicationCommandOptionType;
+
+    let optionsStr = '';
+    if (!options) {
+        return optionsStr;
+    }
+
+    if (options instanceof CommandInteractionOptionResolver) {
+        options = options._hoistedOptions;
+    }
+
+    for (const option of options) {
+        if (option.type === acot.Subcommand) {
+            optionsStr += formatInteractionOptions(option);
+            continue;
+        }
+
+        if (option.type === acot.SubcommandGroup) {
+            optionsStr += formatInteractionOptions(option);
+            continue;
+        }
+
+        const name = option.name;
+        let value = option.value;
+        if (option.type === acot.User) {
+            value = option.user.tag;
+        } else if (option.type === acot.Channel) {
+            value = option.channel.toString();
+        } else if (option.type === acot.Role) {
+            value = option.role.name;
+        }
+        optionsStr += `${name}:${value} `;
+    }
+
+    return optionsStr.trim();
+};
 
 module.exports = { executeSlashCommand };
