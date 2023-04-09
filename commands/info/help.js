@@ -1,4 +1,4 @@
-const { EmbedBuilder, ChatInputCommandInteraction, Client, SlashCommandBuilder, InteractionType } = require("discord.js");
+const { EmbedBuilder, ChatInputCommandInteraction, Client, SlashCommandBuilder, AutocompleteInteraction } = require("discord.js");
 const { readdirSync } = require("fs");
 const createHelpMenu = require(`../../structures/funcs/tools/createHelpMenu`);
 
@@ -6,10 +6,25 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName(`help`)
         .setDescription(`Shows info on commands, or shows help on a specific command`)
-        .addStringOption(option => option.setName(`command`).setDescription(`The command to get help on`).setRequired(false))
+        .addStringOption(option => option.setName(`command`).setDescription(`The command to get help on`).setRequired(false).setAutocomplete(true))
         .setDMPermission(true),
 
     usage: `/help [command|category]`,
+
+    /**
+     * 
+     * @param {AutocompleteInteraction} interaction 
+     * @param {Client} client 
+     */
+    async autocomplete(interaction, client) {
+        // Max is 25
+        let userValue = interaction.options.getFocused();
+        const choices = client.commandCategories.map((category) => ({ name: category.charAt(0).toUpperCase() + category.slice(1).toLowerCase(), value: category.toLowerCase() }));
+
+        const filter = choices.filter((choice) => choice.name.toLowerCase().startsWith(userValue.toLowerCase()));
+        return interaction.respond(filter.map((choice) => ({ name: choice.name, value: choice.value })));
+    },
+
     /**
      * 
      * @param {ChatInputCommandInteraction} interaction 
