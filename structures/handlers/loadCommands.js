@@ -1,8 +1,9 @@
 const consola = require("consola");
 const { cyan } = require('chalk');
 const { loadFiles } = require("../funcs/fileLoader");
+const { loadSubFolders } = require("../funcs/folderLoader");
 
-async function loadCommands(client) { 
+async function loadCommands(client) {
     await client.commands.clear();
 
     let commandsArray = [];
@@ -16,9 +17,12 @@ async function loadCommands(client) {
         if (command.developer) developerArray.push(command.data.toJSON());
         else commandsArray.push(command.data.toJSON());
     });
-    
+
     client.application.commands.set(commandsArray);
-    client.guilds.cache.find(g=>g.id===client.config.developerGuildID).commands.set(developerArray);
+    client.guilds.cache.find(g => g.id === client.config.developerGuildID).commands.set(developerArray);
+
+    let commandCats = await loadSubFolders("commands");
+    client.commandCategories = commandCats;
 
     if (!commandsArray.length && !developerArray.length) return consola.error(`[Commands] None loaded - Folder empty.`)
     else return consola.success(`Successfully loaded ${cyan(`${commandsArray.length} application commands`)} // ${cyan(`${developerArray.length} developer-only commands`)}.`)
