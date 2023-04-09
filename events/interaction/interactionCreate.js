@@ -8,6 +8,7 @@ const { executeSelectMenu } = require('../../structures/funcs/interaction/execut
 const { executeModal } = require('../../structures/funcs/interaction/executeModal');
 const { executeAutoComplete } = require('../../structures/funcs/interaction/executeAutoComplete');
 const { loadModuleStatus } = require('../../structures/funcs/loadClientModules');
+const { executeContextMenu } = require('../../structures/funcs/interaction/executeContextMenu');
 
 module.exports = {
     name: "interactionCreate",
@@ -62,10 +63,11 @@ module.exports = {
             consola.warn("The blacklist module is unavailable!! Please fix MongoDB connection or disable the module.")
         }
 
-        if (interaction.isCommand()) executeSlashCommand(interaction, client);
+        if (interaction.isChatInputCommand()) executeSlashCommand(interaction, client);
         else if (interaction.isButton()) executeButton(interaction, client);
         else if (interaction.isModalSubmit()) executeModal(interaction, client);
         else if (interaction.isStringSelectMenu()) executeSelectMenu(interaction, client);
+        else if (interaction.isContextMenuCommand() || interaction.isUserContextMenuCommand() || interaction.isMessageContextMenuCommand()) executeContextMenu(interaction, client);
         else return;
     }
 }
