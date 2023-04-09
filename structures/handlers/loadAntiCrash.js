@@ -9,7 +9,7 @@ module.exports = (client) => {
     const embed = new EmbedBuilder()
     .setColor("Red");
     
-    client.on("error", (err) => {
+    client.on("error", async (err) => {
         consola.error(err);
 
         embed
@@ -18,10 +18,10 @@ module.exports = (client) => {
         .setDescription(`\`\`\`${inspect(err, { depth: 0 }).slice(0, 1000)}\`\`\``)
         .setTimestamp();
 
-        return webhook.send({ embeds: [embed] });
+        return webhook.send({ embeds: [embed] }).catch(() => { return; });
     });
 
-    process.on("unhandledRejection", (reason, promise) => {
+    process.on("unhandledRejection", async (reason, promise) => {
         consola.error(reason, "\n", promise);
 
         embed
@@ -33,10 +33,10 @@ module.exports = (client) => {
         )
         .setTimestamp();
 
-        return webhook.send({ embeds: [embed] });
+        return webhook.send({ embeds: [embed] }).catch(() => { return; });
     });
     
-    process.on("uncaughtException", (err, origin) => {
+    process.on("uncaughtException", async (err, origin) => {
         consola.error(err, "\n", origin);
 
         embed
@@ -48,10 +48,10 @@ module.exports = (client) => {
         )
         .setTimestamp();
 
-        return webhook.send({ embeds: [embed] });
+        return webhook.send({ embeds: [embed] }).catch(() => { return; });
     });
     
-    process.on("uncaughtExceptionMonitor", (err, origin) => {
+    process.on("uncaughtExceptionMonitor", async (err, origin) => {
         consola.error(err, "\n", origin);
 
         embed
@@ -63,10 +63,10 @@ module.exports = (client) => {
         )
         .setTimestamp();
     
-        return webhook.send({ embeds: [embed] });
+        return webhook.send({ embeds: [embed] }).catch(() => { return; });
     });
     
-    process.on("warn", (warn) => {
+    process.on("warn", async (warn) => {
         consola.error(warn);
 
         embed
@@ -77,7 +77,7 @@ module.exports = (client) => {
         )
         .setTimestamp();
 
-        return webhook.send({ embeds: [embed] });
+        return webhook.send({ embeds: [embed] }).catch(() => { return; });
     });
 
     client.on("warn", consola.warn)
