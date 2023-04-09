@@ -1,4 +1,4 @@
-const { SelectMenuBuilder, ActionRowBuilder } = require(`discord.js`);
+const { StringSelectMenuBuilder, ActionRowBuilder } = require(`discord.js`);
 
 const createHelpMenu = (array) => {
     if (!array) throw new Error(`The options were not provided! Make sure you provide all the options!`);
@@ -28,7 +28,7 @@ const createHelpMenu = (array) => {
         })
     });
 
-    let smenu1 = new SelectMenuBuilder()
+    let smenu1 = new StringSelectMenuBuilder()
         .setCustomId(id)
         .setPlaceholder(`Choose a category`)
         .addOptions(menus)
