@@ -1,4 +1,4 @@
-const { SelectMenuInteraction, EmbedBuilder, Collection, Client } = require("discord.js");
+const { StringSelectMenuInteraction, EmbedBuilder, Collection, Client } = require("discord.js");
 const consola = require('consola');
 const { connection } = require('mongoose');
 const ms = require('ms');
@@ -7,12 +7,12 @@ const modalTimeout = new Collection();
 
 /**
  * 
- * @param {SelectMenuInteraction} interaction 
+ * @param {StringSelectMenuInteraction} interaction 
  * @param {Client} client 
  * @returns 
  */
 async function executeSelectMenu(interaction, client) {
-    if (!interaction.isSelectMenu()) return;
+    if (!interaction.isStringSelectMenu()) return;
 
     /**************************************
      * Check if menu needs to be ignored  *

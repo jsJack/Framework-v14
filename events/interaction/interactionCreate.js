@@ -54,7 +54,7 @@ module.exports = {
         if (interaction.isCommand()) executeSlashCommand(interaction, client);
         else if (interaction.isButton()) executeButton(interaction, client);
         else if (interaction.isModalSubmit()) executeModal(interaction, client);
-        else if (interaction.isSelectMenu()) executeSelectMenu(interaction, client);
+        else if (interaction.isStringSelectMenu()) executeSelectMenu(interaction, client);
         else return;
     }
 }
