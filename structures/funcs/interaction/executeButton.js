@@ -28,7 +28,7 @@ async function executeButton(interaction, client) {
     let notExist = new EmbedBuilder()
         .setDescription(`🛠 This button is not linked to a response.\nPlease try again later.`)
         .setColor(client.config.color)
-        .setFooter({ text: `Item code: ${interaction.customId} - Infinity Development` });
+        .setFooter({ text: `Item code: ${interaction.customId} - Matrix Digital` });
 
     if (!button) return interaction.reply({ embeds: [notExist], ephemeral: true });
 
@@ -40,7 +40,7 @@ async function executeButton(interaction, client) {
             .setTitle(`🌌 Hold on!`)
             .setDescription(`The database isn't quite connected yet, and you cannot use this button without the database.\nThe bot may be starting up, please allow up to 30 seconds before re-running this button.`)
             .setColor(client.config.color)
-            .setFooter({ text: `Infinity Development` });
+            .setFooter({ text: `Matrix Digital` });
 
         consola.log(`${interaction.guild.name} | ${interaction.user.tag} | 💿 Tried to use 🔘${interaction.customId} but the database is not connected.`)
         return interaction.reply({ embeds: [noDB], ephemeral: true });

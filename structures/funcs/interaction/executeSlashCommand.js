@@ -22,7 +22,6 @@ async function executeSlashCommand(interaction, client) {
         let notExist = new EmbedBuilder()
         .setDescription(`🛠 This command is not linked to a response.\nPlease try again later.`)
         .setColor(client.config.color)
-        .setFooter({ text: `Item code: ${interaction.commandName} - Infinity Development` });
         
         if (!command) return interaction.reply({ embeds: [notExist], ephemeral: true });
 
@@ -31,10 +30,11 @@ async function executeSlashCommand(interaction, client) {
          ****************************************************************/
         if (client.config.mongoURL && command.dbDepend && connection.readyState != 1) {
             let noDB = new EmbedBuilder()
+        .setFooter({ text: `Item code: ${interaction.commandName} - Matrix Digital` });
             .setTitle(`🌌 Hold on!`)
             .setDescription(`The database isn't quite connected yet, and you cannot use this command without the database.\nThe bot may be starting up, please allow up to 30 seconds before re-running this command.`)
             .setColor(client.config.color)
-            .setFooter({ text: `Infinity Development` });
+            .setFooter({ text: `Matrix Digital` });
 
             consola.log(`${interaction.guild.name} | ${interaction.user.tag} | 💿 Tried to use /${interaction.commandName} but the database is not connected.`)
             return interaction.reply({ embeds: [noDB], ephemeral: true });
