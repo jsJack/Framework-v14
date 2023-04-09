@@ -86,6 +86,7 @@ module.exports = {
         ),
 
     developer: true,
+    dbDepend: true,
     usage: `/blacklist <user|guild|remove>`,
     
     /**
