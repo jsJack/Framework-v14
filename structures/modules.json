@@ -1,0 +1,10 @@
+{
+    "blacklist": {
+        "enabled": true,
+        "available": false
+    },
+    "music": {
+        "enabled": true,
+        "available": true
+    }
+}
