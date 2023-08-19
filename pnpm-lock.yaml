@@ -12,8 +12,8 @@ dependencies:
     specifier: ^4.0.0
     version: 4.1.2
   consola:
-    specifier: ^2.15.3
-    version: 2.15.3
+    specifier: ^3.0.0
+    version: 3.0.0
   discord-music-player:
     specifier: ^9.1.1
     version: 9.1.1
@@ -382,8 +382,8 @@ packages:
       typedarray: 0.0.6
     dev: false
 
-  /consola@2.15.3:
-    resolution: {integrity: sha512-9vAdYbHj6x2fLKC4+oPH0kFzY/orMZyG2Aj+kNylHxKGJ/Ed4dpNyAQYwJOdqO4zdM7XpVHmyejQDcQHrnuXbw==}
+  /consola@3.0.0:
+    resolution: {integrity: sha512-ed10+SGP/dL3u7fEDxDPb+68vS4JckVjivIMq2wg5to8od2Rki5AyetFivjuC3cE49+azquEVDSgHZ8qYrUxdQ==}
     dev: false
 
   /console-control-strings@1.1.0:
@@ -801,6 +801,7 @@ packages:
 
   /memory-pager@1.5.0:
     resolution: {integrity: sha512-ZS4Bp4r/Zoeq6+NLJpP+0Zzm0pR8whtGPf1XExKLJBAczGMnSi3It14OiNCStjQjM6NU1okjQGSxgEZN8eBYKg==}
+    requiresBuild: true
     dev: false
     optional: true
 
@@ -1123,6 +1124,7 @@ packages:
 
   /sparse-bitfield@3.0.3:
     resolution: {integrity: sha512-kvzhi7vqKTfkh0PZU+2D2PIllw2ymqJKujUcyPMd9Y75Nv4nPbGJZXNhxsgdQab2BmlDct1YnfQCguEvHr7VsQ==}
+    requiresBuild: true
     dependencies:
       memory-pager: 1.5.0
     dev: false
