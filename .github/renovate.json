@@ -1,13 +1,17 @@
 {
-  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": [
-    "config:base"
-  ],
-  "ignoreDeps": ["chalk", "node-fetch"],
-  "packageRules": [
-    {
-      "matchPackagePatterns": ["*"],
-      "automerge": false
-    }
-  ]
+    "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+    "extends": [
+        "config:base"
+    ],
+    "ignoreDeps": [
+        "chalk"
+    ],
+    "packageRules": [
+        {
+            "matchPackagePatterns": [
+                "*"
+            ],
+            "automerge": false
+        }
+    ]
 }
