@@ -17,80 +17,80 @@ module.exports = {
         .setDefaultMemberPermissions(PermissionFlagsBits.ManageMessages)
         .addSubcommand((subcommand) =>
             subcommand
-            .setName("new")
-            .setDescription("embed tools")
-            .addChannelOption((options) =>
-                options.setName("channel").setDescription("channel to send the embed").setRequired(true)
-            )
-            .addStringOption((options) => options.setName("message").setDescription("optional message to send"))
-        )
-        .addSubcommandGroup((subcommandgroup) =>
-            subcommandgroup
-            .setName("setup")
-            .setDescription("embed setup")
-            .addSubcommand((subcommand) =>
-                subcommand
-                .setName("add_category")
-                .setDescription("add a template category")
-                .addStringOption((options) =>
-                    options.setName("name").setDescription("name of the category").setRequired(true)
-                )
-            )
-            .addSubcommand((subcommand) =>
-                subcommand
-                .setName("remove_category")
-                .setDescription("remove a template category")
-                .addStringOption((options) =>
-                    options
-                    .setName("name")
-                    .setDescription("select category to remove")
-                    .setAutocomplete(true)
-                    .setRequired(true)
-                )
-            )
-        )
-        .addSubcommandGroup((subcommandgroup) =>
-            subcommandgroup
-            .setName("tools")
-            .setDescription("embed tools")
-            .addSubcommand((subcommand) =>
-                subcommand
-                .setName("select_from_template")
+                .setName("new")
                 .setDescription("embed tools")
-                .addStringOption((options) =>
-                    options
-                    .setName("category")
-                    .setDescription("category to select from")
-                    .setAutocomplete(true)
-                    .setRequired(true)
-                )
                 .addChannelOption((options) =>
                     options.setName("channel").setDescription("channel to send the embed").setRequired(true)
                 )
                 .addStringOption((options) => options.setName("message").setDescription("optional message to send"))
-            )
-            .addSubcommand((subcommand) =>
-                subcommand
-                .setName("save_as_template")
+        )
+        .addSubcommandGroup((subcommandgroup) =>
+            subcommandgroup
+                .setName("setup")
+                .setDescription("embed setup")
+                .addSubcommand((subcommand) =>
+                    subcommand
+                        .setName("add_category")
+                        .setDescription("add a template category")
+                        .addStringOption((options) =>
+                            options.setName("name").setDescription("name of the category").setRequired(true)
+                        )
+                )
+                .addSubcommand((subcommand) =>
+                    subcommand
+                        .setName("remove_category")
+                        .setDescription("remove a template category")
+                        .addStringOption((options) =>
+                            options
+                                .setName("name")
+                                .setDescription("select category to remove")
+                                .setAutocomplete(true)
+                                .setRequired(true)
+                        )
+                )
+        )
+        .addSubcommandGroup((subcommandgroup) =>
+            subcommandgroup
+                .setName("tools")
                 .setDescription("embed tools")
-                .addStringOption((options) =>
-                    options.setName("category").setDescription("category to save to").setAutocomplete(true).setRequired(true)
+                .addSubcommand((subcommand) =>
+                    subcommand
+                        .setName("select_from_template")
+                        .setDescription("embed tools")
+                        .addStringOption((options) =>
+                            options
+                                .setName("category")
+                                .setDescription("category to select from")
+                                .setAutocomplete(true)
+                                .setRequired(true)
+                        )
+                        .addChannelOption((options) =>
+                            options.setName("channel").setDescription("channel to send the embed").setRequired(true)
+                        )
+                        .addStringOption((options) => options.setName("message").setDescription("optional message to send"))
                 )
-                .addStringOption((options) =>
-                    options.setName("name").setDescription("name of the template").setRequired(true)
+                .addSubcommand((subcommand) =>
+                    subcommand
+                        .setName("save_as_template")
+                        .setDescription("embed tools")
+                        .addStringOption((options) =>
+                            options.setName("category").setDescription("category to save to").setAutocomplete(true).setRequired(true)
+                        )
+                        .addStringOption((options) =>
+                            options.setName("name").setDescription("name of the template").setRequired(true)
+                        )
                 )
-            )
-            .addSubcommand((subcommand) =>
-                subcommand
-                .setName("edit_embed")
-                .setDescription("embed tools")
-                .addChannelOption((options) =>
-                    options.setName("channel").setDescription("message channel").setRequired(true)
+                .addSubcommand((subcommand) =>
+                    subcommand
+                        .setName("edit_embed")
+                        .setDescription("embed tools")
+                        .addChannelOption((options) =>
+                            options.setName("channel").setDescription("message channel").setRequired(true)
+                        )
+                        .addStringOption((options) =>
+                            options.setName("message-id").setDescription("enter message ID").setRequired(true)
+                        )
                 )
-                .addStringOption((options) =>
-                    options.setName("message-id").setDescription("enter message ID").setRequired(true)
-                )
-            )
         ),
 
     cooldown: "10s",
@@ -164,10 +164,10 @@ module.exports = {
         const rows = [ROW_0, ROW_1, ROW_2];
 
         // setup embeds
-        let CUSTOM_EMBED = new EmbedBuilder().setDescription("\u200b").setColor("F4D58D");
+        let CUSTOM_EMBED = new EmbedBuilder().setDescription("\u200b").setColor("67d7e6");
 
         let BASE_EMBED = new EmbedBuilder()
-            .setColor("F4D58D")
+            .setColor("67d7e6")
             .setAuthor({
                 name: `${guild.name} | Embed Creator`,
                 iconURL: guild.iconURL({
@@ -175,12 +175,7 @@ module.exports = {
                     size: 512,
                 }),
             })
-            .setDescription(
-                `
-        **Use buttons to create a customized embed**
-        ㅤ
-        `
-            )
+            .setDescription(`**Use buttons to create a customized embed**`)
             .setFooter({
                 text: `Changes will be reflected on the embed below`
             });
@@ -316,25 +311,25 @@ module.exports = {
                 const getRow = (id) => {
                     const row = new ActionRowBuilder().addComponents(
                         new ButtonBuilder()
-                        .setCustomId("prev_embed")
-                        .setStyle(ButtonStyle.Primary)
-                        .setEmoji("⏮")
-                        .setDisabled(pages[id] === 0),
+                            .setCustomId("prev_embed")
+                            .setStyle(ButtonStyle.Primary)
+                            .setEmoji("⏮")
+                            .setDisabled(pages[id] === 0),
                         new ButtonBuilder()
-                        .setCustomId("select_embed")
-                        .setStyle(ButtonStyle.Primary)
-                        .setEmoji("✅")
-                        .setLabel(`Select`),
+                            .setCustomId("select_embed")
+                            .setStyle(ButtonStyle.Primary)
+                            .setEmoji("✅")
+                            .setLabel(`Select`),
                         new ButtonBuilder()
-                        .setCustomId("delete_embed")
-                        .setStyle(ButtonStyle.Primary)
-                        .setEmoji("❌")
-                        .setLabel("Delete"),
+                            .setCustomId("delete_embed")
+                            .setStyle(ButtonStyle.Primary)
+                            .setEmoji("❌")
+                            .setLabel("Delete"),
                         new ButtonBuilder()
-                        .setCustomId("next_embed")
-                        .setStyle(ButtonStyle.Primary)
-                        .setEmoji("⏭")
-                        .setDisabled(pages[id] === embeds.length - 1)
+                            .setCustomId("next_embed")
+                            .setStyle(ButtonStyle.Primary)
+                            .setEmoji("⏭")
+                            .setDisabled(pages[id] === embeds.length - 1)
                     );
                     return row;
                 };
