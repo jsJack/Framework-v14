@@ -2,39 +2,39 @@ const { EmbedBuilder, ButtonBuilder, ActionRowBuilder, ButtonStyle } = require("
 
 const embeds = {
   colorEmbed: new EmbedBuilder()
-    .setColor("F4D58D")
+    .setColor("67d7e6")
     .setTitle(`Editing color`)
     .setDescription(`**to Set:** \`send a hex color code in chat\``),
   titleEmbed: new EmbedBuilder()
-    .setColor("F4D58D")
+    .setColor("67d7e6")
     .setTitle(`Editing title`)
     .setDescription(`**to Set:** \`send a message in chat\``),
   urlEmbed: new EmbedBuilder()
-    .setColor("F4D58D")
+    .setColor("67d7e6")
     .setTitle(`Editing url`)
     .setDescription(`**to Set:** \`send a url in chat\``),
   authorEmbed: new EmbedBuilder()
-    .setColor("F4D58D")
+    .setColor("67d7e6")
     .setTitle(`Editing author`)
     .setDescription(`**to Set:** \`tag a user\``),
   descriptionEmbed: new EmbedBuilder()
-    .setColor("F4D58D")
+    .setColor("67d7e6")
     .setTitle(`Editing description`)
     .setDescription(`**to Set:** \`send a message in chat\``),
   thumbnailEmbed: new EmbedBuilder()
-    .setColor("F4D58D")
+    .setColor("67d7e6")
     .setTitle(`Editing thumbnail`)
     .setDescription(`**to Set:** \`Send a [DIRECT] image link in chat\``),
   imageEmbed: new EmbedBuilder()
-    .setColor("F4D58D")
+    .setColor("67d7e6")
     .setTitle(`Editing image`)
     .setDescription(`**to Set:** \`Send a [DIRECT] image link in chat\``),
   footerEmbed: new EmbedBuilder()
-    .setColor("F4D58D")
+    .setColor("67d7e6")
     .setTitle(`Editing footer`)
     .setDescription(`**to Set:** \`send a message in chat\``),
   fieldEmbed: new EmbedBuilder()
-    .setColor("F4D58D")
+    .setColor("67d7e6")
     .setTitle(`Deleting fields`)
     .setDescription(`**to Delete:** \`type index number in chat"\``),
 };
@@ -53,7 +53,7 @@ module.exports.buttons = function (client, interaction, collector, type = null) 
   // embeds
   const baseEmbeds = interaction.message.embeds;
   let modifiedEmbed = baseEmbeds[1];
-  let msgEmbed = new EmbedBuilder().setColor("F4D58D");
+  let msgEmbed = new EmbedBuilder().setColor("67d7e6");
 
   //components
   const rows = interaction.message.components;
