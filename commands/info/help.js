@@ -40,10 +40,11 @@ module.exports = {
             builders: `🛠️`,
             info: `ℹ️`,
             developer: `💻`,
+            systems: `📡`,
         };
 
         if (!helpcmd) {
-            let ignored = ["the ingored commands"];
+            let ignored = ["ignored_command"];
 
             let ccate = [];
             readdirSync("./commands/").forEach((dir) => {
@@ -69,7 +70,7 @@ module.exports = {
             });
 
             const embed = new EmbedBuilder()
-                .setTitle(`✨ ${interaction.guild.members.me.user.username} - Help Menu`)
+                .setTitle(`✨ ${interaction.guild.members.me.displayName} - Help Menu`)
                 .setDescription(`Select a category below to view available commands and usage.
 You may also use \`/help [category name]\` or \`/help [command name]\` directly.\n
 **Need extra support?** Open a ticket!`)
