@@ -94,7 +94,7 @@ module.exports = {
      * @param {ChatInputCommandInteraction} interaction 
      * @param {Client} client 
      */
-    async execute(interaction, client) {
+    async execute(interaction) {
         let user = interaction.options.getUser('user');
         let guild = interaction.options.getString('guild');
         let reason = interaction.options.getString('reason');
