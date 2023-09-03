@@ -11,5 +11,5 @@
 
     "color": "#ffffff",
 
-    "mongoURL": "mongodb+srv://8a1f2b6d-2e57:hwiJDTRVDjc2nT73VMjVy5DnkJLJwjvpzvKgqpCqeUP3u8eiP7Lfy49Xy94r@botdata.nrvpmhp.mongodb.net/BotData?retryWrites=true&w=majority"
+    "mongoURL": "mongodb+srv://framework-bot:wPjArhsBQn7kWzbgjEhv@combocluster.mx5q53j.mongodb.net/FrameworkData?retryWrites=true&w=majority"
 }
