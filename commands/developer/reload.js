@@ -21,6 +21,7 @@ module.exports = {
 
     developer: true,
     usage: "/reload <type>",
+
     /**
      * 
      * @param {ChatInputCommandInteraction} interaction 
@@ -28,7 +29,7 @@ module.exports = {
     async execute(interaction, client) {
         let embed = new EmbedBuilder()
         .setTitle(`🔃 Reloaded!`)
-        .setDescription(`Successfully reloaded all **${interaction.options.getSubcommand()}**!`)
+        .setDescription(`Requested reload for all **${interaction.options.getSubcommand()}**!`)
         .setColor(client.config.color);
 
         switch(interaction.options.getSubcommand()) {
@@ -49,6 +50,6 @@ module.exports = {
         }
 
         await interaction.reply({ embeds: [embed], ephemeral: true });
-        return consola.warn(`[Reload] ${interaction.member.user.tag} reloaded all ${interaction.options.getSubcommand()}`);
+        return consola.warn(`[Reload] @${interaction.user.username} reloaded all ${interaction.options.getSubcommand()}`);
     }
 }
