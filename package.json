@@ -23,7 +23,7 @@
         "consola": "^3.2.3",
         "discord-music-player": "^9.1.1",
         "discord.js": "^14.13.0",
-        "glob": "8.1.0",
+        "glob": "10.3.10",
         "isomorphic-unfetch": "^4.0.2",
         "mongoose": "^7.5.0",
         "ms": "^2.1.3"
