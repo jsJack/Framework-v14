@@ -5,7 +5,7 @@ module.exports = {
 
     async execute(member = new GuildMember, client = new Client) {
         let logEmbed = new EmbedBuilder()
-            .setTitle(`📤 Member Joined`)
+            .setTitle(`📥 Member Joined`)
             .setDescription(`${member.user.tag} (\`${member.user.id}\`)`)
             .addFields(
                 {
