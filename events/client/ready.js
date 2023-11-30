@@ -6,7 +6,6 @@ const { loadCommands } = require("../../structures/handlers/loadCommands");
 const { loadModals } = require("../../structures/handlers/loadModals");
 const { loadButtons } = require("../../structures/handlers/loadButtons");
 const { loadSelectMenus } = require('../../structures/handlers/loadSelectMenus');
-const { loadSubFolders } = require('../../structures/funcs/folderLoader');
 const { updateModuleStatus } = require('../../structures/funcs/loadClientModules');
 
 module.exports = {
@@ -28,10 +27,7 @@ module.exports = {
         client.user.setActivity('Starting up... 🔴', { type: ActivityType.Watching });
         client.user.setStatus('dnd');
 
-        await mongoose.connect(client.config.mongoURL, {
-            useNewUrlParser: true,
-            useUnifiedTopology: true
-        }).then(() => {
+        await mongoose.connect(client.config.mongoURL).then(() => {
             consola.info(`Connected to ${greenBright(`MongoDB`)}: ${cyan(mongoose.connection.name)}`);
         }).catch(() => {
             updateModuleStatus("blacklist", client.config.modules.blacklist.enabled, false);
