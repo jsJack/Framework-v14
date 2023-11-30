@@ -15,8 +15,6 @@ async function loadEvents(client) {
         if (event.rest) {
             if (event.once) client.rest.once(event.name, execute);
             else client.rest.on(event.name, execute);
-        } else if (event.player) {
-            client.player.on(event.name, execute);
         } else {
             if (event.once) client.once(event.name, execute);
             else client.on(event.name, execute);
