@@ -7,10 +7,6 @@ const baseTemplate = {
     "blacklist": {
         "enabled": true,
         "available": true
-    },
-    "music": {
-        "enabled": true,
-        "available": true
     }
 };
 
