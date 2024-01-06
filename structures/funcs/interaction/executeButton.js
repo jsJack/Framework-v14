@@ -1,5 +1,5 @@
 const { ButtonInteraction, EmbedBuilder, Collection, Client } = require("discord.js");
-const consola = require('consola');
+const Logger = require('../util/Logger');
 const { connection } = require('mongoose');
 const ms = require('ms');
 
@@ -42,7 +42,7 @@ async function executeButton(interaction, client) {
             .setColor(client.config.color)
             .setFooter({ text: `Matrix Digital` });
 
-        consola.log(`${interaction.guild.name} | ${interaction.user.tag} | 💿 Tried to use 🔘${interaction.customId} but the database is not connected.`)
+        Logger.log(`${interaction.guild.name} | ${interaction.user.tag} | 💿 Tried to use 🔘${interaction.customId} but the database is not connected.`)
         return interaction.reply({ embeds: [noDB], ephemeral: true });
     }
 
@@ -78,7 +78,7 @@ async function executeButton(interaction, client) {
                 .setDescription(`You are currently on a __cooldown__ for this button!\nYou can use the button again <t:${timestamp}:R>`)
                 .setColor(client.config.color)
 
-            consola.log(`${interaction.guild.name} | ${interaction.user.tag} | 🕕 Tried to use 🔘${interaction.customId} but is on cooldown.`)
+            Logger.log(`${interaction.guild.name} | ${interaction.user.tag} | 🕕 Tried to use 🔘${interaction.customId} but is on cooldown.`)
             return interaction.reply({ embeds: [cooldownEmbed], ephemeral: true });
         }
 
@@ -110,7 +110,7 @@ async function executeButton(interaction, client) {
     /********************************
      * Log the button & execute it  *
      ********************************/
-    consola.log(`${interaction.guild.name} | ${interaction.user.tag} | 🔘 ${interaction.customId}`);
+    Logger.log(`${interaction.guild.name} | ${interaction.user.tag} | 🔘 ${interaction.customId}`);
     button.execute(interaction, client);
 }
 

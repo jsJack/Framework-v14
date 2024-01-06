@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const Logger = require('./util/Logger')
 
 // Base template for the modules.json file
 const baseTemplate = {
@@ -48,8 +49,8 @@ async function loadModuleStatus() {
         return moduleData;
     } catch (err) {
         if (err.code === 'ENOENT') {
-            console.log('modules.json not found, creating file...');
-            const defaultModules = ['blacklist', 'music'];
+            Logger.module('Modules file does not exist. Creating...');
+            const defaultModules = ['blacklist'];
             const moduleData = {};
 
             defaultModules.forEach((module) => {
@@ -63,10 +64,10 @@ async function loadModuleStatus() {
             writeStream.write(JSON.stringify(moduleData, null, 4));
             writeStream.end();
 
-            console.log('modules.json created.');
+            Logger.module('Modules file created.');
             return moduleData;
         } else {
-            console.error('Error loading module status:', err);
+            Logger.module('Could not load module status:', err);
             return null;
         }
     }

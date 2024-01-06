@@ -1,4 +1,4 @@
-const consola = require('consola');
+const Logger = require('../../structures/funcs/util/Logger');
 const { cyan } = require('chalk');
 const { loadFiles } = require('../funcs/fileLoader');
 
@@ -14,8 +14,8 @@ async function loadSelectMenus(client) {
         menusArray.push(menu);
     });
 
-    if (!menusArray.length) return consola.warn(`[SelectMenus] None loaded - Folder empty.`);
-    else return consola.success(`Loaded ${cyan(`${menusArray.length} select menus`)}.`);
+    if (!menusArray.length) return Logger.warn(`[SelectMenus] None loaded - Folder empty.`);
+    else return Logger.success(`Loaded ${cyan(`${menusArray.length} select menus`)}.`);
 }
 
 module.exports = { loadSelectMenus };

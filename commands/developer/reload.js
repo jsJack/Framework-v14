@@ -1,5 +1,4 @@
 const { SlashCommandBuilder, ChatInputCommandInteraction, PermissionFlagsBits, EmbedBuilder } = require('discord.js');
-const consola = require('consola');
 
 const { loadCommands } = require('../../structures/handlers/loadCommands');
 const { loadEvents } = require('../../structures/handlers/loadEvents');
@@ -7,6 +6,7 @@ const { loadModals } = require('../../structures/handlers/loadModals');
 const { loadButtons } = require('../../structures/handlers/loadButtons');
 const { loadSelectMenus } = require('../../structures/handlers/loadSelectMenus');
 
+const Logger = require('../../structures/funcs/util/Logger');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -50,6 +50,6 @@ module.exports = {
         }
 
         await interaction.reply({ embeds: [embed], ephemeral: true });
-        return consola.warn(`[Reload] @${interaction.user.username} reloaded all ${interaction.options.getSubcommand()}`);
+        return Logger.warn(`[Reload] @${interaction.user.username} reloaded all ${interaction.options.getSubcommand()}`);
     }
 }

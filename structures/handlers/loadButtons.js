@@ -1,4 +1,4 @@
-const consola = require('consola');
+const Logger = require('../../structures/funcs/util/Logger');
 const { cyan } = require('chalk');
 const { loadFiles } = require('../funcs/fileLoader');
 
@@ -14,8 +14,8 @@ async function loadButtons(client) {
         buttonsArray.push(button);
     });
 
-    if (!buttonsArray.length) return consola.warn(`[Buttons] None loaded - Folder empty.`);
-    else return consola.success(`Loaded ${cyan(`${buttonsArray.length} buttons`)}.`);
+    if (!buttonsArray.length) return Logger.warn(`[Buttons] None loaded - Folder empty.`);
+    else return Logger.success(`Loaded ${cyan(`${buttonsArray.length} buttons`)}.`);
 }
 
 module.exports = { loadButtons };

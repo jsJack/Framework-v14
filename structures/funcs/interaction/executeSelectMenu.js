@@ -1,5 +1,5 @@
 const { StringSelectMenuInteraction, EmbedBuilder, Collection, Client } = require("discord.js");
-const consola = require('consola');
+const Logger = require('../util/Logger');
 const { connection } = require('mongoose');
 const ms = require('ms');
 
@@ -42,7 +42,7 @@ async function executeSelectMenu(interaction, client) {
             .setColor(client.config.color)
             .setFooter({ text: `Matrix Digital` });
 
-        consola.log(`${interaction.guild.name} | ${interaction.user.tag} | 💿 Tried to use 🔘${interaction.customId} but the database is not connected.`)
+        Logger.log(`${interaction.guild.name} | ${interaction.user.tag} | 💿 Tried to use 🔘${interaction.customId} but the database is not connected.`)
         return interaction.reply({ embeds: [noDB], ephemeral: true });
     }
 
@@ -77,7 +77,7 @@ async function executeSelectMenu(interaction, client) {
                 .setDescription(`You are currently on a __cooldown__ for this menu!\nYou can use the menu again <t:${timestamp}:R>`)
                 .setColor(client.config.color)
 
-            consola.log(`${interaction.guild.name} | ${interaction.user.tag} | 🕕 Tried to use 📜${interaction.customId} but is on cooldown.`)
+            Logger.log(`${interaction.guild.name} | ${interaction.user.tag} | 🕕 Tried to use 📜${interaction.customId} but is on cooldown.`)
             return interaction.reply({ embeds: [cooldownEmbed], ephemeral: true });
         }
 
@@ -109,7 +109,7 @@ async function executeSelectMenu(interaction, client) {
     /********************************
      * Log the menu & execute it  *
      ********************************/
-    consola.log(`${interaction.guild.name} | ${interaction.user.tag} | 📜 ${interaction.customId}/${interaction.values[0]}`);
+    Logger.log(`${interaction.guild.name} | ${interaction.user.tag} | 📜 ${interaction.customId}/${interaction.values[0]}`);
     menu.execute(interaction, client);
 }
 

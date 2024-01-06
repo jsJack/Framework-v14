@@ -1,12 +1,14 @@
-const consola = require('consola');
-const mongoose = require('mongoose');
 const { Client, ActivityType } = require('discord.js');
 const { greenBright, cyan } = require('chalk');
+const mongoose = require('mongoose');
+
 const { loadCommands } = require("../../structures/handlers/loadCommands");
 const { loadModals } = require("../../structures/handlers/loadModals");
 const { loadButtons } = require("../../structures/handlers/loadButtons");
 const { loadSelectMenus } = require('../../structures/handlers/loadSelectMenus');
 const { updateModuleStatus } = require('../../structures/funcs/loadClientModules');
+
+const Logger = require('../../structures/funcs/util/Logger');
 
 module.exports = {
     name: "ready",
@@ -21,17 +23,17 @@ module.exports = {
         await loadButtons(client);
         await loadSelectMenus(client);
 
-        consola.success(`Connected to Discord as ${cyan(`${client.user.tag}`)}!\n`);
-        consola.info(`Interaction Logging started.`)
+        Logger.success(`Connected to Discord as ${cyan(`${client.user.tag}`)}!\n`);
+        Logger.info(`Interaction Logging started.`)
 
         client.user.setActivity('Starting up... 🔴', { type: ActivityType.Watching });
         client.user.setStatus('dnd');
 
         await mongoose.connect(client.config.mongoURL).then(() => {
-            consola.info(`Connected to ${greenBright(`MongoDB`)}: ${cyan(mongoose.connection.name)}`);
+            Logger.info(`Connected to ${greenBright(`MongoDB`)}: ${cyan(mongoose.connection.name)}\n`);
         }).catch(() => {
             updateModuleStatus("blacklist", client.config.modules.blacklist.enabled, false);
-            console.error(new Error('MongoDB Error'));
+            Logger.error(new Error('MongoDB Error'));
         });
 
         client.user.setStatus("online");

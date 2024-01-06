@@ -1,4 +1,5 @@
 const { AutocompleteInteraction, Client } = require("discord.js");
+const Logger = require('../util/Logger')
 
 /**
  * 
@@ -15,7 +16,7 @@ async function executeAutoComplete(interaction, client) {
         try {
             return command.autocomplete(interaction, client);
         } catch (e) {
-            console.log(e);
+            Logger.error(e);
         }
     };
 };

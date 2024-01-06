@@ -1,4 +1,4 @@
-const consola = require('consola');
+const Logger = require('../util/Logger');
 const { EmbedBuilder, Collection, ChatInputCommandInteraction, Client, ApplicationCommandOptionType, CommandInteractionOptionResolver } = require('discord.js');
 const { connection } = require('mongoose');
 const ms = require('ms');
@@ -36,7 +36,7 @@ async function executeSlashCommand(interaction, client) {
             .setColor(client.config.color)
             .setFooter({ text: `Matrix Digital` });
 
-        consola.log(`${interaction.guild.name} | ${interaction.user.tag} | 💿 Tried to use /${interaction.commandName} but the database is not connected.`)
+        Logger.log(`${interaction.guild.name} | ${interaction.user.tag} | 💿 Tried to use /${interaction.commandName} but the database is not connected.`)
         return interaction.reply({ embeds: [noDB], ephemeral: true });
     }
 
@@ -71,7 +71,7 @@ async function executeSlashCommand(interaction, client) {
                 .setDescription(`You are currently on a __cooldown__ for **/${interaction.commandName}**!\nYou can use the command again <t:${timestamp}:R>`)
                 .setColor(client.config.color)
 
-            consola.log(`${interaction.guild.name} | ${interaction.user.tag} | 🕕 Tried to use /${interaction.commandName} but is on cooldown.`)
+            Logger.log(`${interaction.guild.name} | ${interaction.user.tag} | 🕕 Tried to use /${interaction.commandName} but is on cooldown.`)
             return interaction.reply({ embeds: [cooldownEmbed], ephemeral: true });
         }
 
@@ -91,7 +91,7 @@ async function executeSlashCommand(interaction, client) {
     // get all of the options used
     let options = formatInteractionOptions(interaction.options);
 
-    consola.log(`${interaction.channel.isDMBased() ? `DMs` : `${interaction.guild.name}`} | ${interaction.user.tag} | /${interaction.commandName} ${subcommand ? subcommand : ``}${options ? options : ``}`);
+    Logger.log(`${interaction.channel.isDMBased() ? `DMs` : `${interaction.guild.name}`} | ${interaction.user.tag} | /${interaction.commandName} ${subcommand ? subcommand : ``}${options ? options : ``}`);
     command.execute(interaction, client);
 };
 

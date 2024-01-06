@@ -1,16 +1,16 @@
 const { EmbedBuilder, WebhookClient } = require("discord.js");
 const { inspect } = require("util");
-const consola = require('consola');
+const Logger = require('../../structures/funcs/util/Logger');
 
 module.exports = (client) => {
     const webhook = new WebhookClient({ url: `${client.config.anticrashWebhook}` });
-    consola.success("Anticrash module loaded");
+    Logger.success("Anticrash module loaded");
 
     const embed = new EmbedBuilder()
     .setColor("Red");
     
     client.on("error", async (err) => {
-        consola.error(err);
+        Logger.error(err);
 
         embed
         .setTitle("Discord API Error")
@@ -22,7 +22,7 @@ module.exports = (client) => {
     });
 
     process.on("unhandledRejection", async (reason, promise) => {
-        consola.error(reason, "\n", promise);
+        Logger.error(reason, "\n", promise);
 
         embed
         .setTitle("Unhandled Rejection/Catch")
@@ -37,7 +37,7 @@ module.exports = (client) => {
     });
     
     process.on("uncaughtException", async (err, origin) => {
-        consola.error(err, "\n", origin);
+        Logger.error(err, "\n", origin);
 
         embed
         .setTitle("Uncaught Exception/Catch")
@@ -52,7 +52,7 @@ module.exports = (client) => {
     });
     
     process.on("uncaughtExceptionMonitor", async (err, origin) => {
-        consola.error(err, "\n", origin);
+        Logger.error(err, "\n", origin);
 
         embed
         .setTitle("Uncaught Exception Monitor")
@@ -67,7 +67,7 @@ module.exports = (client) => {
     });
     
     process.on("warn", async (warn) => {
-        consola.error(warn);
+        Logger.error(warn);
 
         embed
         .setTitle("Uncaught Exception Monitor Warning")
@@ -80,5 +80,5 @@ module.exports = (client) => {
         return webhook.send({ embeds: [embed] }).catch(() => { return; });
     });
 
-    client.on("warn", consola.warn)
+    client.on("warn", Logger.warn)
 };

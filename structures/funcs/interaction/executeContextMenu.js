@@ -1,7 +1,7 @@
 const { ContextMenuCommandInteraction, Client, EmbedBuilder, Collection, ApplicationCommandType } = require('discord.js');
 const { connection } = require('mongoose');
 const ms = require('ms');
-const consola = require('consola');
+const Logger = require('../util/Logger');
 
 const appTimeout = new Collection();
 
@@ -29,7 +29,7 @@ async function executeContextMenu(interaction, client) {
             .setColor(client.config.color)
             .setFooter({ text: `Matrix Digital` });
 
-        consola.log(`${interaction.guild.name} | ${interaction.user.tag} | 💿 Tried to use App "${interaction.commandName}"s but the database is not connected.`)
+        Logger.log(`${interaction.guild.name} | ${interaction.user.tag} | 💿 Tried to use App "${interaction.commandName}"s but the database is not connected.`)
         return interaction.reply({ embeds: [noDB], ephemeral: true });
     }
 
@@ -60,7 +60,7 @@ async function executeContextMenu(interaction, client) {
                 .setDescription(`You are currently on a __cooldown__ for **App: "${interaction.commandName}"**!\nYou can use the app again <t:${timestamp}:R>`)
                 .setColor(client.config.color)
 
-            consola.log(`${interaction.guild.name} | ${interaction.user.tag} | 🕕 Tried to use App: "${interaction.commandName}" but is on cooldown.`)
+            Logger.log(`${interaction.guild.name} | ${interaction.user.tag} | 🕕 Tried to use App: "${interaction.commandName}" but is on cooldown.`)
             return interaction.reply({ embeds: [cooldownEmbed], ephemeral: true });
         }
 
@@ -73,7 +73,7 @@ async function executeContextMenu(interaction, client) {
 
     // Log & Execute
     let type = ApplicationCommandType[interaction.commandType];
-    consola.log(`${interaction.channel.isDMBased() ? `DMs` : interaction.guild.name} | ${interaction.user.tag} | 📟 Executed App: "${interaction.commandName}" (${type})`);
+    Logger.log(`${interaction.channel.isDMBased() ? `DMs` : interaction.guild.name} | ${interaction.user.tag} | 📟 Executed App: "${interaction.commandName}" (${type})`);
     app.execute(interaction, client);
 };
 

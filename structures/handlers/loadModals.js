@@ -1,4 +1,4 @@
-const consola = require('consola');
+const Logger = require('../../structures/funcs/util/Logger');
 const { cyan } = require('chalk');
 const { loadFiles } = require('../funcs/fileLoader');
 
@@ -14,8 +14,8 @@ async function loadModals(client) {
         modalsArray.push(modal);
     });
 
-    if (!modalsArray.length) return consola.warn(`[Modals] None loaded - Folder empty.`);
-    else return consola.success(`Loaded ${cyan(`${modalsArray.length} modals`)}.`);
+    if (!modalsArray.length) return Logger.warn(`[Modals] None loaded - Folder empty.`);
+    else return Logger.success(`Loaded ${cyan(`${modalsArray.length} modals`)}.`);
 }
 
 module.exports = { loadModals };

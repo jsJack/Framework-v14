@@ -1,6 +1,6 @@
 const { BaseInteraction, Client, EmbedBuilder } = require('discord.js');
 const blacklist = require('../../structures/schema/blacklist');
-const consola = require('consola');
+const Logger = require('../../structures/funcs/util/Logger');
 
 const { executeSlashCommand } = require('../../structures/funcs/interaction/executeSlashCommand');
 const { executeButton } = require('../../structures/funcs/interaction/executeButton');
@@ -60,7 +60,7 @@ module.exports = {
                 }
             }
         } else {
-            consola.warn("The blacklist module is unavailable!! Please fix MongoDB connection or disable the module.")
+            Logger.warn("The blacklist module is unavailable!! Please fix MongoDB connection or disable the module.")
         }
 
         if (interaction.isChatInputCommand()) executeSlashCommand(interaction, client);

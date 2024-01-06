@@ -1,5 +1,5 @@
 const { EmbedBuilder, ModalSubmitInteraction, Client } = require('discord.js');
-const consola = require('consola');
+const Logger = require('../util/Logger');
 
 /**
  * 
@@ -18,7 +18,7 @@ async function executeModal(modal, client) {
 
     if (!getModal) return modal.reply({ embeds: [e], ephemeral: true });
 
-    consola.log(`${modal.guild.name} | ${modal.user.tag} | 📋 ${modal.customId}`);
+    Logger.log(`${modal.guild.name} | ${modal.user.tag} | 📋 ${modal.customId}`);
     getModal.execute(modal, client);
 }
 

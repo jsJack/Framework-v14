@@ -1,4 +1,4 @@
-const consola = require("consola");
+const Logger = require('../../structures/funcs/util/Logger');
 const { cyan } = require('chalk');
 const { loadFiles } = require("../funcs/fileLoader");
 const { loadSubFolders } = require("../funcs/folderLoader");
@@ -26,7 +26,7 @@ async function loadCommands(client) {
         else commandsArray.push(command.data.toJSON());
     });
 
-    if (!files.length) consola.warn(`[Commands] None loaded - Folder empty.`)
+    if (!files.length) Logger.warn(`[Commands] None loaded - Folder empty.`)
 
     const contextMenus = await loadFiles("apps");
     contextMenus.forEach((file) => {
@@ -37,8 +37,6 @@ async function loadCommands(client) {
         else appsArray.push(app.data.toJSON());
     });
 
-    if (!contextMenus.length) consola.warn(`[Context Menus] None loaded - Folder empty.`)
-
     commandsArray.push(...appsArray);
     developerArray.push(...devAppsArray);
 
@@ -48,8 +46,8 @@ async function loadCommands(client) {
     let commandCats = await loadSubFolders("commands");
     client.commandCategories = commandCats;
 
-    if (!commandsArray.length && !developerArray.length) return consola.error(`[Commands] None loaded - Folder empty.`)
-    else return consola.success(`Successfully loaded commands:\n- ${cyan(`${commandsArray.length} slash commands`)} (${cyan(`${developerArray.length} developer slash commands`)})\n- ${cyan(`${appsArray.length} context menus`)} (${cyan(`${devAppsArray.length} developer context menus`)})\n- Across ${cyan(`${commandCats.length} categories`)}.`);
+    if (!commandsArray.length && !developerArray.length) return Logger.error(`[Commands] None loaded - Folder empty.`)
+    else return Logger.success(`Successfully loaded commands:\n                       ╒═ ${cyan(`${commandsArray.length} slash commands`)} (${cyan(`${developerArray.length} developer slash commands`)})\n                       ╞═ ${cyan(`${appsArray.length} context menus`)} (${cyan(`${devAppsArray.length} developer context menus`)})\n                       ╘═ Across ${cyan(`${commandCats.length} categories`)}.`);
 }
 
 module.exports = { loadCommands };
