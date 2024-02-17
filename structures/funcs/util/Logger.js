@@ -1,14 +1,17 @@
 const chalk = require('chalk');
-const dateFormat = require('dateformat');
+const dat = require('date-and-time');
 const util = require('util');
+
+const config = require('../../config.json');
+const isDebug = config.enableDebugLogs;
 
 class Logger {
     static get prefix() {
-        return chalk.gray(dateFormat(Date.now(), 'dd/mm/yy HH:MM:ss'));
+        return chalk.gray(dat.format(new Date(), 'DD/MM/YYYY HH:mm:ss'));
     }
 
     static get logPrefix() {
-        return `[${dateFormat(Date.now(), 'isoUtcDateTime')}]`;
+        return `[${dat.format(new Date(), 'DD/MM/YYYY HH:mm:ss')}]`;
     }
 
     static formatInput(args) {
@@ -44,7 +47,12 @@ class Logger {
 
     static log(...args) {
         args = this.formatInput(args)
-        console.log(this.logPrefix + ' ' + args.join(' '));
+        console.log(this.prefix + ' ' + args.join(' '));
+    }
+
+    static debug(...args) {
+        args = this.formatInput(args)
+        if (isDebug) console.log(this.prefix + ' ' + chalk.blue('[DEBUG]') + '  ' + args.join(' '));
     }
 
 }
