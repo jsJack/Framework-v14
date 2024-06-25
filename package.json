@@ -19,11 +19,11 @@
     "homepage": "https://github.com/jsJack/Framework-v14#readme",
     "dependencies": {
         "chalk": "^4.1.2",
-        "date-and-time": "^3.1.1",
-        "discord.js": "^14.14.1",
+        "date-and-time": "^3.3.0",
+        "discord.js": "^14.15.3",
         "glob": "8.1.0",
         "isomorphic-unfetch": "^4.0.2",
-        "mongoose": "^8.0.3",
+        "mongoose": "^8.4.4",
         "ms": "^2.1.3"
     }
 }
