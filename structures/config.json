@@ -1,7 +1,7 @@
 {
-    "token": "OTY3NTE1OTY0MzQ0MjUwNDI4.Gk0xOD.BLX_FNJWSg5gpLc1IAMlFntg8VxYfhyjthGTmQ",
-    "developerGuildID": "939225491775303750",
-    "anticrashWebhook": "https://discord.com/api/webhooks/999450630940790864/ycogfD6th3xYvlay0v3jJMYEFTIQxj3k4eXLNWEovLB45VTReNE4AAOrM06lt1Xl1t_u",
+    "token": "mine",
+    "developerGuildID": "also_mine",
+    "anticrashWebhook": "mine_too",
 
     "modules": {
         "blacklist": {
@@ -11,5 +11,5 @@
 
     "color": "#ffffff",
 
-    "mongoURL": "mongodb+srv://framework-bot:wPjArhsBQn7kWzbgjEhv@combocluster.mx5q53j.mongodb.net/FrameworkData?retryWrites=true&w=majority"
+    "mongoURL": "not_yours"
 }
