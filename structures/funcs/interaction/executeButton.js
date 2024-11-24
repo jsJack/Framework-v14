@@ -17,7 +17,7 @@ async function executeButton(interaction, client) {
     /****************************************
      * Check if button needs to be ignored  *
      ****************************************/
-    let blacklistedIDs = ["cancel", "random", "bot", "guild", "sindex", "select_embed", "delete_embed", "prev_embed", "next_embed", "value", "inline", "name", "set", "discord-blackjack-hitbtn", "discord-blackjack-standbtn", "discord-blackjack-ddownbtn", "discord-blackjack-splitbtn", "discord-blackjack-cancelbtn"];
+    let blacklistedIDs = ["cancel", "random", "bot", "guild", "sindex", "select_embed", "delete_embed", "prev_embed", "next_embed", "value", "inline", "name", "set"];
     if (blacklistedIDs.includes(interaction.customId)) return;
 
     /*******************************
