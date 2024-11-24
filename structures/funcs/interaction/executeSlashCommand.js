@@ -29,7 +29,7 @@ async function executeSlashCommand(interaction, client) {
     /****************************************************************
      * Check if the database is on (for commands that need the db)  *
      ****************************************************************/
-    if (client.config.mongoURL && command.dbDepend && connection.readyState != 1) {
+    if (command.dbDepend && connection.readyState != 1) {
         let noDB = new EmbedBuilder()
             .setTitle(`🌌 Hold on!`)
             .setDescription(`The database isn't quite connected yet, and you cannot use this command without the database.\nThe bot may be starting up, please allow up to 30 seconds before re-running this command.`)

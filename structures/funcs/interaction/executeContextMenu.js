@@ -22,7 +22,7 @@ async function executeContextMenu(interaction, client) {
     if (!app) return interaction.reply({ embeds: [notExist], ephemeral: true });
 
     // Check if it needds the database
-    if (client.config.mongoURL && app.dbDepend && connection.readyState != 1) {
+    if (app.dbDepend && connection.readyState != 1) {
         let noDB = new EmbedBuilder()
             .setTitle(`🌌 Hold on!`)
             .setDescription(`The database isn't quite connected yet, and you cannot use this context menu without the database.\nThe bot may be starting up, please allow up to 30 seconds before re-running this app.`)
