@@ -14,7 +14,7 @@ async function executeModal(modal, client) {
     let e = new EmbedBuilder()
         .setDescription(`🛠 This modal is not linked to a response.\nPlease try again later.`)
         .setColor(client.config.color)
-        .setFooter({ text: `Item code: ${modal.customId} - Matrix Digital` });
+        .setFooter({ text: `Item code: ${modal.customId} - JPY Software` });
 
     if (!getModal) return modal.reply({ embeds: [e], ephemeral: true });
 

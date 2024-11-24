@@ -17,7 +17,7 @@ async function executeContextMenu(interaction, client) {
     let notExist = new EmbedBuilder()
         .setDescription(`🛠 This context menu is not linked to a response.\nPlease try again later.`)
         .setColor(client.config.color)
-        .setFooter({ text: `Item code: ${interaction.commandName} - Matrix Digital` });
+        .setFooter({ text: `Item code: ${interaction.commandName} - JPY Software` });
 
     if (!app) return interaction.reply({ embeds: [notExist], ephemeral: true });
 
@@ -27,7 +27,7 @@ async function executeContextMenu(interaction, client) {
             .setTitle(`🌌 Hold on!`)
             .setDescription(`The database isn't quite connected yet, and you cannot use this context menu without the database.\nThe bot may be starting up, please allow up to 30 seconds before re-running this app.`)
             .setColor(client.config.color)
-            .setFooter({ text: `Matrix Digital` });
+            .setFooter({ text: `JPY Software` });
 
         Logger.log(`${interaction.guild.name} | ${interaction.user.tag} | 💿 Tried to use App "${interaction.commandName}"s but the database is not connected.`)
         return interaction.reply({ embeds: [noDB], ephemeral: true });
