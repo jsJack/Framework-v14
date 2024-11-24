@@ -1,7 +1,7 @@
 {
     "name": "framework-v14",
-    "description": "",
     "version": "1.0.2",
+    "description": "A Discord.js v14 framework",
     "main": "structures/index.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1"
@@ -10,9 +10,12 @@
         "type": "git",
         "url": "git+https://github.com/jsJack/Framework-v14.git"
     },
-    "keywords": [],
-    "author": "",
-    "license": "ISC",
+    "keywords": [
+        "discord",
+        "discord-bot"
+    ],
+    "author": "Jack Perry <hello@jackperry.co>",
+    "license": "MIT",
     "bugs": {
         "url": "https://github.com/jsJack/Framework-v14/issues"
     },
