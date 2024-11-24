@@ -6,7 +6,6 @@ const { loadCommands } = require("../../structures/handlers/loadCommands");
 const { loadModals } = require("../../structures/handlers/loadModals");
 const { loadButtons } = require("../../structures/handlers/loadButtons");
 const { loadSelectMenus } = require('../../structures/handlers/loadSelectMenus');
-const { updateModuleStatus } = require('../../structures/funcs/loadClientModules');
 
 const Logger = require('../../structures/funcs/util/Logger');
 
@@ -32,7 +31,6 @@ module.exports = {
         await mongoose.connect(client.config.mongoURL).then(() => {
             Logger.info(`Connected to ${greenBright(`MongoDB`)}: ${cyan(mongoose.connection.name)}\n`);
         }).catch(() => {
-            updateModuleStatus("blacklist", client.config.modules.blacklist.enabled, false);
             Logger.error(new Error('MongoDB Error'));
         });
 

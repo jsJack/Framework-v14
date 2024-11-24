@@ -7,7 +7,6 @@ const { executeButton } = require('../../structures/funcs/interaction/executeBut
 const { executeSelectMenu } = require('../../structures/funcs/interaction/executeSelectMenu');
 const { executeModal } = require('../../structures/funcs/interaction/executeModal');
 const { executeAutoComplete } = require('../../structures/funcs/interaction/executeAutoComplete');
-const { loadModuleStatus } = require('../../structures/funcs/loadClientModules');
 const { executeContextMenu } = require('../../structures/funcs/interaction/executeContextMenu');
 
 module.exports = {
@@ -21,46 +20,41 @@ module.exports = {
         if (interaction.isAutocomplete()) return executeAutoComplete(interaction, client);
 
         let blacklisted = false;
-        let mod = await loadModuleStatus();
 
-        if (mod.blacklist.available && mod.blacklist.enabled) {
-            const userBlacklist = await blacklist.findOne({ id: interaction.user.id, type: "user" });
-            if (userBlacklist) blacklisted = true;
+        const userBlacklist = await blacklist.findOne({ id: interaction.user.id, type: "user" });
+        if (userBlacklist) blacklisted = true;
 
-            const guildBlacklist = await blacklist.findOne({ id: interaction.guild.id, type: "guild" });
-            if (guildBlacklist) blacklisted = true;
+        const guildBlacklist = await blacklist.findOne({ id: interaction.guild.id, type: "guild" });
+        if (guildBlacklist) blacklisted = true;
 
-            if (blacklisted) {
-                if (userBlacklist && userBlacklist.until < Date.now()) {
-                    await blacklist.deleteOne({ id: interaction.user.id, type: "user" });
-                } else if (guildBlacklist && guildBlacklist.until < Date.now()) {
-                    await blacklist.deleteOne({ id: interaction.guild.id, type: "guild" });
-                } else {
-                    let cmds = userBlacklist ? userBlacklist.cmds : guildBlacklist.cmds;
-                    if (cmds.includes(interaction.commandName) || cmds.includes(interaction.customId) || cmds.includes("all")) blacklisted = true;
-                    else blacklisted = false;
+        if (blacklisted) {
+            if (userBlacklist && userBlacklist.until < Date.now()) {
+                await blacklist.deleteOne({ id: interaction.user.id, type: "user" });
+            } else if (guildBlacklist && guildBlacklist.until < Date.now()) {
+                await blacklist.deleteOne({ id: interaction.guild.id, type: "guild" });
+            } else {
+                let cmds = userBlacklist ? userBlacklist.cmds : guildBlacklist.cmds;
+                if (cmds.includes(interaction.commandName) || cmds.includes(interaction.customId) || cmds.includes("all")) blacklisted = true;
+                else blacklisted = false;
 
-                    if (blacklisted) {
-                        let timestamp = userBlacklist ? userBlacklist.until : guildBlacklist.until;
-                        let reason = userBlacklist ? userBlacklist.reason : guildBlacklist.reason;
-                        let by = userBlacklist ? userBlacklist.by : guildBlacklist.by;
+                if (blacklisted) {
+                    let timestamp = userBlacklist ? userBlacklist.until : guildBlacklist.until;
+                    let reason = userBlacklist ? userBlacklist.reason : guildBlacklist.reason;
+                    let by = userBlacklist ? userBlacklist.by : guildBlacklist.by;
 
-                        let blEmbed = new EmbedBuilder()
-                            .setTitle('Blacklisted')
-                            .setDescription(`${userBlacklist ? "You are" : "This guild is"} blacklisted from using this command.`)
-                            .setColor('NotQuiteBlack')
-                            .setTimestamp()
-                            .addFields(
-                                { name: 'Reason', value: reason, inline: true },
-                                { name: 'By', value: `<@${by}>`, inline: true },
-                                { name: 'Unblacklisted', value: `<t:${Math.floor(timestamp / 1000)}:R>`, inline: true }
-                            );
-                        return interaction.reply({ embeds: [blEmbed], ephemeral: true });
-                    }
+                    let blEmbed = new EmbedBuilder()
+                        .setTitle('Blacklisted')
+                        .setDescription(`${userBlacklist ? "You are" : "This guild is"} blacklisted from using this command.`)
+                        .setColor('NotQuiteBlack')
+                        .setTimestamp()
+                        .addFields(
+                            { name: 'Reason', value: reason, inline: true },
+                            { name: 'By', value: `<@${by}>`, inline: true },
+                            { name: 'Unblacklisted', value: `<t:${Math.floor(timestamp / 1000)}:R>`, inline: true }
+                        );
+                    return interaction.reply({ embeds: [blEmbed], ephemeral: true });
                 }
             }
-        } else {
-            Logger.warn("The blacklist module is unavailable!! Please fix MongoDB connection or disable the module.")
         }
 
         if (interaction.isChatInputCommand()) executeSlashCommand(interaction, client);
