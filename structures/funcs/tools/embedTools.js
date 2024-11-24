@@ -59,10 +59,10 @@ module.exports.buttons = function (client, interaction, collector, type = null) 
   const rows = interaction.message.components;
 
   // define buttons
-  const cancel_button = new ButtonBuilder().setCustomId("cancel").setStyle(ButtonStyle.Secondary).setLabel("cancel");
-  const random_button = new ButtonBuilder().setCustomId("random").setStyle(ButtonStyle.Secondary).setLabel("random");
-  const bot_button = new ButtonBuilder().setCustomId("bot").setStyle(ButtonStyle.Secondary).setLabel("bot");
-  const guild_button = new ButtonBuilder().setCustomId("guild").setStyle(ButtonStyle.Secondary).setLabel("guild");
+  const cancel_button = new ButtonBuilder().setCustomId("cancel").setStyle(ButtonStyle.Secondary).setLabel("Go back");
+  const random_button = new ButtonBuilder().setCustomId("random").setStyle(ButtonStyle.Secondary).setLabel("Random");
+  const bot_button = new ButtonBuilder().setCustomId("bot").setStyle(ButtonStyle.Secondary).setLabel("Set to Bot");
+  const guild_button = new ButtonBuilder().setCustomId("guild").setStyle(ButtonStyle.Secondary).setLabel("Set to Guild");
   const index_button = new ButtonBuilder().setCustomId("sindex").setStyle(ButtonStyle.Secondary).setLabel("Show Index");
 
   // util buttons
