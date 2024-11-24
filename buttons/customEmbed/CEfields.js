@@ -51,7 +51,7 @@ module.exports = {
 
     // util buttons --------------------------------------------------------------
     const buttonRow = new ActionRowBuilder().addComponents(
-      new ButtonBuilder().setCustomId("cancel").setStyle(ButtonStyle.Secondary).setLabel("cancel"),
+      new ButtonBuilder().setCustomId("cancel").setStyle(ButtonStyle.Secondary).setLabel("Go back"),
       new ButtonBuilder().setCustomId("name").setStyle(ButtonStyle.Secondary).setLabel("name"),
       new ButtonBuilder().setCustomId("value").setStyle(ButtonStyle.Secondary).setLabel("value"),
       new ButtonBuilder().setCustomId("inline").setStyle(ButtonStyle.Secondary).setLabel("inline"),
