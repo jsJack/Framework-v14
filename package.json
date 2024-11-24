@@ -24,6 +24,7 @@
         "chalk": "^4.1.2",
         "date-and-time": "^3.3.0",
         "discord.js": "^14.15.3",
+        "dotenv": "^16.4.5",
         "glob": "8.1.0",
         "isomorphic-unfetch": "^4.0.2",
         "mongoose": "^8.4.4",

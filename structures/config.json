@@ -1,15 +1,3 @@
 {
-    "token": "mine",
-    "developerGuildID": "also_mine",
-    "anticrashWebhook": "mine_too",
-
-    "modules": {
-        "blacklist": {
-            "enabled": true
-        }
-    },
-
-    "color": "#ffffff",
-
-    "mongoURL": "not_yours"
+    "color": "#ffffff"
 }

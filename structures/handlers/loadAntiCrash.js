@@ -3,7 +3,7 @@ const { inspect } = require("util");
 const Logger = require('../../structures/funcs/util/Logger');
 
 module.exports = (client) => {
-    const webhook = new WebhookClient({ url: `${client.config.anticrashWebhook}` });
+    const webhook = new WebhookClient({ url: `${process.env.ANTICRASH_WEBHOOK}` });
     Logger.success("Anticrash module loaded");
 
     const embed = new EmbedBuilder()

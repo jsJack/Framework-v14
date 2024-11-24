@@ -5,7 +5,8 @@ const { Guilds, GuildMembers, GuildMessages, MessageContent, GuildVoiceStates, G
 const { User, Message, GuildMember, ThreadMember, Channel } = Partials;
 
 const Logger = require('../structures/funcs/util/Logger');
-const { loadModuleStatus, updateModuleStatus } = require('./funcs/loadClientModules');
+
+require('dotenv').config();
 
 const client = new Client({
     intents: [Guilds, GuildMembers, GuildMessages, MessageContent, GuildVoiceStates, GuildMessageReactions],
@@ -23,11 +24,8 @@ client.customEmbedService = require('./funcs/tools/embedTools.js');
 
 module.exports = client;
 
-loadModuleStatus();
-updateModuleStatus("blacklist", client.config.modules.blacklist.enabled ?? true, true);
-
-if (!client.config.mongoURL) {
-    Logger.error(`MongoDB is not configured, please set config.mongoURL to your MongoDB connection string.`);
+if (!process.env.MONGODB_URI) {
+    Logger.error(`MongoDB is not configured, please set the MONGODB_URI Environment Variable to your MongoDB connection string.`);
     return process.exit(1);
 }
 
@@ -36,4 +34,4 @@ const { loadEvents } = require("./handlers/loadEvents");
 require("./handlers/loadAntiCrash")(client);
 loadEvents(client);
 
-client.login(client.config.token).catch((err) => Logger.error(err));
+client.login(process.env.TOKEN).catch((err) => Logger.error(err));

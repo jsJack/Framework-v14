@@ -41,7 +41,7 @@ async function loadCommands(client) {
     developerArray.push(...devAppsArray);
 
     client.application.commands.set(commandsArray);
-    client.guilds.cache.find(g => g.id === client.config.developerGuildID).commands.set(developerArray);
+    client.guilds.cache.find(g => g.id === process.env.DEVELOPER_GUILD_ID)?.commands.set(developerArray).catch(() => { return; });
 
     let commandCats = await loadSubFolders("commands");
     client.commandCategories = commandCats;

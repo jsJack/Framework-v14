@@ -28,7 +28,7 @@ module.exports = {
         client.user.setActivity('Starting up... 🔴', { type: ActivityType.Watching });
         client.user.setStatus('dnd');
 
-        await mongoose.connect(client.config.mongoURL).then(() => {
+        await mongoose.connect(process.env.MONGODB_URI).then(() => {
             Logger.info(`Connected to ${greenBright(`MongoDB`)}: ${cyan(mongoose.connection.name)}\n`);
         }).catch(() => {
             Logger.error(new Error('MongoDB Error'));
