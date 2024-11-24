@@ -70,4 +70,4 @@ module.exports = {
         else if (interaction.isContextMenuCommand() || interaction.isUserContextMenuCommand() || interaction.isMessageContextMenuCommand()) executeContextMenu(interaction, client);
         else return;
     }
-}
+};

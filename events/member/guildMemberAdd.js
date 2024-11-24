@@ -25,4 +25,4 @@ module.exports = {
         let logChannel = member.guild.channels.cache.find(c => c.name === `logs`);
         if (logChannel) await logChannel.send({ embeds: [logEmbed] });
     }
-}
+};

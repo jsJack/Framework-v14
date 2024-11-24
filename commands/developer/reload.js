@@ -52,4 +52,4 @@ module.exports = {
         await interaction.reply({ embeds: [embed], ephemeral: true });
         return Logger.warn(`[Reload] @${interaction.user.username} reloaded all ${interaction.options.getSubcommand()}`);
     }
-}
+};
