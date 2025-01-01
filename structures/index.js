@@ -24,9 +24,12 @@ client.customEmbedService = require('./funcs/tools/embedTools.js');
 
 module.exports = client;
 
-if (!process.env.MONGODB_URI) {
-    Logger.error(`MongoDB is not configured, please set the MONGODB_URI Environment Variable to your MongoDB connection string.`);
-    return process.exit(1);
+let requiredSecrets = [`MONGODB_URI`, `TOKEN`, `DEVELOPER_GUILD_ID`, `ANTICRASH_WEBHOOK`];
+let missingSecrets = requiredSecrets.filter((secret) => !process.env[secret]);
+
+if (missingSecrets.length) {
+    Logger.error(`Missing required environment variables: ${missingSecrets.join(", ")}`);
+    process.exit(1);
 }
 
 const { loadEvents } = require("./handlers/loadEvents");
