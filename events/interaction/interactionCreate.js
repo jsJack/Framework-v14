@@ -1,6 +1,5 @@
 const { BaseInteraction, Client, EmbedBuilder } = require('discord.js');
 const blacklist = require('../../structures/schema/blacklist');
-const Logger = require('../../structures/funcs/util/Logger');
 
 const { executeSlashCommand } = require('../../structures/funcs/interaction/executeSlashCommand');
 const { executeButton } = require('../../structures/funcs/interaction/executeButton');
@@ -24,10 +23,10 @@ module.exports = {
         const userBlacklist = await blacklist.findOne({ id: interaction.user.id, type: "user" });
         if (userBlacklist) blacklisted = true;
 
-        const guildBlacklist = await blacklist.findOne({ id: interaction.guild.id, type: "guild" });
+        const guildBlacklist = await blacklist.findOne({ id: interaction?.guild?.id, type: "guild" });
         if (guildBlacklist) blacklisted = true;
 
-        if (blacklisted) {
+        if (blacklisted && interaction?.options?.getSubcommand(false) !== "remove") {
             if (userBlacklist && userBlacklist.until < Date.now()) {
                 await blacklist.deleteOne({ id: interaction.user.id, type: "user" });
             } else if (guildBlacklist && guildBlacklist.until < Date.now()) {

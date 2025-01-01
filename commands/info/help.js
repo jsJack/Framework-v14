@@ -70,7 +70,7 @@ module.exports = {
             });
 
             const embed = new EmbedBuilder()
-                .setTitle(`✨ ${interaction.guild.members.me.displayName} - Help Menu`)
+                .setTitle(`✨ ${interaction?.guild?.members.me.displayName ?? client.user.displayName} - Help Menu`)
                 .setDescription(`Select a category below to view available commands and usage.
 You may also use \`/help [category name]\` or \`/help [command name]\` directly.\n
 **Need extra support?** Open a ticket!`)
