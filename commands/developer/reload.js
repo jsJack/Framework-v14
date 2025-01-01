@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, ChatInputCommandInteraction, PermissionFlagsBits, EmbedBuilder } = require('discord.js');
+const { SlashCommandBuilder, ChatInputCommandInteraction, PermissionFlagsBits, EmbedBuilder, InteractionContextType } = require('discord.js');
 
 const { loadCommands } = require('../../structures/handlers/loadCommands');
 const { loadEvents } = require('../../structures/handlers/loadEvents');
@@ -17,7 +17,9 @@ module.exports = {
     .addSubcommand((options) => options.setName("commands").setDescription("Reload commands"))
     .addSubcommand((options) => options.setName("modals").setDescription("Reload modals"))
     .addSubcommand((options) => options.setName("buttons").setDescription("Reload buttons"))
-    .addSubcommand((options) => options.setName("selectmenus").setDescription("Reload selectmenus")),
+    .addSubcommand((options) => options.setName("selectmenus").setDescription("Reload selectmenus"))
+    
+    .setContexts(InteractionContextType.Guild, InteractionContextType.BotDM),
 
     developer: true,
     usage: "/reload <type>",

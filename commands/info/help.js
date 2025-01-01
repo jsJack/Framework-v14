@@ -6,8 +6,7 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName(`help`)
         .setDescription(`Shows info on commands, or shows help on a specific command`)
-        .addStringOption(option => option.setName(`command`).setDescription(`The command to get help on`).setRequired(false).setAutocomplete(true))
-        .setDMPermission(true),
+        .addStringOption(option => option.setName(`command`).setDescription(`The command to get help on`).setRequired(false).setAutocomplete(true)),
 
     usage: `/help [command|category]`,
 

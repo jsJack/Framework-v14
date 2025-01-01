@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, ChatInputCommandInteraction, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, PermissionFlagsBits } = require("discord.js");
+const { SlashCommandBuilder, ChatInputCommandInteraction, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, PermissionFlagsBits, InteractionContextType } = require("discord.js");
 const db = require("../../structures/schema/customEmbed");
 
 function fetch(channel, msg) {
@@ -15,6 +15,9 @@ module.exports = {
         .setName("embed")
         .setDescription("Create a custom message embed")
         .setDefaultMemberPermissions(PermissionFlagsBits.ManageMessages)
+
+        .setContexts(InteractionContextType.Guild)
+
         .addSubcommand((subcommand) =>
             subcommand
                 .setName("new")

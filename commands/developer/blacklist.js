@@ -1,4 +1,4 @@
-const { Client, ChatInputCommandInteraction, EmbedBuilder, SlashCommandBuilder, PermissionFlagsBits } = require('discord.js');
+const { ChatInputCommandInteraction, EmbedBuilder, SlashCommandBuilder, PermissionFlagsBits, InteractionContextType } = require('discord.js');
 const blacklist = require('../../structures/schema/blacklist');
 const ms = require('ms');
 
@@ -6,7 +6,7 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName('blacklist')
         .setDescription('Blacklist a user or guild from using the bot')
-        .setDMPermission(true)
+        .setContexts(InteractionContextType.Guild)
         .setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
         .addSubcommand(subcommand =>
             subcommand
