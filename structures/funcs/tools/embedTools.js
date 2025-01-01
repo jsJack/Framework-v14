@@ -102,6 +102,10 @@ module.exports.buttons = function (client, interaction, collector, type = null) 
 
   // show index of fields function
   async function showIndex(embed0, embed1) {
+    if (!embed1.data.fields) {
+      return interaction.editReply({ embeds: [embed0, EmbedBuilder.from(msgEmbed).setDescription(`No fields found`)] });
+    }
+
     const data = embed1.data.fields.map((field) => {
       return {
         name: `\`${num++}\`` + " " + field.name,
