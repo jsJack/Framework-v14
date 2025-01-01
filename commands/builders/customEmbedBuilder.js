@@ -161,7 +161,7 @@ module.exports = {
 
         const ROW_2 = new ActionRowBuilder().addComponents(
             new ButtonBuilder().setLabel("Send").setCustomId("CEsend").setStyle(ButtonStyle.Success),
-            new ButtonBuilder().setLabel("Go back").setCustomId("CEcancel").setStyle(ButtonStyle.Primary)
+            new ButtonBuilder().setLabel("Cancel").setCustomId("CEcancel").setStyle(ButtonStyle.Secondary)
         );
 
         const rows = [ROW_0, ROW_1, ROW_2];
