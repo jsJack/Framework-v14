@@ -41,6 +41,7 @@ async function loadCommands(client) {
     developerArray.push(...devAppsArray);
 
     client.application.commands.set(commandsArray);
+    if (!process.env.DEVELOPER_GUILD_ID) return Logger.warn(`[Commands] Developer commands not loaded - Developer guild ID not provided.`);
     client.guilds.cache.find(g => g.id === process.env.DEVELOPER_GUILD_ID)?.commands.set(developerArray).catch(() => { return; });
 
     let commandCats = await loadSubFolders("commands");
