@@ -36,7 +36,7 @@ module.exports = {
       if (index > 25 || index < 0) {
         return error(interaction, "Index number must be between 0 - 25", m);
       }
-      if (!modifiedEmbed.data.fields[index]) {
+      if (!modifiedEmbed.data?.fields || !modifiedEmbed.data?.fields[index]) {
         return error(interaction, `Index${index} doesn't exist`, m);
       }
 
