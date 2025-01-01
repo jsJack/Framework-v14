@@ -35,6 +35,9 @@ module.exports = {
       }
 
       author = m.mentions.users.first();
+      if (!author) {
+        return error(interaction, "**Please tag a user**", m);
+      }
 
       interaction.editReply({
         embeds: [EmbedBuilder.from(msgEmbed).setDescription(`Author set to: \`${author.username}\``)],
