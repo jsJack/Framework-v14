@@ -43,16 +43,17 @@ module.exports = {
         };
 
         if (!helpcmd) {
-            let ignored = ["ignored_command"];
+            let ignoredCats = [];
+            let developerOnlyCats = ["developer"];
 
             let ccate = [];
             readdirSync("./commands/").forEach((dir) => {
-                if (ignored.includes(dir.toLowerCase())) return;
+                if (ignoredCats.includes(dir.toLowerCase())) return;
+                if (developerOnlyCats.includes(dir.toLowerCase()) && interaction?.guild?.id != process.env.DEVELOPER_GUILD_ID) return;
+
                 readdirSync(`./commands/${dir}/`).filter((file) =>
                     file.endsWith(".js")
                 );
-
-                if (ignored.includes(dir.toLowerCase())) return;
 
                 const name = `${emo[dir]} - ${dir.charAt(0).toUpperCase() + dir.slice(1).toLowerCase()}`;
                 let nome = dir.toLowerCase();
