@@ -109,7 +109,7 @@ async function executeSelectMenu(interaction, client) {
     /********************************
      * Log the menu & execute it  *
      ********************************/
-    Logger.log(`${interaction.guild.name} | ${interaction.user.tag} | 📜 ${interaction.customId}/${interaction.values[0]}`);
+    Logger.log(`${interaction.channel.isDMBased() ? `DMs` : `${interaction.guild.name}`} | ${interaction.user.tag} | 📜 ${interaction.customId}/${interaction.values[0]}`);
     menu.execute(interaction, client);
 }
 

@@ -110,7 +110,7 @@ async function executeButton(interaction, client) {
     /********************************
      * Log the button & execute it  *
      ********************************/
-    Logger.log(`${interaction.guild.name} | ${interaction.user.tag} | 🔘 ${interaction.customId}`);
+    Logger.log(`${interaction.channel.isDMBased() ? `DMs` : `${interaction.guild.name}`} | ${interaction.user.tag} | 🔘 ${interaction.customId}`);
     button.execute(interaction, client);
 }
 

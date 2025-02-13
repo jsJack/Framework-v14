@@ -18,7 +18,7 @@ async function executeModal(modal, client) {
 
     if (!getModal) return modal.reply({ embeds: [e], flags: [MessageFlags.Ephemeral] });
 
-    Logger.log(`${modal.guild.name} | ${modal.user.tag} | 📋 ${modal.customId}`);
+    Logger.log(`${modal.channel.isDMBased() ? `DMs` : `${interaction.guild.name}`} | ${modal.user.tag} | 📋 ${modal.customId}`);
     getModal.execute(modal, client);
 }
 
