@@ -47,11 +47,11 @@ module.exports = {
             let developerOnlyCats = ["developer"];
 
             let ccate = [];
-            readdirSync("./commands/").forEach((dir) => {
+            readdirSync("./src/commands/").forEach((dir) => {
                 if (ignoredCats.includes(dir.toLowerCase())) return;
                 if (developerOnlyCats.includes(dir.toLowerCase()) && interaction?.guild?.id != process.env.DEVELOPER_GUILD_ID) return;
 
-                readdirSync(`./commands/${dir}/`).filter((file) =>
+                readdirSync(`./src/commands/${dir}/`).filter((file) =>
                     file.endsWith(".js")
                 );
 
@@ -84,7 +84,7 @@ You may also use \`/help [category name]\` or \`/help [command name]\` directly.
         } else {
             let catts = [];
 
-            readdirSync("./commands/").forEach((dir) => {
+            readdirSync("./src/commands/").forEach((dir) => {
                 if (dir.toLowerCase() !== helpcmd.toLowerCase()) return;
                 const commands = readdirSync(`./commands/${dir}/`).filter((file) =>
                     file.endsWith(".js")
