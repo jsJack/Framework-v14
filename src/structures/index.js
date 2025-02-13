@@ -4,7 +4,7 @@ const { Client, GatewayIntentBits, Partials, Collection } = require("discord.js"
 const { Guilds, GuildMembers, GuildMessages, MessageContent, GuildVoiceStates, GuildMessageReactions } = GatewayIntentBits;
 const { User, Message, GuildMember, ThreadMember, Channel } = Partials;
 
-const Logger = require('../structures/funcs/util/Logger');
+const Logger = require('./funcs/util/Logger');
 
 require('dotenv').config();
 

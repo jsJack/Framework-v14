@@ -1,4 +1,4 @@
-const Logger = require('../../structures/funcs/util/Logger');
+const Logger = require('../funcs/util/Logger');
 const { cyan } = require('chalk');
 const { loadFiles } = require('../funcs/fileLoader');
 
@@ -6,7 +6,7 @@ async function loadButtons(client) {
     await client.buttons.clear();
     let buttonsArray = []; let aliasArray = [];
 
-    const files = await loadFiles("buttons");
+    const files = await loadFiles("src/buttons");
     files.forEach((file) => {
         const button = require(file);
 

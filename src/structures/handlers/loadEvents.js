@@ -1,4 +1,4 @@
-const Logger = require('../../structures/funcs/util/Logger');
+const Logger = require('../funcs/util/Logger');
 const { cyan } = require('chalk');
 const { loadFiles } = require('../funcs/fileLoader');
 
@@ -8,7 +8,7 @@ async function loadEvents(client) {
     let eventsArray = [];
     let restEventsArray = [];
 
-    const files = await loadFiles("events");
+    const files = await loadFiles("src/events");
     files.forEach((file) => {
         const event = require(file);
         const execute = (...args) => event.execute(...args, client);

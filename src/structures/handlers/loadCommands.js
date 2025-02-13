@@ -1,4 +1,4 @@
-const Logger = require('../../structures/funcs/util/Logger');
+const Logger = require('../funcs/util/Logger');
 const { cyan } = require('chalk');
 const { loadFiles } = require("../funcs/fileLoader");
 const { loadSubFolders } = require("../funcs/folderLoader");
@@ -17,7 +17,7 @@ async function loadCommands(client) {
     let developerArray = [];
     let devAppsArray = [];
 
-    const files = await loadFiles("commands");
+    const files = await loadFiles("src/commands");
     files.forEach((file) => {
         const command = require(file);
         client.commands.set(command.data.name, command);
@@ -28,7 +28,7 @@ async function loadCommands(client) {
 
     if (!files.length) Logger.warn(`[Commands] None loaded - Folder empty.`)
 
-    const contextMenus = await loadFiles("apps");
+    const contextMenus = await loadFiles("src/apps");
     contextMenus.forEach((file) => {
         const app = require(file);
         client.apps.set(app.data.name, app);

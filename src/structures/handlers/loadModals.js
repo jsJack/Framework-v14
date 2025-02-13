@@ -1,4 +1,4 @@
-const Logger = require('../../structures/funcs/util/Logger');
+const Logger = require('../funcs/util/Logger');
 const { cyan } = require('chalk');
 const { loadFiles } = require('../funcs/fileLoader');
 
@@ -6,7 +6,7 @@ async function loadModals(client) {
     await client.modals.clear();
     let modalsArray = [];
 
-    const files = await loadFiles("modals");
+    const files = await loadFiles("src/modals");
     files.forEach((file) => {
         const modal = require(file);
         client.modals.set(modal.id, modal);

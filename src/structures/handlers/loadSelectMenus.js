@@ -1,4 +1,4 @@
-const Logger = require('../../structures/funcs/util/Logger');
+const Logger = require('../funcs/util/Logger');
 const { cyan } = require('chalk');
 const { loadFiles } = require('../funcs/fileLoader');
 
@@ -6,7 +6,7 @@ async function loadSelectMenus(client) {
     await client.selectmenus.clear();
     let menusArray = [];
 
-    const files = await loadFiles("selectmenus");
+    const files = await loadFiles("src/selectmenus");
     files.forEach((file) => {
         const menu = require(file);
         client.selectmenus.set(menu.id, menu);

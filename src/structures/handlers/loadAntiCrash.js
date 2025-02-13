@@ -1,6 +1,6 @@
 const { EmbedBuilder, WebhookClient } = require("discord.js");
 const { inspect } = require("util");
-const Logger = require('../../structures/funcs/util/Logger');
+const Logger = require('../funcs/util/Logger');
 
 module.exports = (client) => {
     const webhook = new WebhookClient({ url: `${process.env.ANTICRASH_WEBHOOK}` });
