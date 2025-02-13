@@ -20,7 +20,6 @@ client.buttons = new Collection();
 client.selectmenus = new Collection();
 client.apps = new Collection();
 client.config = require("./config.json");
-client.customEmbedService = require('./funcs/tools/embedTools.js');
 
 module.exports = client;
 
