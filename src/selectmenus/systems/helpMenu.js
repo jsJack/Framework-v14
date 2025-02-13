@@ -26,9 +26,9 @@ module.exports = {
 
             let catts = [];
 
-            readdirSync("./commands/").forEach((dir) => {
+            readdirSync("./src/commands/").forEach((dir) => {
                 if (dir.toLowerCase() !== value.toLowerCase()) return;
-                const commands = readdirSync(`./commands/${dir}/`).filter(
+                const commands = readdirSync(`./src/commands/${dir}/`).filter(
                     (file) => file.endsWith(".js")
                 );
                 const cmds = commands.map((command) => {
