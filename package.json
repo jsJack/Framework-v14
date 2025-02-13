@@ -22,12 +22,11 @@
     "homepage": "https://github.com/jsJack/Framework-v14#readme",
     "dependencies": {
         "chalk": "^4.1.2",
-        "date-and-time": "^3.3.0",
-        "discord.js": "^14.15.3",
-        "dotenv": "^16.4.5",
-        "glob": "8.1.0",
-        "isomorphic-unfetch": "^4.0.2",
-        "mongoose": "^8.4.4",
+        "date-and-time": "^3.6.0",
+        "discord.js": "^14.18.0",
+        "dotenv": "^16.4.7",
+        "glob": "^11.0.1",
+        "mongoose": "^8.10.0",
         "ms": "^2.1.3"
     },
     "packageManager": "pnpm@9.15.2+sha512.93e57b0126f0df74ce6bff29680394c0ba54ec47246b9cf321f0121d8d9bb03f750a705f24edc3c1180853afd7c2c3b94196d0a3d53d3e069d9e2793ef11f321"
