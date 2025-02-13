@@ -1,4 +1,4 @@
-const { ButtonInteraction, EmbedBuilder, Collection, Client } = require("discord.js");
+const { ButtonInteraction, EmbedBuilder, Collection, Client, MessageFlags } = require("discord.js");
 const Logger = require('../util/Logger');
 const { connection } = require('mongoose');
 const ms = require('ms');
@@ -30,7 +30,7 @@ async function executeButton(interaction, client) {
         .setColor(client.config.color)
         .setFooter({ text: `Item code: ${interaction.customId} - JPY Software` });
 
-    if (!button) return interaction.reply({ embeds: [notExist], ephemeral: true });
+    if (!button) return interaction.reply({ embeds: [notExist], flags: [MessageFlags.Ephemeral] });
 
     /****************************************************************
      * Check if the database is on (for buttons that need the db)  *
@@ -43,7 +43,7 @@ async function executeButton(interaction, client) {
             .setFooter({ text: `JPY Software` });
 
         Logger.log(`${interaction.guild.name} | ${interaction.user.tag} | 💿 Tried to use 🔘${interaction.customId} but the database is not connected.`)
-        return interaction.reply({ embeds: [noDB], ephemeral: true });
+        return interaction.reply({ embeds: [noDB], flags: [MessageFlags.Ephemeral] });
     }
 
     /*************************************
@@ -61,7 +61,7 @@ async function executeButton(interaction, client) {
             .setDescription(`Required Roles: <@&${button.reqRoles.join(">, <@&")}>`)
             .setColor(client.config.color);
 
-        if (!hasReqRole) return interaction.reply({ embeds: [notReqRoles], ephemeral: true });
+        if (!hasReqRole) return interaction.reply({ embeds: [notReqRoles], flags: [MessageFlags.Ephemeral] });
     }
 
     /*********************************
@@ -79,7 +79,7 @@ async function executeButton(interaction, client) {
                 .setColor(client.config.color)
 
             Logger.log(`${interaction.guild.name} | ${interaction.user.tag} | 🕕 Tried to use 🔘${interaction.customId} but is on cooldown.`)
-            return interaction.reply({ embeds: [cooldownEmbed], ephemeral: true });
+            return interaction.reply({ embeds: [cooldownEmbed], flags: [MessageFlags.Ephemeral] });
         }
 
         btnTimeout.set(`${interaction.commandName}${interaction.user.id}`, (Date.now() / 1000).toFixed(0));
@@ -96,7 +96,7 @@ async function executeButton(interaction, client) {
         .setTitle(`❌ You do not have permission to use this button!`)
         .setColor(client.config.color)
 
-    if (button.permission && !interaction.member.permissions.has(button.permission)) return interaction.reply({ embeds: [buttonNoPerms], ephemeral: true });
+    if (button.permission && !interaction.member.permissions.has(button.permission)) return interaction.reply({ embeds: [buttonNoPerms], flags: [MessageFlags.Ephemeral] });
 
     /*********************************
      * Check if user is guild owner  *
@@ -105,7 +105,7 @@ async function executeButton(interaction, client) {
         .setTitle(`❌ This button is locked to the __Owner of the Guild__!`)
         .setColor(client.config.color)
 
-    if (button.ownerOnly && interaction.member.id !== interaction.guild.ownerId) return interaction.reply({ embeds: [buttonOwnerOnly], ephemeral: true });
+    if (button.ownerOnly && interaction.member.id !== interaction.guild.ownerId) return interaction.reply({ embeds: [buttonOwnerOnly], flags: [MessageFlags.Ephemeral] });
 
     /********************************
      * Log the button & execute it  *

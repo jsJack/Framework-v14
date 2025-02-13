@@ -1,5 +1,5 @@
 const Logger = require('../util/Logger');
-const { EmbedBuilder, Collection, ChatInputCommandInteraction, Client, ApplicationCommandOptionType, CommandInteractionOptionResolver } = require('discord.js');
+const { EmbedBuilder, Collection, ChatInputCommandInteraction, Client, ApplicationCommandOptionType, CommandInteractionOptionResolver, MessageFlags } = require('discord.js');
 const { connection } = require('mongoose');
 const ms = require('ms');
 
@@ -24,7 +24,7 @@ async function executeSlashCommand(interaction, client) {
         .setColor(client.config.color)
         .setFooter({ text: `Item code: ${interaction.commandName} - JPY Software` });
 
-    if (!command) return interaction.reply({ embeds: [notExist], ephemeral: true });
+    if (!command) return interaction.reply({ embeds: [notExist], flags: [MessageFlags.Ephemeral] });
 
     /****************************************************************
      * Check if the database is on (for commands that need the db)  *
@@ -37,7 +37,7 @@ async function executeSlashCommand(interaction, client) {
             .setFooter({ text: `JPY Software` });
 
         Logger.log(`${interaction.guild.name} | ${interaction.user.tag} | 💿 Tried to use /${interaction.commandName} but the database is not connected.`)
-        return interaction.reply({ embeds: [noDB], ephemeral: true });
+        return interaction.reply({ embeds: [noDB], flags: [MessageFlags.Ephemeral] });
     }
 
     /*************************************
@@ -54,7 +54,7 @@ async function executeSlashCommand(interaction, client) {
             .setDescription(`Required Roles: <@&${command.reqRoles.join(">, <@&")}>`)
             .setColor(client.config.color);
 
-        if (!hasReqRole) return interaction.reply({ embeds: [notReqRoles], ephemeral: true });
+        if (!hasReqRole) return interaction.reply({ embeds: [notReqRoles], flags: [MessageFlags.Ephemeral] });
     }
 
     /*********************************
@@ -72,7 +72,7 @@ async function executeSlashCommand(interaction, client) {
                 .setColor(client.config.color)
 
             Logger.log(`${interaction.guild.name} | ${interaction.user.tag} | 🕕 Tried to use /${interaction.commandName} but is on cooldown.`)
-            return interaction.reply({ embeds: [cooldownEmbed], ephemeral: true });
+            return interaction.reply({ embeds: [cooldownEmbed], flags: [MessageFlags.Ephemeral] });
         }
 
         cmdTimeout.set(`${interaction.commandName}${interaction.user.id}`, (Date.now() / 1000).toFixed(0));

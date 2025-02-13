@@ -1,4 +1,4 @@
-const { ChatInputCommandInteraction, EmbedBuilder } = require("discord.js");
+const { ChatInputCommandInteraction, EmbedBuilder, MessageFlags } = require("discord.js");
 const { readdirSync } = require('fs');
 
 module.exports = {
@@ -83,7 +83,7 @@ module.exports = {
                     combed.setDescription(`Need more information on a command? Try using \`/help [command name]\`!`)
                 }
 
-                return interaction.update({ embeds: [combed], ephemeral: true });
+                return interaction.update({ embeds: [combed], flags: [MessageFlags.Ephemeral] });
             }
         };
 

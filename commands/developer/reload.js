@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, ChatInputCommandInteraction, PermissionFlagsBits, EmbedBuilder, InteractionContextType } = require('discord.js');
+const { SlashCommandBuilder, ChatInputCommandInteraction, PermissionFlagsBits, EmbedBuilder, InteractionContextType, MessageFlags } = require('discord.js');
 
 const { loadCommands } = require('../../structures/handlers/loadCommands');
 const { loadEvents } = require('../../structures/handlers/loadEvents');
@@ -51,7 +51,7 @@ module.exports = {
             break;
         }
 
-        await interaction.reply({ embeds: [embed], ephemeral: true });
+        await interaction.reply({ embeds: [embed], flags: [MessageFlags.Ephemeral] });
         return Logger.warn(`[Reload] @${interaction.user.username} reloaded all ${interaction.options.getSubcommand()}`);
     }
 };

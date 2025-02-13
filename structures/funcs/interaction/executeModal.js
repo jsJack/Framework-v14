@@ -1,4 +1,4 @@
-const { EmbedBuilder, ModalSubmitInteraction, Client } = require('discord.js');
+const { EmbedBuilder, ModalSubmitInteraction, Client, MessageFlags } = require('discord.js');
 const Logger = require('../util/Logger');
 
 /**
@@ -16,7 +16,7 @@ async function executeModal(modal, client) {
         .setColor(client.config.color)
         .setFooter({ text: `Item code: ${modal.customId} - JPY Software` });
 
-    if (!getModal) return modal.reply({ embeds: [e], ephemeral: true });
+    if (!getModal) return modal.reply({ embeds: [e], flags: [MessageFlags.Ephemeral] });
 
     Logger.log(`${modal.guild.name} | ${modal.user.tag} | 📋 ${modal.customId}`);
     getModal.execute(modal, client);

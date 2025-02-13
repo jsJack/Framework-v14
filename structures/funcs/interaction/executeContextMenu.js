@@ -1,4 +1,4 @@
-const { ContextMenuCommandInteraction, Client, EmbedBuilder, Collection, ApplicationCommandType } = require('discord.js');
+const { ContextMenuCommandInteraction, Client, EmbedBuilder, Collection, ApplicationCommandType, MessageFlags } = require('discord.js');
 const { connection } = require('mongoose');
 const ms = require('ms');
 const Logger = require('../util/Logger');
@@ -19,7 +19,7 @@ async function executeContextMenu(interaction, client) {
         .setColor(client.config.color)
         .setFooter({ text: `Item code: ${interaction.commandName} - JPY Software` });
 
-    if (!app) return interaction.reply({ embeds: [notExist], ephemeral: true });
+    if (!app) return interaction.reply({ embeds: [notExist], flags: [MessageFlags.Ephemeral] });
 
     // Check if it needds the database
     if (app.dbDepend && connection.readyState != 1) {
@@ -30,7 +30,7 @@ async function executeContextMenu(interaction, client) {
             .setFooter({ text: `JPY Software` });
 
         Logger.log(`${interaction.guild.name} | ${interaction.user.tag} | 💿 Tried to use App "${interaction.commandName}"s but the database is not connected.`)
-        return interaction.reply({ embeds: [noDB], ephemeral: true });
+        return interaction.reply({ embeds: [noDB], flags: [MessageFlags.Ephemeral] });
     }
 
     // Check if the user has the required roles
@@ -45,7 +45,7 @@ async function executeContextMenu(interaction, client) {
             .setDescription(`Required Roles: <@&${app.reqRoles.join(">, <@&")}>`)
             .setColor(client.config.color);
 
-        if (!hasReqRole) return interaction.reply({ embeds: [notReqRoles], ephemeral: true });
+        if (!hasReqRole) return interaction.reply({ embeds: [notReqRoles], flags: [MessageFlags.Ephemeral] });
     }
 
     // Check if the user is on a cooldown
@@ -61,7 +61,7 @@ async function executeContextMenu(interaction, client) {
                 .setColor(client.config.color)
 
             Logger.log(`${interaction.guild.name} | ${interaction.user.tag} | 🕕 Tried to use App: "${interaction.commandName}" but is on cooldown.`)
-            return interaction.reply({ embeds: [cooldownEmbed], ephemeral: true });
+            return interaction.reply({ embeds: [cooldownEmbed], flags: [MessageFlags.Ephemeral] });
         }
 
         appTimeout.set(`${interaction.commandName}${interaction.user.id}`, (Date.now() / 1000).toFixed(0));

@@ -1,4 +1,4 @@
-const { StringSelectMenuInteraction, EmbedBuilder, Collection, Client } = require("discord.js");
+const { StringSelectMenuInteraction, EmbedBuilder, Collection, Client, MessageFlags } = require("discord.js");
 const Logger = require('../util/Logger');
 const { connection } = require('mongoose');
 const ms = require('ms');
@@ -30,7 +30,7 @@ async function executeSelectMenu(interaction, client) {
         .setColor(client.config.color)
         .setFooter({ text: `Item code: ${interaction.customId} - JPY Software` });
 
-    if (!menu) return interaction.reply({ embeds: [notExist], ephemeral: true });
+    if (!menu) return interaction.reply({ embeds: [notExist], flags: [MessageFlags.Ephemeral] });
 
     /****************************************************************
      * Check if the database is on (for buttons that need the db)  *
@@ -43,7 +43,7 @@ async function executeSelectMenu(interaction, client) {
             .setFooter({ text: `JPY Software` });
 
         Logger.log(`${interaction.guild.name} | ${interaction.user.tag} | 💿 Tried to use 🔘${interaction.customId} but the database is not connected.`)
-        return interaction.reply({ embeds: [noDB], ephemeral: true });
+        return interaction.reply({ embeds: [noDB], flags: [MessageFlags.Ephemeral] });
     }
 
     /*************************************
@@ -60,7 +60,7 @@ async function executeSelectMenu(interaction, client) {
             .setDescription(`Required Roles: <@&${menu.reqRoles.join(">, <@&")}>`)
             .setColor(client.config.color);
 
-        if (!hasReqRole) return interaction.reply({ embeds: [notReqRoles], ephemeral: true });
+        if (!hasReqRole) return interaction.reply({ embeds: [notReqRoles], flags: [MessageFlags.Ephemeral] });
     }
 
     /*********************************
@@ -78,7 +78,7 @@ async function executeSelectMenu(interaction, client) {
                 .setColor(client.config.color)
 
             Logger.log(`${interaction.guild.name} | ${interaction.user.tag} | 🕕 Tried to use 📜${interaction.customId} but is on cooldown.`)
-            return interaction.reply({ embeds: [cooldownEmbed], ephemeral: true });
+            return interaction.reply({ embeds: [cooldownEmbed], flags: [MessageFlags.Ephemeral] });
         }
 
         modalTimeout.set(`${interaction.commandName}${interaction.user.id}`, (Date.now() / 1000).toFixed(0));
@@ -95,7 +95,7 @@ async function executeSelectMenu(interaction, client) {
         .setTitle(`❌ You do not have permission to use this menu!`)
         .setColor(client.config.color)
 
-    if (menu.permission && !interaction.member.permissions.has(menu.permission)) return interaction.reply({ embeds: [menuNoPerms], ephemeral: true });
+    if (menu.permission && !interaction.member.permissions.has(menu.permission)) return interaction.reply({ embeds: [menuNoPerms], flags: [MessageFlags.Ephemeral] });
 
     /*********************************
      * Check if user is guild owner  *
@@ -104,7 +104,7 @@ async function executeSelectMenu(interaction, client) {
         .setTitle(`❌ This menu is locked to the __Owner of the Guild__!`)
         .setColor(client.config.color)
 
-    if (menu.ownerOnly && interaction.member.id !== interaction.guild.ownerId) return interaction.reply({ embeds: [menuOwnerOnly], ephemeral: true });
+    if (menu.ownerOnly && interaction.member.id !== interaction.guild.ownerId) return interaction.reply({ embeds: [menuOwnerOnly], flags: [MessageFlags.Ephemeral] });
 
     /********************************
      * Log the menu & execute it  *

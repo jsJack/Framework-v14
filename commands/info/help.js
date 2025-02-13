@@ -1,4 +1,4 @@
-const { EmbedBuilder, ChatInputCommandInteraction, Client, SlashCommandBuilder, AutocompleteInteraction } = require("discord.js");
+const { EmbedBuilder, ChatInputCommandInteraction, Client, SlashCommandBuilder, AutocompleteInteraction, MessageFlags } = require("discord.js");
 const { readdirSync } = require("fs");
 const createHelpMenu = require(`../../structures/funcs/tools/createHelpMenu`);
 
@@ -80,7 +80,7 @@ You may also use \`/help [category name]\` or \`/help [command name]\` directly.
 
             let menus = createHelpMenu(ccate);
 
-            return await interaction.reply({ embeds: [embed], components: menus.smenu, ephemeral: true });
+            return await interaction.reply({ embeds: [embed], components: menus.smenu, flags: [MessageFlags.Ephemeral] });
         } else {
             let catts = [];
 
@@ -141,7 +141,7 @@ You may also use \`/help [category name]\` or \`/help [command name]\` directly.
                     .addFields(catts)
                     .setColor(client.config.color);
 
-                return interaction.reply({ embeds: [combed], ephemeral: true });
+                return interaction.reply({ embeds: [combed], flags: [MessageFlags.Ephemeral] });
             }
 
             if (!command) {
@@ -151,7 +151,7 @@ You may also use \`/help [category name]\` or \`/help [command name]\` directly.
                     .setColor(client.config.color);
                 return await interaction.reply({
                     embeds: [embed],
-                    ephemeral: true,
+                    flags: [MessageFlags.Ephemeral],
                 });
             }
             const embed = new EmbedBuilder()
@@ -165,7 +165,7 @@ You may also use \`/help [category name]\` or \`/help [command name]\` directly.
 
             return await interaction.reply({
                 embeds: [embed],
-                ephemeral: true,
+                flags: [MessageFlags.Ephemeral],
             });
         }
     },
