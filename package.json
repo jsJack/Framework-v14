@@ -4,7 +4,10 @@
     "description": "A Discord.js v14 framework",
     "main": "src/structures/index.js",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "start": "node .",
+        "dev": "nodemon .",
+        "preinstall": "node ./scripts/preinstall.js",
+        "postinstall": "node ./scripts/postinstall.js"
     },
     "repository": {
         "type": "git",
