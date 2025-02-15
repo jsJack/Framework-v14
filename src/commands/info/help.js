@@ -1,5 +1,5 @@
 const { EmbedBuilder, ChatInputCommandInteraction, Client, SlashCommandBuilder, AutocompleteInteraction, MessageFlags } = require("discord.js");
-const { readdirSync } = require("fs");
+const { readdirSync } = require('fs-extra');
 
 const createHelpMenu = require(`../../structures/funcs/tools/createHelpMenu`);
 

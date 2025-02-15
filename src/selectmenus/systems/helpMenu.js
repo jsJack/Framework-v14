@@ -1,5 +1,5 @@
 const { ChatInputCommandInteraction, EmbedBuilder, MessageFlags } = require("discord.js");
-const { readdirSync } = require('fs');
+const { readdirSync } = require('fs-extra');
 
 module.exports = {
     id: `help-menus`,
