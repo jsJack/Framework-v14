@@ -52,7 +52,7 @@ class Logger {
 
     static debug(...args) {
         args = this.formatInput(args)
-        if (isDebug) console.log(this.prefix + ' ' + chalk.blue('[DEBUG]') + '  ' + args.join(' '));
+        if (isDebug) console.log(this.prefix + ' ' + chalk.blue('[DEBUG]') + ' ' + args.join(' '));
     }
 
 }
