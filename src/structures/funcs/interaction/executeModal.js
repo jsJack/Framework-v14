@@ -1,4 +1,5 @@
 const { EmbedBuilder, ModalSubmitInteraction, Client, MessageFlags } = require('discord.js');
+
 const Logger = require('../util/Logger');
 
 /**

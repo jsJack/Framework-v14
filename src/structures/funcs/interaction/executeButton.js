@@ -1,7 +1,8 @@
 const { ButtonInteraction, EmbedBuilder, Collection, Client, MessageFlags } = require("discord.js");
-const Logger = require('../util/Logger');
 const { connection } = require('mongoose');
 const ms = require('ms');
+
+const Logger = require('../util/Logger');
 
 const btnTimeout = new Collection();
 

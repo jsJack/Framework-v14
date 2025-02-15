@@ -1,8 +1,9 @@
-const Logger = require('../funcs/util/Logger');
 const { cyan } = require('chalk');
+const { Client } = require('discord.js');
+
 const { loadFiles } = require("../funcs/fileLoader");
 const { loadSubFolders } = require("../funcs/folderLoader");
-const { Client } = require('discord.js');
+const Logger = require('../funcs/util/Logger');
 
 /**
  * 

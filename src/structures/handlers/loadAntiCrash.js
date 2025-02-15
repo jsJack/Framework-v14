@@ -1,5 +1,6 @@
 const { EmbedBuilder, WebhookClient } = require("discord.js");
 const { inspect } = require("util");
+
 const Logger = require('../funcs/util/Logger');
 
 module.exports = (client) => {

@@ -1,6 +1,7 @@
-const Logger = require('../funcs/util/Logger');
 const { cyan } = require('chalk');
+
 const { loadFiles } = require('../funcs/fileLoader');
+const Logger = require('../funcs/util/Logger');
 
 async function loadSelectMenus(client) {
     await client.selectmenus.clear();

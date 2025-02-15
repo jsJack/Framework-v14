@@ -1,5 +1,6 @@
-const Logger = require('../funcs/util/Logger');
 const { cyan } = require('chalk');
+
+const Logger = require('../funcs/util/Logger');
 const { loadFiles } = require('../funcs/fileLoader');
 
 async function loadButtons(client) {

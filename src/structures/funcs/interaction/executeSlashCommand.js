@@ -1,7 +1,8 @@
-const Logger = require('../util/Logger');
 const { EmbedBuilder, Collection, ChatInputCommandInteraction, Client, ApplicationCommandOptionType, CommandInteractionOptionResolver, MessageFlags } = require('discord.js');
 const { connection } = require('mongoose');
 const ms = require('ms');
+
+const Logger = require('../util/Logger');
 
 const cmdTimeout = new Collection();
 
