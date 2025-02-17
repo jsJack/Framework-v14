@@ -75,4 +75,7 @@ async function main() {
     await executeCommand('prisma migrate deploy');
 };
 
-main().catch(console.error);
+main().catch((err) => {
+    Logger.error(err);
+    process.exit(1);
+});
