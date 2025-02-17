@@ -1,0 +1,21 @@
+datasource db {
+    provider    = "mysql"
+    url         = env("DB_CONNECTION_URL")
+}
+
+generator client {
+    provider    = "prisma-client-js"
+}
+
+model Blacklist {
+    id          Int         @id @default(autoincrement())
+    identifier  String      @unique
+
+    reason      String?
+    commands    Json
+
+    createdAt   BigInt
+    expiresAt   BigInt
+
+    @@map("blacklists")
+}
