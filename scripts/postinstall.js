@@ -14,23 +14,33 @@ const DB_PROVIDER = process.env.DB_PROVIDER;
 
 // Helper functions
 const pathify = (path) => resolve(__dirname, '../', path);
-const log = (...args) => Logger.debug('[+postinstall]', ...args);
-const warnLog = (...args) => Logger.warn('[+postinstall]', ...args);
+const createLogger = (level) => (...args) => Logger[level]('[+postinstall]', ...args);
 
-async function executeCommand(cmd) {
-    const [command, ...args] = cmd.split(' ');
-    const execPath = pathify(`./node_modules/.bin/${command}`);
-    
-    const fullCommand = !fs.existsSync(execPath)
-        ? `node ${FALLBACK_PATHS[command]} ${args.join(' ')}`
-        : `npx ${cmd}`;
+// Loggers
+const log = createLogger('debug');
+const warnLog = createLogger('warn');
+const errorLog = createLogger('error');
 
-    log(`> ${fullCommand}`);
+// Main functions
+async function executeNPX(cmd) {
+    try {
+        const [command, ...args] = cmd.split(' ');
+        const execPath = pathify(`./node_modules/.bin/${command}`);
 
-    const { stderr, stdout } = await exec(fullCommand, { cwd: pathify('./') });
-    
-    if (stdout) Logger.error(stdout.toString());
-    if (stderr) Logger.error(stderr.toString());
+        const fullCommand = !fs.existsSync(execPath)
+            ? `node ${FALLBACK_PATHS[command]} ${args.join(' ')}`
+            : `npx ${cmd}`;
+
+        log(`> ${fullCommand}`);
+
+        const { stderr, stdout } = await exec(fullCommand, { cwd: pathify('./') });
+
+        if (stdout) log(stdout.toString());
+        if (stderr) errorLog(stderr.toString());
+    } catch (error) {
+        errorLog(`Failed to execute command: ${cmd}\n${error.message}`);
+        process.exit(1);
+    }
 };
 
 function validateEnvironment() {
@@ -40,20 +50,25 @@ function validateEnvironment() {
     }
 
     if (!SUPPORTED_PROVIDERS.includes(DB_PROVIDER)) {
-        throw new Error(`DB_PROVIDER must be one of: ${SUPPORTED_PROVIDERS}`);
+        throw new Error(`DB_PROVIDER must be one of [${SUPPORTED_PROVIDERS.join(", ")}]`);
     }
 };
 
 function setupPrismaDirectory() {
-    const prismaPath = pathify('./prisma');
-    
-    if (fs.existsSync(prismaPath)) {
-        fs.rmSync(prismaPath, { force: true, recursive: true });
-    } else {
-        fs.mkdirSync(prismaPath);
-    }
+    try {
+        const prismaPath = pathify('./prisma');
 
-    fs.copySync(pathify(`./db/${DB_PROVIDER}`), prismaPath);
+        if (fs.existsSync(prismaPath)) {
+            fs.rmSync(prismaPath, { force: true, recursive: true });
+        } else {
+            fs.mkdirSync(prismaPath);
+        }
+
+        fs.copySync(pathify(`./db/${DB_PROVIDER}`), prismaPath);
+    } catch (error) {
+        errorLog(`Error setting up Prisma directory - ${error.message}`);
+        process.exit(1);
+    }
 };
 
 /* Re-enable when we support SQLite */
@@ -64,18 +79,22 @@ function setupPrismaDirectory() {
 //     }
 // }
 
-// Main execution
 async function main() {
-    validateEnvironment();
-    log(`Copying schema & migrations for ${DB_PROVIDER}`);
-    setupPrismaDirectory();
-    // setupSqliteConnection();
-    
-    await executeCommand('prisma generate');
-    await executeCommand('prisma migrate deploy');
-};
+    try {
+        validateEnvironment();
+        log(`Copying schema & migrations for ${DB_PROVIDER}`);
+        setupPrismaDirectory();
+        // setupSqliteConnection();
+        
+        await executeNPX('prisma generate');
+        await executeNPX('prisma migrate deploy');
+    } catch (error) {
+        errorLog(`An unexpected error occurred: ${error.message}`);
+        process.exit(1);
+    }
+}
 
-main().catch((err) => {
-    Logger.error(err);
+main().catch((error) => {
+    errorLog(`Fatal error: ${error.message}`);
     process.exit(1);
 });
