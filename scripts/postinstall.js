@@ -89,8 +89,14 @@ async function main() {
 
     try {
         validateEnvironment();
-        setupPrismaDirectory();
+
+        if (process.env.CI) {
+            infoLog('CI detected, skipping');
+            process.exit(0);
+        };
+
         // setupSqliteConnection();
+        setupPrismaDirectory();
 
         await executeNPX('prisma generate');
         await executeNPX('prisma migrate deploy');
