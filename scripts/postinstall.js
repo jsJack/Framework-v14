@@ -17,7 +17,8 @@ const pathify = (path) => resolve(__dirname, '../', path);
 const createLogger = (level) => (...args) => Logger[level]('[+postinstall]', ...args);
 
 // Loggers
-const log = createLogger('debug');
+const infoLog = createLogger('info');
+const debugLog = createLogger('debug');
 const warnLog = createLogger('warn');
 const errorLog = createLogger('error');
 
@@ -31,11 +32,11 @@ async function executeNPX(cmd) {
             ? `node ${FALLBACK_PATHS[command]} ${args.join(' ')}`
             : `npx ${cmd}`;
 
-        log(`> ${fullCommand}`);
+        infoLog(`> ${fullCommand}`);
 
         const { stderr, stdout } = await exec(fullCommand, { cwd: pathify('./') });
 
-        if (stdout) log(stdout.toString());
+        if (stdout) debugLog(stdout.toString());
         if (stderr) errorLog(stderr.toString());
     } catch (error) {
         errorLog(`Failed to execute command: ${cmd}\n${error.message}`);
@@ -44,6 +45,8 @@ async function executeNPX(cmd) {
 };
 
 function validateEnvironment() {
+    infoLog("Validating environment variables...");
+
     if (!DB_PROVIDER) {
         warnLog('Environment Variables have not been filled out.\nPlease fill out the environment and run the installer again.');
         process.exit(0);
@@ -55,6 +58,8 @@ function validateEnvironment() {
 };
 
 function setupPrismaDirectory() {
+    infoLog(`Copying schema & migrations for ${DB_PROVIDER}`);
+
     try {
         const prismaPath = pathify('./prisma');
 
@@ -80,19 +85,20 @@ function setupPrismaDirectory() {
 // }
 
 async function main() {
+    infoLog("Starting post-install tasks...");
+
     try {
         validateEnvironment();
-        log(`Copying schema & migrations for ${DB_PROVIDER}`);
         setupPrismaDirectory();
         // setupSqliteConnection();
-        
+
         await executeNPX('prisma generate');
         await executeNPX('prisma migrate deploy');
     } catch (error) {
         errorLog(`An unexpected error occurred: ${error.message}`);
         process.exit(1);
-    }
-}
+    };
+};
 
 main().catch((error) => {
     errorLog(`Fatal error: ${error.message}`);
