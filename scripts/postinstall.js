@@ -1,5 +1,6 @@
 const { promisify } = require('util');
 const { resolve, join } = require('path');
+const { PrismaClient } = require('@prisma/client');
 const fs = require('fs-extra');
 const exec = promisify(require('child_process').exec);
 
@@ -14,9 +15,9 @@ const DB_PROVIDER = process.env.DB_PROVIDER;
 
 // Helper functions
 const pathify = (path) => resolve(__dirname, '../', path);
-const createLogger = (level) => (...args) => Logger[level]('[+postinstall]', ...args);
 
 // Loggers
+const createLogger = (level) => (...args) => Logger[level]('[+postinstall]', ...args);
 const infoLog = createLogger('info');
 const debugLog = createLogger('debug');
 const warnLog = createLogger('warn');
@@ -76,6 +77,23 @@ function setupPrismaDirectory() {
     }
 };
 
+function runConnectionCheck() {
+    const db = new PrismaClient();
+    return db.$connect()
+        .then(async () => {
+            await db.blacklist.findFirst().catch((err) => {
+                errorLog(`Failed to run sample query. Has the migration run successfully?\nFull error: ${err.message}.`);
+                process.exit(1);
+            }); // Sample query to test connection and migrations
+            await db.$disconnect();
+            infoLog('Database test successful.');
+        })
+        .catch((error) => {
+            errorLog('Failed to connect to database:', error.message);
+            process.exit(1);
+        });
+};
+
 /* Re-enable when we support SQLite */
 // function setupSqliteConnection() {
 //     if (DB_PROVIDER === 'sqlite' && !DB_CONNECTION_URL) {
@@ -100,6 +118,8 @@ async function main() {
 
         await executeNPX('prisma generate');
         await executeNPX('prisma migrate deploy');
+
+        runConnectionCheck();
     } catch (error) {
         errorLog(`An unexpected error occurred: ${error.message}`);
         process.exit(1);
