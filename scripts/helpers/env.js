@@ -11,4 +11,16 @@ const env = {
     NODE_ENV: 'production',
 };
 
-module.exports = { env };
+const requiredSecrets = [
+    'DB_CONNECTION_URL',
+    'DB_PROVIDER',
+
+    'DISCORD_TOKEN',
+    'SUPER_USERS',
+    
+    'ANTICRASH_WEBHOOK'
+];
+
+const missingSecrets = requiredSecrets.filter((secret) => !process.env[secret]);
+
+module.exports = { env, missingSecrets };
