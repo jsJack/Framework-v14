@@ -1,10 +1,13 @@
 const fs = require('fs-extra');
 const Logger = require('../src/structures/funcs/util/Logger');
+const createLogger = (level) => (...args) => Logger[level]('[+postinstall]', ...args);
 
-function log(...args) { Logger.debug('[+preinstall]', ...args) };
+// Loggers
+const infoLog = createLogger('info');
+const warnLog = createLogger('warn');
 
 if (process.env.CI) {
-    log('CI detected, skipping');
+    infoLog('CI detected, skipping'); // Can't rely on debug log being enabled
     process.exit(0);
 };
 
@@ -23,7 +26,7 @@ const env = {
 
 if (!fs.existsSync('./.env')) {
     fs.writeFileSync('./.env', Object.entries(env).map(([k, v]) => `${k}=${v}`).join('\n'));
-    log('.env created and populated with default values');
+    infoLog('.env created and populated with default values.');
 } else {
-    log('.env exists; skipping');
+    warnLog('.env exists; not creating.');
 };
