@@ -16,6 +16,4 @@ model Blacklist {
 
     createdAt   BigInt
     expiresAt   BigInt
-
-    @@map("blacklists")
 }
