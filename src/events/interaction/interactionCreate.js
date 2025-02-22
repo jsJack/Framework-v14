@@ -25,6 +25,7 @@ module.exports = {
         let userBlacklist = await client.db.blacklist.findFirst({ where: { id: interaction.user.id } });
         let guildBlacklist = await client.db.blacklist.findFirst({ where: { id: interaction.guild.id } });
 
+        if (guildBlacklist?.commands?.includes("all")) userBlacklist = null; // Only ever ignore user blacklist if the guildBlacklist.commands is ["all"]
         let scope = (userBlacklist ?? guildBlacklist)?.commands;
 
         let skipBlacklistChecks = false;
