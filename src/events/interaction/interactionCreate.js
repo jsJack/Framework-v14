@@ -45,7 +45,7 @@ module.exports = {
                 .setFooter({ text: `Blacklisted on` })
                 .setTimestamp(new Date(Number((userBlacklist ?? guildBlacklist).createdAt) * 1000));
 
-            if (!scope?.includes("all")) blacklistEmbed.addFields({ name: `Commands`, value: `/` + scope?.join(', /') });
+            if (!scope?.includes("all")) blacklistEmbed.addFields({ name: `Commands`, value: `\`/` + scope?.join('\`, \`/') + `\`` });
 
             return interaction.reply({ embeds: [blacklistEmbed], flags: [MessageFlags.Ephemeral] });
         };
