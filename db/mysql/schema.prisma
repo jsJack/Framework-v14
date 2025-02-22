@@ -8,12 +8,12 @@ generator client {
 }
 
 model Blacklist {
-    id          Int         @id @default(autoincrement())
-    identifier  String      @unique
+    id          String          @id @unique @db.VarChar(18)     // Discord User/Guild ID
 
-    reason      String?
-    commands    Json
+    executorId  String          @db.VarChar(18)                 // Discord User ID of the executor
+    reason      String?         @db.LongText                    // Reason for blacklisting
+    commands    Json            @db.Json                        // Array of commands that are blacklisted
 
-    createdAt   BigInt
-    expiresAt   BigInt
+    createdAt   BigInt          @db.BigInt                      // Timestamp when the user was blacklisted
+    expiresAt   BigInt          @db.BigInt                      // Timestamp when the user will be unblacklisted
 }
