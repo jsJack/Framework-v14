@@ -93,7 +93,7 @@ async function executeSlashCommand(interaction, client) {
     // get all of the options used
     let options = formatInteractionOptions(interaction.options);
 
-    Logger.log(`${interaction.channel.isDMBased() ? `DMs` : `${interaction.guild.name}`} | ${interaction.user.tag} | /${interaction.commandName} ${subcommand ? subcommand : ``}${options ? options : ``}`);
+    Logger.log(`${interaction.channel.isDMBased() ? `DMs` : `${interaction.guild.name}`} | ${interaction.user.tag} | /${interaction.commandName} ${subcommand ? subcommand : ``} ${options ? options : ``}`);
     command.execute(interaction, client);
 };
 
