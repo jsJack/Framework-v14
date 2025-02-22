@@ -9,7 +9,7 @@ module.exports = {
     /**
     * 
     * @param {ButtonInteraction} interaction 
-    * @param {Client} client 
+    * @param {import('../../structures/funcs/util/Types').ExtendedClient} client 
     */
     async execute(interaction, client) {
         let idField = interaction.message.embeds[0].fields.find(f => f.name === "ID").value;
