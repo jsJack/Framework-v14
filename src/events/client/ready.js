@@ -1,6 +1,5 @@
 const { Client, ActivityType } = require('discord.js');
-const { greenBright, cyan } = require('chalk');
-const mongoose = require('mongoose');
+const { cyan } = require('chalk');
 
 const { loadCommands } = require("../../structures/handlers/loadCommands");
 const { loadModals } = require("../../structures/handlers/loadModals");
@@ -27,12 +26,6 @@ module.exports = {
 
         client.user.setActivity('Starting up... 🔴', { type: ActivityType.Watching });
         client.user.setStatus('dnd');
-
-        await mongoose.connect(process.env.MONGODB_URI).then(() => {
-            Logger.info(`Connected to ${greenBright(`MongoDB`)}: ${cyan(mongoose.connection.name)}\n`);
-        }).catch(() => {
-            Logger.error(new Error('MongoDB Error'));
-        });
 
         client.user.setStatus("online");
         client.user.setActivity(`you. 👁👄👁`, { type: ActivityType.Watching });

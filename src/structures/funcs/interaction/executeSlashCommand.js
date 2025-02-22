@@ -1,5 +1,4 @@
 const { EmbedBuilder, Collection, ChatInputCommandInteraction, Client, ApplicationCommandOptionType, CommandInteractionOptionResolver, MessageFlags } = require('discord.js');
-const { connection } = require('mongoose');
 const ms = require('ms');
 
 const Logger = require('../util/Logger');
@@ -30,16 +29,16 @@ async function executeSlashCommand(interaction, client) {
     /****************************************************************
      * Check if the database is on (for commands that need the db)  *
      ****************************************************************/
-    if (command.dbDepend && connection.readyState != 1) {
-        let noDB = new EmbedBuilder()
-            .setTitle(`🌌 Hold on!`)
-            .setDescription(`The database isn't quite connected yet, and you cannot use this command without the database.\nThe bot may be starting up, please allow up to 30 seconds before re-running this command.`)
-            .setColor(client.config.color)
-            .setFooter({ text: `JPY Software` });
+    // if (command.dbDepend && connection.readyState != 1) {
+    //     let noDB = new EmbedBuilder()
+    //         .setTitle(`🌌 Hold on!`)
+    //         .setDescription(`The database isn't quite connected yet, and you cannot use this command without the database.\nThe bot may be starting up, please allow up to 30 seconds before re-running this command.`)
+    //         .setColor(client.config.color)
+    //         .setFooter({ text: `JPY Software` });
 
-        Logger.log(`${interaction.guild.name} | ${interaction.user.tag} | 💿 Tried to use /${interaction.commandName} but the database is not connected.`)
-        return interaction.reply({ embeds: [noDB], flags: [MessageFlags.Ephemeral] });
-    }
+    //     Logger.log(`${interaction.guild.name} | ${interaction.user.tag} | 💿 Tried to use /${interaction.commandName} but the database is not connected.`)
+    //     return interaction.reply({ embeds: [noDB], flags: [MessageFlags.Ephemeral] });
+    // }
 
     /*************************************
      * Check if user has required roles  *

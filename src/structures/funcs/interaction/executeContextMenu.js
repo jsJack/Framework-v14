@@ -1,5 +1,4 @@
 const { ContextMenuCommandInteraction, Client, EmbedBuilder, Collection, ApplicationCommandType, MessageFlags } = require('discord.js');
-const { connection } = require('mongoose');
 const ms = require('ms');
 
 const Logger = require('../util/Logger');
@@ -23,16 +22,16 @@ async function executeContextMenu(interaction, client) {
     if (!app) return interaction.reply({ embeds: [notExist], flags: [MessageFlags.Ephemeral] });
 
     // Check if it needds the database
-    if (app.dbDepend && connection.readyState != 1) {
-        let noDB = new EmbedBuilder()
-            .setTitle(`🌌 Hold on!`)
-            .setDescription(`The database isn't quite connected yet, and you cannot use this context menu without the database.\nThe bot may be starting up, please allow up to 30 seconds before re-running this app.`)
-            .setColor(client.config.color)
-            .setFooter({ text: `JPY Software` });
+    // if (app.dbDepend && connection.readyState != 1) {
+    //     let noDB = new EmbedBuilder()
+    //         .setTitle(`🌌 Hold on!`)
+    //         .setDescription(`The database isn't quite connected yet, and you cannot use this context menu without the database.\nThe bot may be starting up, please allow up to 30 seconds before re-running this app.`)
+    //         .setColor(client.config.color)
+    //         .setFooter({ text: `JPY Software` });
 
-        Logger.log(`${interaction.guild.name} | ${interaction.user.tag} | 💿 Tried to use App "${interaction.commandName}"s but the database is not connected.`)
-        return interaction.reply({ embeds: [noDB], flags: [MessageFlags.Ephemeral] });
-    }
+    //     Logger.log(`${interaction.guild.name} | ${interaction.user.tag} | 💿 Tried to use App "${interaction.commandName}"s but the database is not connected.`)
+    //     return interaction.reply({ embeds: [noDB], flags: [MessageFlags.Ephemeral] });
+    // }
 
     // Check if the user has the required roles
     if (app.reqRoles && !interaction.channel.isDMBased()) {

@@ -1,5 +1,4 @@
 const { ButtonInteraction, EmbedBuilder, Collection, Client, MessageFlags } = require("discord.js");
-const { connection } = require('mongoose');
 const ms = require('ms');
 
 const Logger = require('../util/Logger');
@@ -36,16 +35,16 @@ async function executeButton(interaction, client) {
     /****************************************************************
      * Check if the database is on (for buttons that need the db)  *
      ****************************************************************/
-    if (button.dbDepend && connection.readyState != 1) {
-        let noDB = new EmbedBuilder()
-            .setTitle(`🌌 Hold on!`)
-            .setDescription(`The database isn't quite connected yet, and you cannot use this button without the database.\nThe bot may be starting up, please allow up to 30 seconds before re-running this button.`)
-            .setColor(client.config.color)
-            .setFooter({ text: `JPY Software` });
+    // if (button.dbDepend && connection.readyState != 1) {
+    //     let noDB = new EmbedBuilder()
+    //         .setTitle(`🌌 Hold on!`)
+    //         .setDescription(`The database isn't quite connected yet, and you cannot use this button without the database.\nThe bot may be starting up, please allow up to 30 seconds before re-running this button.`)
+    //         .setColor(client.config.color)
+    //         .setFooter({ text: `JPY Software` });
 
-        Logger.log(`${interaction.guild.name} | ${interaction.user.tag} | 💿 Tried to use 🔘${interaction.customId} but the database is not connected.`)
-        return interaction.reply({ embeds: [noDB], flags: [MessageFlags.Ephemeral] });
-    }
+    //     Logger.log(`${interaction.guild.name} | ${interaction.user.tag} | 💿 Tried to use 🔘${interaction.customId} but the database is not connected.`)
+    //     return interaction.reply({ embeds: [noDB], flags: [MessageFlags.Ephemeral] });
+    // }
 
     /*************************************
      * Check if user has required roles  *
