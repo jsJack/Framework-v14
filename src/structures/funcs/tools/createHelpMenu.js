@@ -1,5 +1,10 @@
 const { StringSelectMenuBuilder, ActionRowBuilder } = require(`discord.js`);
 
+/**
+ * 
+ * @param {Array} array 
+ * @returns {Object}
+ */
 const createHelpMenu = (array) => {
     if (!array) throw new Error(`The options were not provided! Make sure you provide all the options!`);
     if (array.length < 0) throw new Error(`The array has to have atleast one thing to select!`);

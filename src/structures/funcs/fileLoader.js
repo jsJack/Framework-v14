@@ -1,5 +1,10 @@
 const { glob } = require("glob");
 
+/**
+ * 
+ * @param {String} dirName 
+ * @returns 
+ */
 async function loadFiles(dirName) {
     const files = await glob(`${process.cwd().replace(/\\/g, "/")}/${dirName}/**/*.js`);
 

@@ -3,8 +3,15 @@ const { cyan } = require('chalk');
 const { loadFiles } = require('../funcs/fileLoader');
 const Logger = require('../funcs/util/Logger');
 
+/** @typedef {import("../funcs/util/Types").ExtendedClient} ExtendedClient */
+
+/**
+ * 
+ * @param {ExtendedClient} client 
+ * @returns 
+ */
 async function loadEvents(client) {
-    await client.events.clear();
+    client.events.clear();
     
     let eventsArray = [];
     let restEventsArray = [];

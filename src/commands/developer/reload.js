@@ -8,6 +8,8 @@ const { loadSelectMenus } = require('../../structures/handlers/loadSelectMenus')
 
 const Logger = require('../../structures/funcs/util/Logger');
 
+/** @typedef {import("../../structures/funcs/util/Types").ExtendedClient} ExtendedClient */
+
 module.exports = {
     data: new SlashCommandBuilder()
     .setName("reload")
@@ -25,8 +27,9 @@ module.exports = {
     usage: "/reload <type>",
 
     /**
-     * 
      * @param {ChatInputCommandInteraction} interaction 
+     * @param {ExtendedClient} client 
+     * @returns 
      */
     async execute(interaction, client) {
         let embed = new EmbedBuilder()

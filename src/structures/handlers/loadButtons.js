@@ -3,9 +3,18 @@ const { cyan } = require('chalk');
 const Logger = require('../funcs/util/Logger');
 const { loadFiles } = require('../funcs/fileLoader');
 
+/** @typedef {import("../funcs/util/Types").ExtendedClient} ExtendedClient */
+
+/**
+ * 
+ * @param {ExtendedClient} client 
+ * @returns 
+ */
 async function loadButtons(client) {
-    await client.buttons.clear();
-    let buttonsArray = []; let aliasArray = [];
+    client.buttons.clear();
+    
+    let buttonsArray = [];
+    let aliasArray = [];
 
     const files = await loadFiles("src/buttons");
     files.forEach((file) => {

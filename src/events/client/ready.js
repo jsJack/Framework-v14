@@ -8,12 +8,15 @@ const { loadSelectMenus } = require('../../structures/handlers/loadSelectMenus')
 
 const Logger = require('../../structures/funcs/util/Logger');
 
+/** @typedef {import("../../structures/funcs/util/Types").ExtendedClient} ExtendedClient */
+
 module.exports = {
     name: "ready",
     once: true,
     /**
      *
-     * @param {Client} client
+     * @param {ExtendedClient} client
+     * @returns 
      */
     async execute(client) {
         await loadCommands(client);

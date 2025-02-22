@@ -3,8 +3,16 @@ const { cyan } = require('chalk');
 const { loadFiles } = require('../funcs/fileLoader');
 const Logger = require('../funcs/util/Logger');
 
+/** @typedef {import("../funcs/util/Types").ExtendedClient} ExtendedClient */
+
+/**
+ * 
+ * @param {ExtendedClient} client 
+ * @returns 
+ */
 async function loadSelectMenus(client) {
-    await client.selectmenus.clear();
+    client.selectmenus.clear();
+    
     let menusArray = [];
 
     const files = await loadFiles("src/selectmenus");

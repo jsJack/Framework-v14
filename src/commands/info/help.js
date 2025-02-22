@@ -3,6 +3,8 @@ const { readdirSync } = require('fs-extra');
 
 const createHelpMenu = require(`../../structures/funcs/tools/createHelpMenu`);
 
+/** @typedef {import("../../structures/funcs/util/Types").ExtendedClient} ExtendedClient */
+
 module.exports = {
     data: new SlashCommandBuilder()
         .setName(`help`)
@@ -14,7 +16,8 @@ module.exports = {
     /**
      * 
      * @param {AutocompleteInteraction} interaction 
-     * @param {Client} client 
+     * @param {ExtendedClient} client
+     * @returns 
      */
     async autocomplete(interaction, client) {
         // Max is 25
@@ -28,7 +31,8 @@ module.exports = {
     /**
      * 
      * @param {ChatInputCommandInteraction} interaction 
-     * @param {Client} client 
+     * @param {ExtendedClient} client 
+     * @returns 
      */
     async execute(interaction, client) {
         const helpcmd = interaction.options.getString("command");

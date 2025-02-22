@@ -2,10 +2,12 @@ const { EmbedBuilder, ModalSubmitInteraction, Client, MessageFlags } = require('
 
 const Logger = require('../util/Logger');
 
+/** @typedef {import("../util/Types").ExtendedClient} ExtendedClient */
+
 /**
  * 
  * @param {ModalSubmitInteraction} modal 
- * @param {Client} client 
+ * @param {ExtendedClient} client 
  * @returns 
  */
 async function executeModal(modal, client) {

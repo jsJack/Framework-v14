@@ -1,13 +1,16 @@
 const { ChatInputCommandInteraction, EmbedBuilder, MessageFlags } = require("discord.js");
 const { readdirSync } = require('fs-extra');
 
+/** @typedef {import("../../structures/funcs/util/Types").ExtendedClient} ExtendedClient */
+
 module.exports = {
     id: `help-menus`,
 
     /**
      * 
      * @param {ChatInputCommandInteraction} interaction 
-     * @param {Client} client 
+     * @param {ExtendedClient} client 
+     * @returns 
      */
     async execute(interaction, client) {
         let cots = [];

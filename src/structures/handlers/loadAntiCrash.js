@@ -3,6 +3,12 @@ const { inspect } = require("util");
 
 const Logger = require('../funcs/util/Logger');
 
+/** @typedef {import("../funcs/util/Types").ExtendedClient} ExtendedClient */
+
+/**
+ * 
+ * @param {ExtendedClient} client 
+ */
 module.exports = (client) => {
     const webhook = new WebhookClient({ url: `${process.env.ANTICRASH_WEBHOOK}` });
     Logger.success("Anticrash module loaded");

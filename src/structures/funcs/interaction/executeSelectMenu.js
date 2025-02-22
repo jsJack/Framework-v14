@@ -5,10 +5,12 @@ const Logger = require('../util/Logger');
 
 const modalTimeout = new Collection();
 
+/** @typedef {import("../util/Types").ExtendedClient} ExtendedClient */
+
 /**
  * 
  * @param {StringSelectMenuInteraction} interaction 
- * @param {Client} client 
+ * @param {ExtendedClient} client 
  * @returns 
  */
 async function executeSelectMenu(interaction, client) {

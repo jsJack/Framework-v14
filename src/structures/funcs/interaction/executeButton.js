@@ -5,10 +5,12 @@ const Logger = require('../util/Logger');
 
 const btnTimeout = new Collection();
 
+/** @typedef {import("../util/Types").ExtendedClient} ExtendedClient */
+
 /**
  * 
  * @param {ButtonInteraction} interaction 
- * @param {Client} client 
+ * @param {ExtendedClient} client 
  * @returns 
  */
 async function executeButton(interaction, client) {

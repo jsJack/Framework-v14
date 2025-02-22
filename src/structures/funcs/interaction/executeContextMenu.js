@@ -5,10 +5,13 @@ const Logger = require('../util/Logger');
 
 const appTimeout = new Collection();
 
+/** @typedef {import("../util/Types").ExtendedClient} ExtendedClient */
+
 /**
  * 
  * @param {ContextMenuCommandInteraction} interaction 
- * @param {Client} client 
+ * @param {ExtendedClient} client 
+ * @returns  
  */
 async function executeContextMenu(interaction, client) {
     // Check if it exists

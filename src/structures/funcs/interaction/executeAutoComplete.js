@@ -1,11 +1,14 @@
 const { AutocompleteInteraction, Client } = require("discord.js");
 
-const Logger = require('../util/Logger')
+const Logger = require('../util/Logger');
+
+/** @typedef {import("../util/Types").ExtendedClient} ExtendedClient */
 
 /**
  * 
  * @param {AutocompleteInteraction} interaction 
- * @param {Client} client 
+ * @param {ExtendedClient} client 
+ * @returns
  */
 async function executeAutoComplete(interaction, client) {
     const commandName = interaction.commandName;

@@ -5,13 +5,15 @@ const { loadFiles } = require("../funcs/fileLoader");
 const { loadSubFolders } = require("../funcs/folderLoader");
 const Logger = require('../funcs/util/Logger');
 
+/** @typedef {import("../funcs/util/Types").ExtendedClient} ExtendedClient */
+
 /**
  * 
- * @param {Client} client 
+ * @param {ExtendedClient} client 
  * @returns 
  */
 async function loadCommands(client) {
-    await client.commands.clear();
+    client.commands.clear();
 
     let commandsArray = [];
     let appsArray = [];

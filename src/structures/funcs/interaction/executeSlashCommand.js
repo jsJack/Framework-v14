@@ -5,10 +5,12 @@ const Logger = require('../util/Logger');
 
 const cmdTimeout = new Collection();
 
+/** @typedef {import("../util/Types").ExtendedClient} ExtendedClient */
+
 /**
  * 
  * @param {ChatInputCommandInteraction} interaction 
- * @param {Client} client 
+ * @param {ExtendedClient} client 
  * @returns 
  */
 async function executeSlashCommand(interaction, client) {

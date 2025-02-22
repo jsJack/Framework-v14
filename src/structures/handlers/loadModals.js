@@ -3,8 +3,16 @@ const { cyan } = require('chalk');
 const { loadFiles } = require('../funcs/fileLoader');
 const Logger = require('../funcs/util/Logger');
 
+/** @typedef {import("../funcs/util/Types").ExtendedClient} ExtendedClient */
+
+/**
+ * 
+ * @param {ExtendedClient} client 
+ * @returns 
+ */
 async function loadModals(client) {
-    await client.modals.clear();
+    client.modals.clear();
+    
     let modalsArray = [];
 
     const files = await loadFiles("src/modals");

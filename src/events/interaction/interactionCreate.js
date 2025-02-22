@@ -14,7 +14,8 @@ module.exports = {
     /**
      * 
      * @param {BaseInteraction} interaction 
-     * @param {ExtendedClient} client
+     * @param {ExtendedClient} client 
+     * @returns 
      */
     async execute(interaction, client) {
         // Autocomplete ignores being blacklisted
