@@ -8,9 +8,9 @@ generator client {
 }
 
 model Blacklist {
-    id          String          @id @unique @db.VarChar(18)     // Discord User/Guild ID
+    id          String          @id @unique @db.VarChar(19)     // Discord User/Guild ID
 
-    executorId  String          @db.VarChar(18)                 // Discord User ID of the executor
+    executorId  String          @db.VarChar(19)                 // Discord User ID of the executor
     reason      String?         @db.LongText                    // Reason for blacklisting
     commands    Json            @db.Json                        // Array of commands that are blacklisted
 

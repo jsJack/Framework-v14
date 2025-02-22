@@ -1,7 +1,7 @@
 -- CreateTable
 CREATE TABLE `Blacklist` (
-    `id` VARCHAR(18) NOT NULL,
-    `executorId` VARCHAR(18) NOT NULL,
+    `id` VARCHAR(19) NOT NULL,
+    `executorId` VARCHAR(19) NOT NULL,
     `reason` LONGTEXT NULL,
     `commands` JSON NOT NULL,
     `createdAt` BIGINT NOT NULL,
