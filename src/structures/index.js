@@ -10,19 +10,7 @@ const { missingSecrets } = require('../../scripts/helpers/env');
 
 require('dotenv').config();
 
-/**
- * @typedef {Object} ExtendedClient
- * 
- * @property {Collection} events
- * @property {Collection} commands
- * @property {Collection} modals
- * @property {Collection} buttons
- * @property {Collection} selectmenus
- * @property {Collection} apps
- * 
- * @property {PrismaClient} db
- * @property {Object} config
- */
+/** @typedef {import("./funcs/util/Types").ExtendedClient} ExtendedClient */
 
 /** @type {Client & ExtendedClient} */
 const client = new Client({
