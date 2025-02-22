@@ -1,9 +1,8 @@
-const { Collection } = require('discord.js');
+const { Client, Collection } = require('discord.js');
 const { PrismaClient } = require('@prisma/client');
 
 /**
- * @typedef {Object} ExtendedClient
- * 
+ * @typedef {Object} ExtendedProperties
  * @property {Collection} events
  * @property {Collection} commands
  * @property {Collection} modals
