@@ -14,4 +14,8 @@ const { PrismaClient } = require('@prisma/client');
  * @property {Object} config
  */
 
+/**
+ * @typedef {Client & ExtendedProperties} ExtendedClient
+ */
+
 module.exports = {};
