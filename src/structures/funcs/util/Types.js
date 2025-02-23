@@ -9,6 +9,7 @@ const { PrismaClient } = require('@prisma/client');
  * @property {Collection} buttons
  * @property {Collection} selectmenus
  * @property {Collection} apps
+ * @property {Collection} cooldowns
  * 
  * @property {PrismaClient} db
  * @property {Object} config
