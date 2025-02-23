@@ -1,118 +1,108 @@
-const { StringSelectMenuInteraction, EmbedBuilder, Collection, Client, MessageFlags } = require("discord.js");
-const ms = require('ms');
+const { ModalSubmitInteraction, EmbedBuilder, MessageFlags } = require("discord.js");
+const timestring = require('timestring');
 
 const Logger = require('../util/Logger');
-
-const modalTimeout = new Collection();
+const { getCooldown, setCooldown, generateCooldownEmbed } = require("../util/CooldownManager");
 
 /** @typedef {import("../util/Types").ExtendedClient} ExtendedClient */
 
 /**
  * 
- * @param {StringSelectMenuInteraction} interaction 
+ * @param {ModalSubmitInteraction} interaction 
  * @param {ExtendedClient} client 
  * @returns 
  */
 async function executeSelectMenu(interaction, client) {
-    if (!interaction.isStringSelectMenu()) return;
+    /** Check if the interaction is actually a select menu */
+    if (!interaction.isAnySelectMenu()) return;
 
-    /**************************************
-     * Check if menu needs to be ignored  *
-     **************************************/
-    let blacklistedIDs = []; //["help-menus"];
-    if (blacklistedIDs.includes(interaction.customId)) return;
-
-    /******************************
-     * Check if the modal exists  *
-     ******************************/
+    /** Check if the select menu exists */
     const menu = client.selectmenus.get(interaction.customId);
-
-    let notExist = new EmbedBuilder()
-        .setDescription(`🛠 This menu is not linked to a response.\nPlease try again later.`)
-        .setColor(client.config.color)
-        .setFooter({ text: `Item code: ${interaction.customId} - JPY Software` });
-
-    if (!menu) return interaction.reply({ embeds: [notExist], flags: [MessageFlags.Ephemeral] });
-
-    /****************************************************************
-     * Check if the database is on (for buttons that need the db)  *
-     ****************************************************************/
-    // if (menu.dbDepend && connection.readyState != 1) {
-    //     let noDB = new EmbedBuilder()
-    //         .setTitle(`🌌 Hold on!`)
-    //         .setDescription(`The database isn't quite connected yet, and you cannot use this menu without the database.\nThe bot may be starting up, please allow up to 30 seconds before re-running this menu.`)
-    //         .setColor(client.config.color)
-    //         .setFooter({ text: `JPY Software` });
-
-    //     Logger.log(`${interaction.guild.name} | ${interaction.user.tag} | 💿 Tried to use 🔘${interaction.customId} but the database is not connected.`)
-    //     return interaction.reply({ embeds: [noDB], flags: [MessageFlags.Ephemeral] });
-    // }
-
-    /*************************************
-     * Check if user has required roles  *
-     *************************************/
-    if (menu.reqRoles && !interaction.channel.isDMBased()) {
-        hasReqRole = false;
-        menu.reqRoles.forEach((findRole) => {
-            if (interaction.member.roles.cache.some((role) => role.id === findRole)) hasReqRole = true;
-        });
-
-        let notReqRoles = new EmbedBuilder()
-            .setTitle(`❌ You do not have the required roles to use this menu`)
-            .setDescription(`Required Roles: <@&${menu.reqRoles.join(">, <@&")}>`)
-            .setColor(client.config.color);
-
-        if (!hasReqRole) return interaction.reply({ embeds: [notReqRoles], flags: [MessageFlags.Ephemeral] });
-    }
-
-    /*********************************
-     * Check if user is on cooldown  *
-     *********************************/
-    if (menu.cooldown) {
-        if (modalTimeout.has(`${interaction.commandName}${interaction.user.id}`)) {
-            let lastUsage = modalTimeout.get(`${interaction.commandName}${interaction.user.id}`);
-            let msTimeout = ms(menu.cooldown) / 1000;
-            let timestamp = parseInt(lastUsage) + parseInt(msTimeout);
-
-            let cooldownEmbed = new EmbedBuilder()
-                .setTitle(`🏃‍♂️💨 Woah! Slow down!`)
-                .setDescription(`You are currently on a __cooldown__ for this menu!\nYou can use the menu again <t:${timestamp}:R>`)
-                .setColor(client.config.color)
-
-            Logger.log(`${interaction.guild.name} | ${interaction.user.tag} | 🕕 Tried to use 📜${interaction.customId} but is on cooldown.`)
-            return interaction.reply({ embeds: [cooldownEmbed], flags: [MessageFlags.Ephemeral] });
-        }
-
-        modalTimeout.set(`${interaction.commandName}${interaction.user.id}`, (Date.now() / 1000).toFixed(0));
-
-        setTimeout(() => {
-            modalTimeout.delete(`${interaction.commandName}${interaction.user.id}`)
-        }, ms(menu.cooldown));
+    if (!menu) {
+        Logger.error(`Select menu ${interaction.customId} does not exist.`);
+        return interaction.reply({ content: `This select menu is not linked to a response.`, ephemeral: true });
     };
 
-    /******************************************
-     * Check if user has required permission  *
-     ******************************************/
-    let menuNoPerms = new EmbedBuilder()
-        .setTitle(`❌ You do not have permission to use this menu!`)
-        .setColor(client.config.color)
+    /** Check if the user is on a cooldown */
+    if (menu?.cooldown) {
+        // Check if the user is on cooldown
+        const cooldown = await getCooldown(client, "menu", interaction.customId, interaction.user.id);
+        if (cooldown) return interaction.reply({ embeds: [generateCooldownEmbed(client, getCooldown(client, "menu", interaction.customId, interaction.user.id))], flags: [MessageFlags.Ephemeral] });
 
-    if (menu.permission && !interaction.member.permissions.has(menu.permission)) return interaction.reply({ embeds: [menuNoPerms], flags: [MessageFlags.Ephemeral] });
+        // Set the cooldown
+        let menuCooldown;
+        try {
+            menuCooldown = timestring(menu.cooldown);
+        } catch (e) {
+            Logger.error(`The cooldown for select menu ${interaction.customId} is not a valid timestring.`);
+        };
 
-    /*********************************
-     * Check if user is guild owner  *
-     *********************************/
-    let menuOwnerOnly = new EmbedBuilder()
-        .setTitle(`❌ This menu is locked to the __Owner of the Guild__!`)
-        .setColor(client.config.color)
+        setCooldown(client, "menu", interaction.customId, interaction.user.id, timestring(menuCooldown));
+    };
 
-    if (menu.ownerOnly && interaction.member.id !== interaction.guild.ownerId) return interaction.reply({ embeds: [menuOwnerOnly], flags: [MessageFlags.Ephemeral] });
+    /** Setup permission checking */
+    let hasError = false;
 
-    /********************************
-     * Log the menu & execute it  *
-     ********************************/
-    Logger.log(`${interaction.channel.isDMBased() ? `DMs` : `${interaction.guild.name}`} | ${interaction.user.tag} | 📜 ${interaction.customId}/${interaction.values[0]}`);
-    menu.execute(interaction, client);
+    /** Check if the menu requires SuperUser */
+    if (menu?.superUser && !process.env.SUPER_USERS?.split(/, |,/).includes(interaction.user.id)) hasError = "permission_error_super_user";
+
+    /** Check if the menu requires GuildOwner */
+    if (menu?.ownerOnly && interaction.member.id !== interaction?.guild.ownerId) hasError = "permission_error_guild_owner";
+
+    /** Check if the menu requires a Permission */
+    if (menu?.permission && !interaction.member.permissions.has(menu?.permission)) hasError = "permission_error_guild_permission";
+
+    /** Check if the menu requires a Role */
+    if (menu?.reqRoles) {
+        if (interaction.channel.isDMBased()) hasError = "permission_error_dm";
+
+        let hasReqRole = false;
+
+        command.reqRoles.forEach((findRole) => {
+            if (interaction?.member.roles.cache.has(findRole)) hasReqRole = true;
+        });
+
+        if (!hasReqRole) hasError = "permission_error_guild_role";
+    };
+
+    /** Process errors */
+    if (hasError) {
+        let errorEmbed = new EmbedBuilder()
+            .setColor(client.config.color);
+
+        switch (hasError) {
+            case "permission_error_super_user":
+                errorEmbed.setDescription(`❌ This modal is locked to __Super Users__ only!`);
+                break;
+
+            case "permission_error_guild_owner":
+                errorEmbed.setDescription(`❌ This modal is locked to the __Owner of the Guild__!`);
+                break;
+
+            case "permission_error_guild_permission":
+                errorEmbed.setDescription(`❌ You do not have permission to use this modal!`);
+                break;
+
+            case "permission_error_guild_role":
+                errorEmbed.setDescription(`❌ You do not have the required roles to execute this modal`)
+                    .addFields({ name: `Required Roles`, value: `<@&${modal.reqRoles.join(">, <@&")}>` });
+                break;
+
+            case "permission_error_dm":
+                errorEmbed.setDescription(`❌ A server role is required to interact with this modal!\nPlease try again in a server.`);
+
+                break;
+
+            default:
+                errorEmbed.setDescription(`❌ There was a permission error, but we're not sure what.`)
+        };
+
+        return interaction.reply({ embeds: [errorEmbed], ephemeral: true });
+    };
+
+    /** Log & Execute the menu */
+    Logger.log(`${interaction.channel.isDMBased() ? `DMs` : `${interaction.guild.name}`} | ${interaction.user.tag} | 📃 ${interaction.customId}`)
+    return menu.execute(interaction, client);
 }
 
 module.exports = { executeSelectMenu };

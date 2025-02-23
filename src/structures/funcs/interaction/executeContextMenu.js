@@ -1,9 +1,8 @@
-const { ContextMenuCommandInteraction, Client, EmbedBuilder, Collection, ApplicationCommandType, MessageFlags } = require('discord.js');
-const ms = require('ms');
+const { ContextMenuCommandInteraction, EmbedBuilder, MessageFlags } = require("discord.js");
+const timestring = require('timestring');
 
 const Logger = require('../util/Logger');
-
-const appTimeout = new Collection();
+const { getCooldown, setCooldown, generateCooldownEmbed } = require("../util/CooldownManager");
 
 /** @typedef {import("../util/Types").ExtendedClient} ExtendedClient */
 
@@ -14,70 +13,98 @@ const appTimeout = new Collection();
  * @returns  
  */
 async function executeContextMenu(interaction, client) {
-    // Check if it exists
+    /** Check if the interaction is actually a context menu */
+    if (!interaction.isContextMenuCommand()) return;
+
+    /** Check if the context menu exists */
     const app = client.apps.get(interaction.commandName);
-
-    let notExist = new EmbedBuilder()
-        .setDescription(`🛠 This context menu is not linked to a response.\nPlease try again later.`)
-        .setColor(client.config.color)
-        .setFooter({ text: `Item code: ${interaction.commandName} - JPY Software` });
-
-    if (!app) return interaction.reply({ embeds: [notExist], flags: [MessageFlags.Ephemeral] });
-
-    // Check if it needds the database
-    // if (app.dbDepend && connection.readyState != 1) {
-    //     let noDB = new EmbedBuilder()
-    //         .setTitle(`🌌 Hold on!`)
-    //         .setDescription(`The database isn't quite connected yet, and you cannot use this context menu without the database.\nThe bot may be starting up, please allow up to 30 seconds before re-running this app.`)
-    //         .setColor(client.config.color)
-    //         .setFooter({ text: `JPY Software` });
-
-    //     Logger.log(`${interaction.guild.name} | ${interaction.user.tag} | 💿 Tried to use App "${interaction.commandName}"s but the database is not connected.`)
-    //     return interaction.reply({ embeds: [noDB], flags: [MessageFlags.Ephemeral] });
-    // }
-
-    // Check if the user has the required roles
-    if (app.reqRoles && !interaction.channel.isDMBased()) {
-        hasReqRole = false;
-        app.reqRoles.forEach((findRole) => {
-            if (interaction.member.roles.cache.some((role) => role.id === findRole)) hasReqRole = true;
-        });
-
-        let notReqRoles = new EmbedBuilder()
-            .setTitle(`❌ You do not have the required roles to execute this app`)
-            .setDescription(`Required Roles: <@&${app.reqRoles.join(">, <@&")}>`)
-            .setColor(client.config.color);
-
-        if (!hasReqRole) return interaction.reply({ embeds: [notReqRoles], flags: [MessageFlags.Ephemeral] });
-    }
-
-    // Check if the user is on a cooldown
-    if (app.cooldown) {
-        if (appTimeout.has(`${interaction.commandName}${interaction.user.id}`)) {
-            let lastUsage = appTimeout.get(`${interaction.commandName}${interaction.user.id}`);
-            let msTimeout = ms(app.cooldown) / 1000;
-            let timestamp = parseInt(lastUsage) + parseInt(msTimeout);
-
-            let cooldownEmbed = new EmbedBuilder()
-                .setTitle(`🏃‍♂️💨 Woah! Slow down!`)
-                .setDescription(`You are currently on a __cooldown__ for **App: "${interaction.commandName}"**!\nYou can use the app again <t:${timestamp}:R>`)
-                .setColor(client.config.color)
-
-            Logger.log(`${interaction.guild.name} | ${interaction.user.tag} | 🕕 Tried to use App: "${interaction.commandName}" but is on cooldown.`)
-            return interaction.reply({ embeds: [cooldownEmbed], flags: [MessageFlags.Ephemeral] });
-        }
-
-        appTimeout.set(`${interaction.commandName}${interaction.user.id}`, (Date.now() / 1000).toFixed(0));
-
-        setTimeout(() => {
-            appTimeout.delete(`${interaction.commandName}${interaction.user.id}`)
-        }, ms(app.cooldown));
+    if (!app) {
+        Logger.error(`ContextMenu ${interaction.commandName} does not exist.`);
+        return interaction.reply({ content: `This context menu is not linked to a response.`, ephemeral: true });
     };
 
-    // Log & Execute
-    let type = ApplicationCommandType[interaction.commandType];
-    Logger.log(`${interaction.channel.isDMBased() ? `DMs` : interaction.guild.name} | ${interaction.user.tag} | 📟 Executed App: "${interaction.commandName}" (${type})`);
-    app.execute(interaction, client);
+    /** Check if the context menu needs to be ignored */
+    if (client.config.ignoredInteractions.apps.includes(interaction.commandName)) return;
+
+    /** Check if the user is on a cooldown */
+    if (app?.cooldown) {
+        const cooldown = await getCooldown(client, "app", interaction.commandName, interaction.user.id);
+        if (cooldown) return interaction.reply({ embeds: [generateCooldownEmbed(client, getCooldown(client, "button", interaction.commandName, interaction.user.id))], flags: [MessageFlags.Ephemeral] });
+
+        // Set the cooldown
+        let appCooldown;
+        try {
+            appCooldown = timestring(app.cooldown);
+        } catch (e) {
+            Logger.error(`The cooldown for app ${interaction.commandName} is not a valid timestring.`);
+        };
+
+        setCooldown(client, "app", interaction.commandName, interaction.user.id, timestring(appCooldown));
+    };
+
+    /** Setup permission checking */
+    let hasError = false;
+
+    /** Check if the app requires SuperUser */
+    if (app?.superUserOnly && !process.env.SUPER_USERS?.split(/, |,/).includes(interaction.user.id)) hasError = "permission_error_super_user";
+
+    /** Check if the app requires GuildOwner */
+    if (app?.ownerOnly && interaction.member.id !== interaction?.guild.ownerId) hasError = "permission_error_guild_owner";
+
+    /** Check if the app requires a Permission */
+    if (app?.permission && !interaction.member.permissions.has(app?.permission)) hasError = "permission_error_guild_permission";
+
+    /** Check if the app requires a Role */
+    if (app?.reqRoles) {
+        if (interaction.channel.isDMBased()) hasError = "permission_error_dm";
+
+        let hasReqRole = false;
+
+        command.reqRoles.forEach((findRole) => {
+            if (interaction?.member.roles.cache.has(findRole)) hasReqRole = true;
+        });
+
+        if (!hasReqRole) hasError = "permission_error_guild_role";
+    };
+
+    /** Process errors */
+    if (hasError) {
+        let errorEmbed = new EmbedBuilder()
+            .setColor(client.config.color);
+
+        switch (hasError) {
+            case "permission_error_super_user":
+                errorEmbed.setDescription(`❌ This app is locked to __Super Users__ only!`);
+                break;
+
+            case "permission_error_guild_owner":
+                errorEmbed.setDescription(`❌ This app is locked to the __Owner of the Guild__!`);
+                break;
+
+            case "permission_error_guild_permission":
+                errorEmbed.setDescription(`❌ You do not have permission to use this app!`);
+                break;
+
+            case "permission_error_guild_role":
+                errorEmbed.setDescription(`❌ You do not have the required roles to execute this app`)
+                    .addFields({ name: `Required Roles`, value: `<@&${button.reqRoles.join(">, <@&")}>` });
+                break;
+
+            case "permission_error_dm":
+                errorEmbed.setDescription(`❌ A server role is required to interact with this app!\nPlease try again in a server.`);
+
+                break;
+
+            default:
+                errorEmbed.setDescription(`❌ There was a permission error, but we're not sure what.`)
+        };
+
+        return interaction.reply({ embeds: [errorEmbed], ephemeral: true });
+    };
+
+    /** Execute the app */
+    Logger.log(`${interaction.channel.isDMBased() ? `DMs` : `${interaction.guild.name}`} | ${interaction.user.tag} | 📱 ${interaction.commandName}`)    
+    return app.execute(interaction, client);
 };
 
 module.exports = { executeContextMenu };
