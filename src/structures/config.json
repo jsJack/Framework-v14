@@ -1,4 +1,26 @@
 {
     "color": "#ffffff",
-    "enableDebugLogs": false
+    "enableDebugLogs": false,
+
+    "ignoredInteractions": {
+        "apps": [],
+        "autocomplete": [],
+        "buttons": [
+            "cancel",
+            "random",
+            "bot",
+            "guild",
+            "sindex",
+            "select_embed",
+            "delete_embed",
+            "prev_embed",
+            "next_embed",
+            "value",
+            "inline",
+            "name",
+            "set"
+        ],
+        "modals": [],
+        "selectmenus": []
+    }
 }
