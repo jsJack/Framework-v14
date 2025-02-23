@@ -19,11 +19,15 @@ const client = new Client({
 });
 
 client.events = new Collection();
+
 client.commands = new Collection();
-client.modals = new Collection();
-client.buttons = new Collection();
-client.selectmenus = new Collection();
 client.apps = new Collection();
+
+client.buttons = new Collection();
+client.modals = new Collection();
+client.selectmenus = new Collection();
+
+client.cooldowns = new Collection();
 
 try {
     client.db = new PrismaClient();
