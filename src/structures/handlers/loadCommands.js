@@ -1,5 +1,4 @@
 const { cyan } = require('chalk');
-const { Client } = require('discord.js');
 
 const { loadFiles } = require("../funcs/fileLoader");
 const { loadSubFolders } = require("../funcs/folderLoader");
@@ -23,7 +22,9 @@ async function loadCommands(client) {
     const files = await loadFiles("src/commands");
     files.forEach((file) => {
         const command = require(file);
-        client.commands.set(command.data.name, command);
+        if (!command.data) return Logger.warn(`[Commands] ${file} does not export a command.`);
+
+        client.commands.set(command.data?.name, command);
 
         if (command.developer) developerArray.push(command.data.toJSON());
         else commandsArray.push(command.data.toJSON());
@@ -34,6 +35,8 @@ async function loadCommands(client) {
     const contextMenus = await loadFiles("src/apps");
     contextMenus.forEach((file) => {
         const app = require(file);
+        if (!app.data) return Logger.warn(`[Commands] ${file} does not export an app.`);
+
         client.apps.set(app.data.name, app);
 
         if (app.developer) devAppsArray.push(app.data.toJSON());
