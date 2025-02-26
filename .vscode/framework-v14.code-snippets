@@ -1,0 +1,121 @@
+{
+    "Discord.js App": {
+        "prefix": ["!app", "!contextmenu"],
+        "description": "Discord.js Context Menu Command Boilerplate",
+
+        "body": [
+            "const { ContextMenuCommandBuilder, ApplicationCommandType, ContextMenuCommandInteraction, EmbedBuilder, MessageFlags } = require('discord.js');",
+            "",
+            "/** @typedef {import(\"../../../structures/funcs/util/Types\").ExtendedClient} ExtendedClient */",
+            "",
+            "module.exports = {",
+            "    data: new ContextMenuCommandBuilder()",
+            "       .setType(ApplicationCommandType.Message)",
+            "       .setName(\"${TM_FILENAME_BASE}\"),",
+            "",
+            "    /**",
+            "    * ",
+            "    * @param {ContextMenuCommandInteraction} interaction ",
+            "    * @param {ExtendedClient} client ",
+            "    */",
+            "    async execute(interaction, client) {",
+            "        $0",
+            "    }",
+            "};",
+            ""
+        ]
+    },
+
+    // "d.js button boilerplate": {
+    //     "prefix": ["!btn"],
+    //     "description": "Discord.js Button Boilerplate",
+
+    //     "body": [
+    //         "const { ButtonInteraction, Client, EmbedBuilder } = require('discord.js');",
+    //         "",
+    //         "module.exports = {",
+    //         "\tid: \"${TM_FILENAME_BASE}\",",
+    //         "",
+    //         "\t/**",
+    //         "\t* ",
+    //         "\t* @param {ButtonInteraction} interaction ",
+    //         "\t* @param {Client} client ",
+    //         "\t*/",
+    //         "\tasync execute(interaction, client) {",
+    //         "\t\t$0",
+    //         "\t}",
+    //         "};"
+    //     ]
+    // },
+
+    "Discord.js Command": {
+        "prefix": ["!cmd", "!command"],
+        "description": "Discord.js Slash Command Boilerplate",
+
+        "body": [
+            "const { SlashCommandBuilder, ChatInputCommandInteraction, EmbedBuilder, MessageFlags } = require('discord.js');",
+            "",
+            "/** @typedef {import(\"../../structures/funcs/util/Types\").ExtendedClient} ExtendedClient */",
+            "",
+            "module.exports = {",
+            "    data: new SlashCommandBuilder()",
+            "       .setName(\"${TM_FILENAME_BASE}\")",
+            "       .setDescription(\"\"),",
+            "",    
+            "    /**",
+            "    * ",
+            "    * @param {ChatInputCommandInteraction} interaction", 
+            "    * @param {ExtendedClient} client", 
+            "    */",
+            "    async execute(interaction, client) {",
+            "        $0",
+            "    }",
+            "};",
+            ""
+        ]
+    },
+
+    // "d.js modal boilerplate": {
+    //     "prefix": ["!modal"],
+    //     "description": "Discord.js Modal Boilerplate",
+
+    //     "body": [
+    //         "const { ModalSubmitInteraction, Client, EmbedBuilder } = require('discord.js');",
+    //         "",
+    //         "module.exports = {",
+    //         "\tid: \"${TM_FILENAME_BASE}\",",
+    //         "",
+    //         "\t/**",
+    //         "\t* ",
+    //         "\t* @param {ModalSubmitInteraction} interaction ",
+    //         "\t* @param {Client} client ",
+    //         "\t*/",
+    //         "\tasync execute(interaction, client) {",
+    //         "\t\t$0",
+    //         "\t}",
+    //         "};"
+    //     ],
+    // },
+
+    // "d.js selectmenu boilerplate": {
+    //     "prefix": ["!selectmenu"],
+    //     "description": "Discord.js Select Menu Boilerplate",
+
+    //     "body": [
+    //         "const { StringSelectMenuInteraction, Client, EmbedBuilder } = require('discord.js');",
+    //         "",
+    //         "module.exports = {",
+    //         "\tid: \"${TM_FILENAME_BASE}\",",
+    //         "",
+    //         "\t/**",
+    //         "\t* ",
+    //         "\t* @param {StringSelectMenuInteraction} interaction ",
+    //         "\t* @param {Client} client ",
+    //         "\t*/",
+    //         "\tasync execute(interaction, client) {",
+    //         "\t\t$0",
+    //         "\t}",
+    //         "};"
+    //     ],
+    // }
+}
