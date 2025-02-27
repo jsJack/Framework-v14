@@ -1,6 +1,6 @@
 {
     "Discord.js App": {
-        "prefix": ["!app", "!contextmenu"],
+        "prefix": ["!app", "!contextmenu", "!djsapp"],
         "description": "Discord.js Context Menu Command Boilerplate",
 
         "body": [
@@ -26,30 +26,33 @@
         ]
     },
 
-    // "d.js button boilerplate": {
-    //     "prefix": ["!btn"],
-    //     "description": "Discord.js Button Boilerplate",
+    "Discord.js Button": {
+        "prefix": ["!btn", "!button", "!djsbtn"],
+        "description": "Discord.js Button Boilerplate",
 
-    //     "body": [
-    //         "const { ButtonInteraction, Client, EmbedBuilder } = require('discord.js');",
-    //         "",
-    //         "module.exports = {",
-    //         "\tid: \"${TM_FILENAME_BASE}\",",
-    //         "",
-    //         "\t/**",
-    //         "\t* ",
-    //         "\t* @param {ButtonInteraction} interaction ",
-    //         "\t* @param {Client} client ",
-    //         "\t*/",
-    //         "\tasync execute(interaction, client) {",
-    //         "\t\t$0",
-    //         "\t}",
-    //         "};"
-    //     ]
-    // },
+        "body": [
+            "const { ButtonInteraction, EmbedBuilder, MessageFlags } = require('discord.js');",
+            "",
+            "/** @typedef {import(\"../../../structures/funcs/util/Types\").ExtendedClient} ExtendedClient */",
+            "",
+            "module.exports = {",
+            "    id: \"${TM_FILENAME_BASE}\",",
+            "",
+            "    /**",
+            "    * ",
+            "    * @param {ButtonInteraction} interaction ",
+            "    * @param {ExtendedClient} client ",
+            "    */",
+            "    async execute(interaction, client) {",
+            "        $0",
+            "    }",
+            "};",
+            ""
+        ]
+    },
 
     "Discord.js Command": {
-        "prefix": ["!cmd", "!command"],
+        "prefix": ["!cmd", "!command", "!djscmd"],
         "description": "Discord.js Slash Command Boilerplate",
 
         "body": [
@@ -75,47 +78,51 @@
         ]
     },
 
-    // "d.js modal boilerplate": {
-    //     "prefix": ["!modal"],
-    //     "description": "Discord.js Modal Boilerplate",
+    "Discord.js Modal": {
+        "prefix": ["!modal", "!djsmodal"],
+        "description": "Discord.js Modal Boilerplate",
+        "body": [
+            "const { ModalSubmitInteraction, EmbedBuilder, MessageFlags } = require('discord.js');",
+            "",
+            "/** @typedef {import(\"../../../structures/funcs/util/Types\").ExtendedClient} ExtendedClient */",
+            "",
+            "module.exports = {",
+            "    id: \"${TM_FILENAME_BASE}\",",
+            "",
+            "    /**",
+            "    * ",
+            "    * @param {ModalSubmitInteraction} interaction ",
+            "    * @param {ExtendedClient} client ",
+            "    */",
+            "    async execute(interaction, client) {",
+            "        $0",
+            "    }",
+            "};",
+            ""
+        ]
+    },
 
-    //     "body": [
-    //         "const { ModalSubmitInteraction, Client, EmbedBuilder } = require('discord.js');",
-    //         "",
-    //         "module.exports = {",
-    //         "\tid: \"${TM_FILENAME_BASE}\",",
-    //         "",
-    //         "\t/**",
-    //         "\t* ",
-    //         "\t* @param {ModalSubmitInteraction} interaction ",
-    //         "\t* @param {Client} client ",
-    //         "\t*/",
-    //         "\tasync execute(interaction, client) {",
-    //         "\t\t$0",
-    //         "\t}",
-    //         "};"
-    //     ],
-    // },
-
-    // "d.js selectmenu boilerplate": {
-    //     "prefix": ["!selectmenu"],
-    //     "description": "Discord.js Select Menu Boilerplate",
-
-    //     "body": [
-    //         "const { StringSelectMenuInteraction, Client, EmbedBuilder } = require('discord.js');",
-    //         "",
-    //         "module.exports = {",
-    //         "\tid: \"${TM_FILENAME_BASE}\",",
-    //         "",
-    //         "\t/**",
-    //         "\t* ",
-    //         "\t* @param {StringSelectMenuInteraction} interaction ",
-    //         "\t* @param {Client} client ",
-    //         "\t*/",
-    //         "\tasync execute(interaction, client) {",
-    //         "\t\t$0",
-    //         "\t}",
-    //         "};"
-    //     ],
-    // }
+    "Discord.js Select Menu": {
+        "prefix": ["!menu", "!selectmenu", "!djsmenu", "!djsselectmenu"],
+        "description": "Discord.js Select Menu Boilerplate",
+        "body": [
+            "const { StringSelectMenuInteraction, EmbedBuilder, MessageFlags } = require('discord.js');",
+            "",
+            "/** @typedef {import(\"../../../structures/funcs/util/Types\").ExtendedClient} ExtendedClient */",
+            "",
+            "module.exports = {",
+            "    id: \"${TM_FILENAME_BASE}\",",
+            "",
+            "    /**",
+            "    * ",
+            "    * @param {StringSelectMenuInteraction} interaction ",
+            "    * @param {ExtendedClient} client ",
+            "    */",
+            "    async execute(interaction, client) {",
+            "        $0",
+            "    }",
+            "};",
+            ""
+        ]
+    },
 }
