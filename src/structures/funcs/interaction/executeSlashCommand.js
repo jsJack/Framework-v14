@@ -49,9 +49,6 @@ async function executeSlashCommand(interaction, client) {
     /** Check if the modal requires GuildOwner */
     if (command?.ownerOnly && interaction.member.id !== interaction?.guild.ownerId) hasError = "permission_error_guild_owner";
 
-    /** Check if the modal requires a Permission */
-    if (command?.permission && !interaction.member.permissions.has(modal?.permission)) hasError = "permission_error_guild_permission";
-
     /** Check if the modal requires a Role */
     if (command?.reqRoles) {
         if (interaction.channel.isDMBased()) hasError = "permission_error_dm";
@@ -77,10 +74,6 @@ async function executeSlashCommand(interaction, client) {
 
             case "permission_error_guild_owner":
                 errorEmbed.setDescription(`❌ This modal is locked to the __Owner of the Guild__!`);
-                break;
-
-            case "permission_error_guild_permission":
-                errorEmbed.setDescription(`❌ You do not have permission to use this modal!`);
                 break;
 
             case "permission_error_guild_role":
