@@ -19,6 +19,8 @@ async function loadEvents(client) {
     const files = await loadFiles("src/events");
     files.forEach((file) => {
         const event = require(file);
+        if (!event?.name) return Logger.warn(`[Events] ${file} does not export a event (name).`);
+
         const execute = (...args) => event.execute(...args, client);
         client.events.set(event.name, execute);
 

@@ -22,7 +22,7 @@ async function loadCommands(client) {
     const files = await loadFiles("src/commands");
     files.forEach((file) => {
         const command = require(file);
-        if (!command.data) return Logger.warn(`[Commands] ${file} does not export a command.`);
+        if (!command.data) return Logger.warn(`[Commands] ${file} does not export a command (data).`);
 
         client.commands.set(command.data?.name, command);
 
@@ -35,7 +35,7 @@ async function loadCommands(client) {
     const contextMenus = await loadFiles("src/apps");
     contextMenus.forEach((file) => {
         const app = require(file);
-        if (!app.data) return Logger.warn(`[Commands] ${file} does not export an app.`);
+        if (!app.data) return Logger.warn(`[Commands] ${file} does not export an app (data).`);
 
         client.apps.set(app.data.name, app);
 

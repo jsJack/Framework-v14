@@ -19,6 +19,7 @@ async function loadButtons(client) {
     const files = await loadFiles("src/buttons");
     files.forEach((file) => {
         const button = require(file);
+        if (!button?.id) return Logger.warn(`[Buttons] ${file} does not export a button (id).`);
 
         if (button.aliases) {
             button.aliases.forEach(alias => {

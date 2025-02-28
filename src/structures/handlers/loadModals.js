@@ -18,6 +18,8 @@ async function loadModals(client) {
     const files = await loadFiles("src/modals");
     files.forEach((file) => {
         const modal = require(file);
+        if (!modal?.id) return Logger.warn(`[Modals] ${file} does not export a modal (id).`);
+
         client.modals.set(modal.id, modal);
 
         modalsArray.push(modal);

@@ -18,6 +18,8 @@ async function loadSelectMenus(client) {
     const files = await loadFiles("src/selectmenus");
     files.forEach((file) => {
         const menu = require(file);
+        if (!menu?.id) return Logger.warn(`[SelectMenus] ${file} does not export a select menu (id).`);
+
         client.selectmenus.set(menu.id, menu);
 
         menusArray.push(menu);
