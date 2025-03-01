@@ -25,6 +25,6 @@ model Embed {
     createdAt   BigInt          @db.BigInt                      // Timestamp when the embed was created
     updatedAt   BigInt          @db.BigInt                      // Timestamp when the embed was last updated
     createdBy   String          @db.VarChar(19)                 // Discord User ID of the creator
-    
+
     embedJson   Json            @db.Json                        // JSON of the embed
 }
