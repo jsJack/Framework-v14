@@ -17,3 +17,14 @@ model Blacklist {
     createdAt   BigInt          @db.BigInt                      // Timestamp when the user was blacklisted
     expiresAt   BigInt          @db.BigInt                      // Timestamp when the user will be unblacklisted
 }
+
+model Embed {
+    id          String          @id @unique @db.VarChar(19)     // Discord Message ID
+    name        String          @db.VarChar(100)                // Name of the embed
+
+    createdAt   BigInt          @db.BigInt                      // Timestamp when the embed was created
+    updatedAt   BigInt          @db.BigInt                      // Timestamp when the embed was last updated
+    createdBy   String          @db.VarChar(19)                 // Discord User ID of the creator
+    
+    embedJson   Json            @db.Json                        // JSON of the embed
+}
