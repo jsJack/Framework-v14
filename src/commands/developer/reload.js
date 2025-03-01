@@ -24,6 +24,7 @@ module.exports = {
     .setContexts(InteractionContextType.Guild, InteractionContextType.BotDM),
 
     developer: true,
+    superUserOnly: true,
     usage: "/reload <type>",
 
     /**

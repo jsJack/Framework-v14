@@ -67,6 +67,7 @@ module.exports = {
         ),
 
     developer: true,
+    superUserOnly: true,
     usage: "/blacklist [user/guid id] <reason>",
 
     /**
