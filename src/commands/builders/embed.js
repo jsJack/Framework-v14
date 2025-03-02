@@ -31,9 +31,21 @@ module.exports = {
      * @param {ExtendedClient} client 
      */
     async autocomplete(interaction, client) {
-        if (interaction.options.getSubcommand() != "load") return;
-        
-        let choices = [{ name: `Test`, value: `test` }];
+        let savedEmbeds = await client.db.embed.findMany({
+            where: {
+                name: { startsWith: interaction.options.getString("name") }
+            }
+        });
+
+        let choices = savedEmbeds.map(embed => {
+            return {
+                name: embed.name,
+                value: embed.id
+            };
+        });
+
+        if (!choices.length) choices = [{ name: "No embeds found", value: "none" }];
+
         return interaction.respond(choices);
     },
 
@@ -43,5 +55,41 @@ module.exports = {
     * @param {ExtendedClient} client
     */
     async execute(interaction, client) {
+        let subcommand = interaction.options.getSubcommand();
+
+        switch (subcommand) {
+            case "create":
+                return create(interaction, client);
+            case "load":
+                return load(interaction, client);
+
+            default: return interaction.reply({ content: "Sorry, that subcommand hasn't been implemented.", flags: [MessageFlags.Ephemeral] });
+        };
     }
+};
+
+/**
+ * 
+ * @param {ChatInputCommandInteraction} interaction 
+ * @param {ExtendedClient} client 
+ * @returns 
+ */
+async function create(interaction, client) {
+    let embed = new EmbedBuilder()
+        .setTitle("New Embed")
+        .setDescription("This is a new embed")
+        .setColor('Random')
+        .setTimestamp();
+
+    return interaction.reply({ embeds: [embed] });
+};
+
+/**
+ * 
+ * @param {ChatInputCommandInteraction} interaction 
+ * @param {ExtendedClient} client 
+ * @returns 
+ */
+async function load(interaction, client) {
+    return interaction.reply({ content: `Loading embed: ${interaction.options.getString("name")}` });
 };
