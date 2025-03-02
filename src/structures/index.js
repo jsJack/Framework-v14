@@ -2,8 +2,13 @@ console.clear();
 
 const { PrismaClient } = require('@prisma/client');
 const { Client, GatewayIntentBits, Partials, Collection } = require("discord.js");
-const { Guilds, GuildMembers, GuildMessages, MessageContent, GuildVoiceStates, GuildMessageReactions } = GatewayIntentBits;
-const { User, Message, GuildMember, ThreadMember, Channel } = Partials;
+const { 
+    AutoModerationConfiguration, AutoModerationExecution, DirectMessagePolls, DirectMessageReactions,
+    DirectMessages, DirectMessageTyping, GuildExpressions, GuildIntegrations, GuildInvites, GuildMembers,
+    GuildMessagePolls, GuildMessageReactions, GuildMessages, GuildMessageTyping, GuildModeration, GuildPresences,
+    Guilds, GuildScheduledEvents, GuildVoiceStates, GuildWebhooks, MessageContent
+} = GatewayIntentBits;
+const { User, Channel, GuildMember, Message, Reaction, GuildScheduledEvent, ThreadMember } = Partials;
 
 const Logger = require('./funcs/util/Logger');
 const { missingSecrets } = require('../../scripts/helpers/env');
@@ -14,8 +19,13 @@ require('dotenv').config();
 
 /** @type {Client & ExtendedClient} */
 const client = new Client({
-    intents: [Guilds, GuildMembers, GuildMessages, MessageContent, GuildVoiceStates, GuildMessageReactions],
-    partials: [User, Message, GuildMember, ThreadMember, Channel],
+    intents: [
+        AutoModerationConfiguration, AutoModerationExecution, DirectMessagePolls, DirectMessageReactions,
+        DirectMessages, DirectMessageTyping, GuildExpressions, GuildIntegrations, GuildInvites, GuildMembers,
+        GuildMessagePolls, GuildMessageReactions, GuildMessages, GuildMessageTyping, GuildModeration, GuildPresences,
+        Guilds, GuildScheduledEvents, GuildVoiceStates, GuildWebhooks, MessageContent
+    ],
+    partials: [User, Channel, GuildMember, Message, Reaction, GuildScheduledEvent, ThreadMember],
 });
 
 client.events = new Collection();
