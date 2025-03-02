@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, ChatInputCommandInteraction, AutocompleteInteraction, EmbedBuilder, MessageFlags } = require('discord.js');
+const { SlashCommandBuilder, ChatInputCommandInteraction, AutocompleteInteraction, EmbedBuilder, MessageFlags, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
 
 /** @typedef {import("../../structures/funcs/util/Types").ExtendedClient} ExtendedClient */
 
@@ -31,10 +31,15 @@ module.exports = {
      * @param {ExtendedClient} client 
      */
     async autocomplete(interaction, client) {
+        let userFocus = interaction.options.getFocused();
+
         let savedEmbeds = await client.db.embed.findMany({
             where: {
-                name: { startsWith: interaction.options.getString("name") }
-            }
+                OR: [
+                    { name: { contains: userFocus } },
+                    { id: { startsWith: userFocus } }
+                ]
+            },
         });
 
         let choices = savedEmbeds.map(embed => {
@@ -75,13 +80,73 @@ module.exports = {
  * @returns 
  */
 async function create(interaction, client) {
-    let embed = new EmbedBuilder()
-        .setTitle("New Embed")
-        .setDescription("This is a new embed")
-        .setColor('Random')
+    let explainEmbed = new EmbedBuilder()
+        .setTitle(`Custom Embed Builder`)
+        .setDescription(`You can create a custom embed using the options below.\nThe embed above is the preview of the embed you are creating.`)
+        .setColor(client.config.color ?? 'DarkButNotBlack')
+        .setFooter({ text: `Created by @${interaction.user.tag}`, iconURL: interaction.user.displayAvatarURL() })
         .setTimestamp();
 
-    return interaction.reply({ embeds: [embed] });
+    let emptyEmbed = new EmbedBuilder()
+        .setColor(client.config.color ?? 'DarkButNotBlack')
+        .setDescription(`\u200b`);
+
+    let actionRow1 = new ActionRowBuilder()
+        .addComponents(
+            new ButtonBuilder()
+                .setCustomId("ceb_title")
+                .setLabel("Title, Description & Color")
+                .setStyle(ButtonStyle.Primary),
+
+            new ButtonBuilder()
+                .setCustomId("ceb_author")
+                .setLabel("Author")
+                .setStyle(ButtonStyle.Primary)
+                .setDisabled(true)
+        );
+
+    let actionRow2 = new ActionRowBuilder()
+        .addComponents(
+            new ButtonBuilder()
+                .setCustomId("ceb_thumbnail")
+                .setLabel("Thumbnail & Image")
+                .setStyle(ButtonStyle.Primary)
+                .setDisabled(true),
+
+            new ButtonBuilder()
+                .setCustomId("ceb_footer")
+                .setLabel("Footer")
+                .setStyle(ButtonStyle.Primary)
+                .setDisabled(true),
+
+            new ButtonBuilder()
+                .setCustomId("ceb_fields")
+                .setLabel("Manage Fields")
+                .setStyle(ButtonStyle.Primary)
+                .setDisabled(true)
+        );
+
+    let actionRow3 = new ActionRowBuilder()
+        .addComponents(
+            new ButtonBuilder()
+                .setCustomId("ceb_save")
+                .setLabel("Save")
+                .setStyle(ButtonStyle.Success)
+                .setDisabled(true),
+
+            new ButtonBuilder()
+                .setCustomId("ceb_send")
+                .setLabel("Send")
+                .setStyle(ButtonStyle.Secondary)
+                .setDisabled(true),
+
+            new ButtonBuilder()
+                .setCustomId("ceb_cancel")
+                .setLabel("Cancel")
+                .setStyle(ButtonStyle.Danger)
+        );
+
+    return interaction.reply({ embeds: [emptyEmbed, explainEmbed], components: [actionRow1, actionRow2, actionRow3] });
 };
 
 /**
