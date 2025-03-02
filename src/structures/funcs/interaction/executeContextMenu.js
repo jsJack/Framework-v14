@@ -20,7 +20,7 @@ async function executeContextMenu(interaction, client) {
     const app = client.apps.get(interaction.commandName);
     if (!app) {
         Logger.error(`ContextMenu ${interaction.commandName} does not exist.`);
-        return interaction.reply({ content: `This context menu is not linked to a response.`, ephemeral: true });
+        return interaction.reply({ content: `This context menu is not linked to a response.`, flags: [MessageFlags.Ephemeral] });
     };
 
     /** Check if the context menu needs to be ignored */
@@ -99,7 +99,7 @@ async function executeContextMenu(interaction, client) {
                 errorEmbed.setDescription(`❌ There was a permission error, but we're not sure what.`)
         };
 
-        return interaction.reply({ embeds: [errorEmbed], ephemeral: true });
+        return interaction.reply({ embeds: [errorEmbed], flags: [MessageFlags.Ephemeral] });
     };
 
     /** Execute the app */

@@ -20,7 +20,7 @@ async function executeButton(interaction, client) {
     const button = client.buttons.get(interaction.customId);
     if (!button) {
         Logger.error(`Button ${interaction.customId} does not exist.`);
-        return interaction.reply({ content: `This button is not linked to a response.`, ephemeral: true });
+        return interaction.reply({ content: `This button is not linked to a response.`, flags: [MessageFlags.Ephemeral] });
     };
 
     /** Check if the button needs to be ignored */

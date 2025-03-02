@@ -20,7 +20,7 @@ async function executeSlashCommand(interaction, client) {
     const command = client.commands.get(interaction.commandName);
     if (!command) {
         Logger.error(`Command /${interaction.commandName} does not exist.`);
-        return interaction.reply({ content: `This command is not linked to a response.`, ephemeral: true });
+        return interaction.reply({ content: `This command is not linked to a response.`, flags: [MessageFlags.Ephemeral] });
     };
 
     /** Check if the user is on a cooldown */
@@ -90,7 +90,7 @@ async function executeSlashCommand(interaction, client) {
                 errorEmbed.setDescription(`❌ There was a permission error, but we're not sure what.`)
         };
 
-        return interaction.reply({ embeds: [errorEmbed], ephemeral: true });
+        return interaction.reply({ embeds: [errorEmbed], flags: [MessageFlags.Ephemeral] });
     };
 
     /** Execute the modal */

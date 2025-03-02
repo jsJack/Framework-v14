@@ -1,4 +1,4 @@
-const { ButtonInteraction, Client, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
+const { ButtonInteraction, ActionRowBuilder, ButtonBuilder, ButtonStyle, MessageFlags } = require('discord.js');
 
 const { remove } = require('../../commands/developer/blacklist');
 
@@ -13,7 +13,7 @@ module.exports = {
     */
     async execute(interaction, client) {
         let idField = interaction.message.embeds[0].fields.find(f => f.name === "ID").value;
-        if (!idField) return interaction.reply({ content: "This embed is missing an ID field.", ephemeral: true });
+        if (!idField) return interaction.reply({ content: "This embed is missing an ID field.", flags: [MessageFlags.Ephemeral] });
 
         idField = idField.replace(/`/g, "");
 

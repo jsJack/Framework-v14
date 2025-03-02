@@ -20,7 +20,7 @@ async function executeModal(interaction, client) {
     const modal = client.modals.get(interaction.customId);
     if (!modal) {
         Logger.error(`Modal ${interaction.customId} does not exist.`);
-        return interaction.reply({ content: `This modal is not linked to a response.`, ephemeral: true });
+        return interaction.reply({ content: `This modal is not linked to a response.`, flags: [MessageFlags.Ephemeral] });
     };
 
     /** Check if the modal needs to be ignored */
@@ -100,7 +100,7 @@ async function executeModal(interaction, client) {
                 errorEmbed.setDescription(`❌ There was a permission error, but we're not sure what.`)
         };
 
-        return interaction.reply({ embeds: [errorEmbed], ephemeral: true });
+        return interaction.reply({ embeds: [errorEmbed], flags: [MessageFlags.Ephemeral] });
     };
 
     /** Execute the modal */

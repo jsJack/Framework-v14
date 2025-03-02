@@ -20,7 +20,7 @@ async function executeSelectMenu(interaction, client) {
     const menu = client.selectmenus.get(interaction.customId);
     if (!menu) {
         Logger.error(`Select menu ${interaction.customId} does not exist.`);
-        return interaction.reply({ content: `This select menu is not linked to a response.`, ephemeral: true });
+        return interaction.reply({ content: `This select menu is not linked to a response.`, flags: [MessageFlags.Ephemeral] });
     };
 
     /** Check if the user is on a cooldown */
@@ -97,7 +97,7 @@ async function executeSelectMenu(interaction, client) {
                 errorEmbed.setDescription(`❌ There was a permission error, but we're not sure what.`)
         };
 
-        return interaction.reply({ embeds: [errorEmbed], ephemeral: true });
+        return interaction.reply({ embeds: [errorEmbed], flags: [MessageFlags.Ephemeral] });
     };
 
     /** Log & Execute the menu */
