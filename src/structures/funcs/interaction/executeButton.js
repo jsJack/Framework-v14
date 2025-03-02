@@ -67,6 +67,9 @@ async function executeButton(interaction, client) {
         if (!hasReqRole) hasError = "permission_error_guild_role";
     };
 
+    /** Check if the button is usable by the invoker only */
+    if (button?.invokerOnly && interaction.user.id !== interaction?.message?.interactionMetadata.user.id) hasError = "permission_error_invoker_only";
+
     /** Process errors */
     if (hasError) {
         let errorEmbed = new EmbedBuilder()
@@ -86,17 +89,22 @@ async function executeButton(interaction, client) {
                 break;
 
             case "permission_error_guild_role":
-                errorEmbed.setDescription(`❌ You do not have the required roles to execute this button`)
+                errorEmbed
+                    .setDescription(`❌ You do not have the required roles to execute this button`)
                     .addFields({ name: `Required Roles`, value: `<@&${button.reqRoles.join(">, <@&")}>` });
                 break;
 
             case "permission_error_dm":
                 errorEmbed.setDescription(`❌ A server role is required to interact with this button!\nPlease try again in a server.`);
+                break;
 
+            case "permission_error_invoker_only":
+                errorEmbed.setDescription(`❌ You are not the invoker of this command!`);
                 break;
 
             default:
-                errorEmbed.setDescription(`❌ There was a permission error, but we're not sure what.`)
+                errorEmbed.setDescription(`❌ There was a permission error, but we're not sure what.`);
+                break;
         };
 
         return interaction.reply({ embeds: [errorEmbed], flags: [MessageFlags.Ephemeral] });
