@@ -1,4 +1,4 @@
-const { ChatInputCommandInteraction, EmbedBuilder, MessageFlags, SlashCommandChannelOption } = require("discord.js");
+const { ChatInputCommandInteraction, EmbedBuilder, MessageFlags, ApplicationCommandOptionType, CommandInteractionOptionResolver } = require("discord.js");
 const timestring = require('timestring');
 
 const Logger = require('../util/Logger');
@@ -94,6 +94,7 @@ async function executeSlashCommand(interaction, client) {
     };
 
     /** Execute the modal */
+    let subcommand = interaction.options.getSubcommand();
     let options = formatInteractionOptions(interaction.options);
 
     Logger.log(`${interaction.channel.isDMBased() ? `DMs` : `${interaction.guild.name}`} | ${interaction.user.tag} | /${interaction.commandName} ${subcommand ? subcommand : ``} ${options ? options : ``}`);
