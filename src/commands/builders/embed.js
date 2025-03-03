@@ -31,7 +31,7 @@ module.exports = {
      * @param {ExtendedClient} client 
      */
     async autocomplete(interaction, client) {
-        let userFocus = interaction.options.getFocused();
+        let userFocus = interaction.options.getFocused().replace('#', '');
 
         let savedEmbeds = await client.db.embed.findMany({
             where: {
@@ -44,7 +44,7 @@ module.exports = {
 
         let choices = savedEmbeds.map(embed => {
             return {
-                name: embed.name,
+                name: `#${embed.id} | ${embed.name}`,
                 value: embed.id
             };
         });
