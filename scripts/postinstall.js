@@ -77,7 +77,7 @@ function setupPrismaDirectory() {
     }
 };
 
-function runConnectionCheck() {
+async function runConnectionCheck() {
     const db = new PrismaClient();
     return db.$connect()
         .then(async () => {
@@ -119,7 +119,7 @@ async function main() {
         await executeNPX('prisma generate');
         await executeNPX('prisma migrate deploy');
 
-        runConnectionCheck();
+        await runConnectionCheck();
     } catch (error) {
         errorLog(`An unexpected error occurred: ${error.message}`);
         process.exit(1);
