@@ -40,8 +40,8 @@ async function executeNPX(cmd) {
         if (stdout) debugLog(stdout.toString());
         if (stderr) errorLog(stderr.toString());
     } catch (error) {
-        errorLog(`Failed to execute command: ${cmd}\n${error.message}`);
-        process.exit(1);
+        errorLog(`Failed to execute command: ${cmd}`);
+        throw error.message;
     }
 };
 
@@ -116,8 +116,13 @@ async function main() {
         // setupSqliteConnection();
         setupPrismaDirectory();
 
-        await executeNPX('prisma generate');
-        await executeNPX('prisma migrate deploy');
+        try {
+            await executeNPX('prisma generate');
+            await executeNPX('prisma migrate deploy');
+        } catch (error) {
+            errorLog(error);
+            warnLog('If you are migrating a database with existing data, please run `npx prisma db push` manually.');
+        };
 
         await runConnectionCheck();
     } catch (error) {
