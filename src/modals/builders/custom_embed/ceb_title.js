@@ -18,23 +18,23 @@ module.exports = {
         let color = interaction.fields.getTextInputValue("ceb_color_i");
 
         if (!title && !description) {
-            return interaction.reply({ 
-                embeds: [statusEmbed.create("You must provide a title **or** description.", 'Red')], 
+            return interaction.reply({
+                embeds: [statusEmbed.create("You must provide a title **or** description.", 'Red')],
                 flags: MessageFlags.Ephemeral
             });
         }
 
         if (color && !/^#(?:[0-9a-fA-F]{3}){1,2}$/.test(color)) {
-            return interaction.reply({ 
-                embeds: [statusEmbed.create("You must provide a valid hex code for the embed **color**.", 'Red')], 
-                flags: MessageFlags.Ephemeral 
+            return interaction.reply({
+                embeds: [statusEmbed.create("You must provide a valid hex code for the embed **color**.", 'Red')],
+                flags: MessageFlags.Ephemeral
             });
         }
 
         if (interaction.message.embeds.length != 2) {
-            return interaction.reply({ 
-                embeds: [statusEmbed.create("There was an error fetching the embeds, have they been deleted?", 'Red')], 
-                flags: MessageFlags.Ephemeral 
+            return interaction.reply({
+                embeds: [statusEmbed.create("There was an error fetching the embeds, have they been deleted?", 'Red')],
+                flags: MessageFlags.Ephemeral
             });
         }
 
@@ -46,10 +46,10 @@ module.exports = {
         if (description === customEmbed.description) description = null;
         if (color === customEmbed.hexColor) color = null;
 
-        if (!title && !description && !color) {
-            return interaction.reply({ 
-                embeds: [statusEmbed.create("There were no changes made, exiting.", 'Yellow')], 
-                flags: MessageFlags.Ephemeral 
+        if (title === null && description === null && color === null) {
+            return interaction.reply({
+                embeds: [statusEmbed.create("There were no changes made, exiting.", 'Yellow')],
+                flags: MessageFlags.Ephemeral
             });
         }
 
@@ -57,17 +57,20 @@ module.exports = {
         let doneEmbed = statusEmbed.create("The title, description, and color have been successfully updated.", 'Green');
 
         const updates = [
-            { field: 'title', setter: 'setTitle', value: title },
-            { field: 'description', setter: 'setDescription', value: description },
-            { field: 'color', setter: 'setColor', value: color }
+            { field: 'title', setter: 'title', value: title },
+            { field: 'description', setter: 'description', value: description },
+            { field: 'color', setter: 'hexColor', value: color }
         ];
 
         updates.forEach(({ field, setter, value }) => {
-            if (value) {
-                newEmbed[setter](value);
-                doneEmbed.addFields({ name: field.charAt(0).toUpperCase() + field.slice(1), value, inline: false });
-            }
+            if (value == null) return;
+            
+            if (value.length < 1) delete newEmbed.data[setter];
+            newEmbed.data[setter] = value;
+            doneEmbed.addFields({ name: field.charAt(0).toUpperCase() + field.slice(1), value: value.length ? value : "> Unset", inline: false });
         });
+
+        if (newEmbed.data.title && newEmbed.data.description == "\u200b") newEmbed.setDescription(null);
 
         await interaction.message.edit({ embeds: [newEmbed, instructionsEmbed] });
         return interaction.reply({ embeds: [doneEmbed], flags: MessageFlags.Ephemeral });
