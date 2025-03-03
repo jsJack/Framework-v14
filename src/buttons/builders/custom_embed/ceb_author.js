@@ -13,7 +13,7 @@ module.exports = {
     * @param {ExtendedClient} client 
     */
     async execute(interaction, client) {
-        let statusEmbed = new StatusEmbedBuilder("Author", { name: `Embed Builder`, iconURL: client.user.displayAvatarURL() });
+        const statusEmbed = new StatusEmbedBuilder("Author", { name: `Embed Builder`, iconURL: client.user.displayAvatarURL() });
 
         if (interaction.message.embeds.length != 2) {
             return interaction.reply({

@@ -1,4 +1,5 @@
-const { ButtonInteraction, ModalBuilder, ActionRowBuilder, TextInputBuilder, TextInputStyle } = require('discord.js');
+const { ButtonInteraction, ModalBuilder, EmbedBuilder, ActionRowBuilder, TextInputBuilder, TextInputStyle, MessageFlags } = require('discord.js');
+const StatusEmbedBuilder = require('../../../structures/funcs/tools/createStatusEmbed');
 
 module.exports = {
     id: "ceb_title",
@@ -8,7 +9,16 @@ module.exports = {
     * 
     * @param {ButtonInteraction} interaction 
     */
-    async execute(interaction) {
+    async execute(interaction, client) {
+        const statusEmbed = new StatusEmbedBuilder("Title, Description, and Color", { name: `Embed Builder`, iconURL: client.user.displayAvatarURL() });
+
+        if (interaction.message.embeds.length != 2) {
+            return interaction.reply({
+                embeds: [statusEmbed.create("There was an error fetching the embeds, have they been deleted?", 'Red')],
+                flags: [MessageFlags.Ephemeral]
+            });
+        }
+
         let existingTitle = interaction.message.embeds[0]?.title?.toString();
         let existingDescription = interaction.message.embeds[0]?.description?.toString();
         let existingColor = interaction.message.embeds[0]?.hexColor?.toString();
