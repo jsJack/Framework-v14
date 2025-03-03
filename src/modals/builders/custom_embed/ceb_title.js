@@ -35,7 +35,7 @@ module.exports = {
                 embeds: [createStatusEmbed("You must provide a valid hex code for the embed **color**.", 'Red')], 
                 flags: MessageFlags.Ephemeral 
             });
-        };
+        }
 
         if (interaction.message.embeds.length != 2) {
             return interaction.reply({ 
