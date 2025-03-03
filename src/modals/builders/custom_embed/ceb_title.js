@@ -35,6 +35,13 @@ module.exports = {
                 embeds: [createStatusEmbed("You must provide a valid hex code for the embed **color**.", 'Red')], 
                 flags: MessageFlags.Ephemeral 
             });
+        };
+
+        if (interaction.message.embeds.length != 2) {
+            return interaction.reply({ 
+                embeds: [createStatusEmbed("There was an error fetching the embeds, have they been deleted?", 'Red')], 
+                flags: MessageFlags.Ephemeral 
+            });
         }
 
         const customEmbed = interaction.message.embeds[0];
