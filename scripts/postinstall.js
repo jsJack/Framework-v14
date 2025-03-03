@@ -40,7 +40,6 @@ async function executeNPX(cmd) {
         if (stdout) debugLog(stdout.toString());
         if (stderr) errorLog(stderr.toString());
     } catch (error) {
-        errorLog(`Failed to execute command: ${cmd}`);
         throw error.message;
     }
 };
