@@ -101,8 +101,7 @@ async function create(interaction, client) {
             new ButtonBuilder()
                 .setCustomId("ceb_author")
                 .setLabel("Author")
-                .setStyle(ButtonStyle.Primary)
-                .setDisabled(true)
+                .setStyle(ButtonStyle.Primary),
         );
 
     let actionRow2 = new ActionRowBuilder()
