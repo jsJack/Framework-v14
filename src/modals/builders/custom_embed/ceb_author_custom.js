@@ -42,7 +42,7 @@ module.exports = {
         }
 
         if (iconURL) {
-            if (!process.env.ALLOWED_IMAGE_HOSTNAMES.split(',').includes(new URL(iconURL).hostname) && process.env.ALLOWED_IMAGE_HOSTNAMES !== "*") {
+            if (!process.env.ALLOWED_IMAGE_HOSTNAMES?.split(',').includes(new URL(iconURL).hostname) && process.env.ALLOWED_IMAGE_HOSTNAMES !== "*") {
                 return interaction.editReply({
                     embeds: [
                         statusEmbed
