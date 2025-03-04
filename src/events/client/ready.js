@@ -45,6 +45,5 @@ module.exports = {
             let presence = presences[state];
             client.user.setActivity(presence.message, { type: presence.type });
         }, 10000);
-    },
-
+    }
 };
