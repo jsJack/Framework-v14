@@ -109,8 +109,7 @@ async function create(interaction, client) {
             new ButtonBuilder()
                 .setCustomId("ceb_thumbnail")
                 .setLabel("Thumbnail & Image")
-                .setStyle(ButtonStyle.Primary)
-                .setDisabled(true),
+                .setStyle(ButtonStyle.Primary),
 
             new ButtonBuilder()
                 .setCustomId("ceb_footer")
