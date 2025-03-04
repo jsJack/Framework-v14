@@ -9,6 +9,8 @@ const env = {
     ANTICRASH_WEBHOOK: '',
 
     NODE_ENV: 'production',
+
+    ALLOWED_IMAGE_HOSTNAMES: 'i.gyazo.com,gyazo.com,i.imgur.com,imgur.com,cdn.discordapp.com'
 };
 
 const requiredSecrets = [
