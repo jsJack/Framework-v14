@@ -79,8 +79,8 @@ module.exports = {
         };
 
         // Check if values have changed
-        if (thumbnail === existingData.thumbnail.url) thumbnail = null;
-        if (image === existingData.image.url) image = null;
+        if (thumbnail === existingData.thumbnail?.url) thumbnail = null;
+        if (image === existingData.image?.url) image = null;
 
         if (thumbnail == null && image == null) {
             return interaction.reply({
