@@ -60,4 +60,4 @@ const { loadEvents } = require("./handlers/loadEvents");
 require("./handlers/loadAntiCrash")(client);
 loadEvents(client);
 
-client.login(process.env.TOKEN).catch((err) => Logger.error(err));
+client.login(process.env.DISCORD_TOKEN).catch((err) => Logger.error(err));
