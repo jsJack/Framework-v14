@@ -10,6 +10,9 @@ module.exports = {
     * @param {ButtonInteraction} interaction 
     */
     async execute(interaction) {
+        const existingThumbnail = interaction.message.embeds[0]?.thumbnail?.url ?? "";
+        const existingImage = interaction.message.embeds[0]?.image?.url ?? "";
+
         let modal = new ModalBuilder()
             .setCustomId("ceb_thumbnail")
             .setTitle("Thumbnail & Image")
@@ -17,8 +20,10 @@ module.exports = {
                 new ActionRowBuilder().setComponents(
                     new TextInputBuilder()
                         .setCustomId("ceb_thumbnail_i")
-                        .setPlaceholder("Enter a URL...")
                         .setLabel("Thumbnail URL")
+                        .setPlaceholder("Enter a URL...")
+                        .setValue(existingThumbnail)
+
                         .setStyle(TextInputStyle.Short)
                         .setRequired(false)
                 ),
@@ -26,8 +31,10 @@ module.exports = {
                 new ActionRowBuilder().setComponents(
                     new TextInputBuilder()
                         .setCustomId("ceb_image_i")
-                        .setPlaceholder("Enter a URL...")
                         .setLabel("Image URL")
+                        .setPlaceholder("Enter a URL...")
+                        .setValue(existingImage)
+
                         .setStyle(TextInputStyle.Short)
                         .setRequired(false)
                 )
