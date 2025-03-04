@@ -46,7 +46,7 @@ module.exports = {
                 return interaction.editReply({
                     embeds: [
                         statusEmbed
-                            .create("The icon URL must be from a whitelisted domain.\n> You may be required to use a **Direct Image URL**\n> e.g. `i.imgur.com` > `imgur.com`", 'Red')
+                            .create("The icon URL must be from a whitelisted domain.\n> You may be required to use a **Direct Image URL**\n> e.g. `i.imgur.com` instead of `imgur.com`", 'Red')
                             .setFields([
                                 { name: "Your URL", value: iconURL, inline: false },
                                 { name: "Allowed Hostnames", value: "`" + process.env.ALLOWED_IMAGE_HOSTNAMES.split(",").join("`, `") + "`", inline: false }
