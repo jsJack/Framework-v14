@@ -1,16 +1,13 @@
 const { ButtonInteraction, ModalBuilder, ActionRowBuilder, TextInputBuilder, TextInputStyle } = require('discord.js');
 
-/** @typedef {import("../../../structures/funcs/util/Types").ExtendedClient} ExtendedClient */
-
 module.exports = {
     id: "ceb_footer",
 
     /**
     * 
     * @param {ButtonInteraction} interaction 
-    * @param {ExtendedClient} client 
     */
-    async execute(interaction, client) {
+    async execute(interaction) {
         const existingEmbed = interaction.message.embeds[0];
         const existingData = {
             text: existingEmbed.footer?.text,

@@ -1,7 +1,5 @@
 const { ButtonInteraction, ModalBuilder, ActionRowBuilder, TextInputBuilder, TextInputStyle } = require('discord.js');
 
-/** @typedef {import("../../../structures/funcs/util/Types").ExtendedClient} ExtendedClient */
-
 module.exports = {
     id: "ceb_thumbnail",
 
