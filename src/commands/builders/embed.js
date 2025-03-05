@@ -114,8 +114,7 @@ async function create(interaction, client) {
             new ButtonBuilder()
                 .setCustomId("ceb_footer")
                 .setLabel("Footer")
-                .setStyle(ButtonStyle.Primary)
-                .setDisabled(true),
+                .setStyle(ButtonStyle.Primary),
 
             new ButtonBuilder()
                 .setCustomId("ceb_fields")
