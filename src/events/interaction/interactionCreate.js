@@ -54,7 +54,7 @@ module.exports = {
         if (interaction.isChatInputCommand()) executeSlashCommand(interaction, client);
         else if (interaction.isButton()) executeButton(interaction, client);
         else if (interaction.isModalSubmit()) executeModal(interaction, client);
-        else if (interaction.isStringSelectMenu()) executeSelectMenu(interaction, client);
+        else if (interaction.isAnySelectMenu()) executeSelectMenu(interaction, client);
         else if (interaction.isContextMenuCommand() || interaction.isUserContextMenuCommand() || interaction.isMessageContextMenuCommand()) executeContextMenu(interaction, client);
         else return;
     }
