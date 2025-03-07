@@ -134,8 +134,7 @@ async function create(interaction, client) {
             new ButtonBuilder()
                 .setCustomId("ceb_send")
                 .setLabel("Send")
-                .setStyle(ButtonStyle.Secondary)
-                .setDisabled(true),
+                .setStyle(ButtonStyle.Secondary),
 
             new ButtonBuilder()
                 .setCustomId("ceb_cancel")
