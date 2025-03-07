@@ -101,7 +101,8 @@ module.exports = {
             if (value == null) return;
 
             if (value.length < 1) delete newEmbed.data[field];
-            newEmbed.data[field] = { url: value };
+            else newEmbed.data[field] = { url: value };
+            
             doneEmbed.addFields({ name: field.charAt(0).toUpperCase() + field.slice(1), value: value.length ? value : "> Unset", inline: false });
         });
 

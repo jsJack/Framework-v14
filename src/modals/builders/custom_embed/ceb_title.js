@@ -66,7 +66,8 @@ module.exports = {
             if (value == null) return;
             
             if (value.length < 1) delete newEmbed.data[setter];
-            newEmbed.data[setter] = value;
+            else newEmbed.data[setter] = value;
+            
             doneEmbed.addFields({ name: field.charAt(0).toUpperCase() + field.slice(1), value: value.length ? value : "> Unset", inline: false });
         });
 
