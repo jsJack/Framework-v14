@@ -20,7 +20,7 @@ module.exports = {
             .setComponents(
                 new ActionRowBuilder().setComponents(
                     new TextInputBuilder()
-                        .setCustomId("ceb_footer_text")
+                        .setCustomId("ceb_footer_text_i")
                         .setLabel("Footer Text")
                         .setPlaceholder("Enter some inspiring text...")
                         .setValue(existingData.text ?? "")
@@ -31,7 +31,7 @@ module.exports = {
 
                 new ActionRowBuilder().setComponents(
                     new TextInputBuilder()
-                        .setCustomId("ceb_footer_icon")
+                        .setCustomId("ceb_footer_icon_i")
                         .setLabel("Footer Icon URL")
                         .setPlaceholder("Enter a URL...")
                         .setValue(existingData.icon_url ?? "")
@@ -42,7 +42,7 @@ module.exports = {
 
                 new ActionRowBuilder().setComponents(
                     new TextInputBuilder()
-                        .setCustomId("ceb_footer_timestamp")
+                        .setCustomId("ceb_footer_timestamp_i")
                         .setLabel("Timestamp")
                         .setPlaceholder("Enter a timestamp...")
                         .setValue(existingEmbed.timestamp ?? "")
