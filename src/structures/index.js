@@ -38,6 +38,7 @@ client.modals = new Collection();
 client.selectmenus = new Collection();
 
 client.cooldowns = new Collection();
+client.jobs = new Collection();
 
 try {
     client.db = new PrismaClient();

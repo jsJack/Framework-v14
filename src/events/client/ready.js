@@ -5,6 +5,7 @@ const { loadCommands } = require("../../structures/handlers/loadCommands");
 const { loadModals } = require("../../structures/handlers/loadModals");
 const { loadButtons } = require("../../structures/handlers/loadButtons");
 const { loadSelectMenus } = require('../../structures/handlers/loadSelectMenus');
+const { loadJobs } = require('../../structures/handlers/loadJobs');
 
 const Logger = require('../../structures/funcs/util/Logger');
 
@@ -23,6 +24,7 @@ module.exports = {
         await loadModals(client);
         await loadButtons(client);
         await loadSelectMenus(client);
+        await loadJobs(client);
 
         Logger.success(`Connected to Discord as ${cyan(`${client.user.tag}`)}!\n`);
         Logger.info(`Interaction Logging started.`)
