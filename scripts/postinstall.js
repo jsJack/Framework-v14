@@ -1,6 +1,5 @@
 const { promisify } = require('util');
 const { resolve, join } = require('path');
-const { PrismaClient } = require('@prisma/client');
 const fs = require('fs-extra');
 const exec = promisify(require('child_process').exec);
 
@@ -77,20 +76,23 @@ function setupPrismaDirectory() {
 };
 
 async function runConnectionCheck() {
-    const db = new PrismaClient();
-    return db.$connect()
-        .then(async () => {
-            await db.blacklist.findFirst().catch((err) => {
-                errorLog(`Failed to run sample query. Has the migration run successfully?\nFull error: ${err.message}.`);
-                process.exit(1);
-            }); // Sample query to test connection and migrations
-            await db.$disconnect();
-            infoLog('Database test successful.');
-        })
-        .catch((error) => {
-            errorLog('Failed to connect to database:', error.message);
+    try {
+        // Import PrismaClient dynamically after generation is complete
+        const { PrismaClient } = require('@prisma/client');
+        const db = new PrismaClient();
+
+        await db.$connect();
+        await db.blacklist.findFirst().catch((err) => {
+            errorLog(`Failed to run sample query. Has the migration run successfully?\nFull error: ${err.message}.`);
             process.exit(1);
         });
+
+        await db.$disconnect();
+        infoLog('Database test successful.');
+    } catch (error) {
+        errorLog('Failed to connect to database:', error.message);
+        process.exit(1);
+    }
 };
 
 /* Re-enable when we support SQLite */
@@ -121,7 +123,11 @@ async function main() {
         } catch (error) {
             errorLog(error);
             warnLog('If you are migrating a database with existing data, please run `npx prisma db push` manually.');
+            // process.exit(1);
         };
+
+        // Add a small delay to ensure Prisma client is fully initialized
+        await new Promise(resolve => setTimeout(resolve, 1000));
 
         await runConnectionCheck();
     } catch (error) {
