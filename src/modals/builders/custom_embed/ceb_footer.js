@@ -77,7 +77,7 @@ module.exports = {
                 if (!res.ok) throw new Error(`Invalid response: ${res.status} ${res.statusText}`);
                 if (!supportedTypes.some(type => contentType?.includes(type))) throw new Error(`Invalid content type: \`${contentType}\``);
             } catch (e) {
-                return await interaction.reply({
+                return interaction.reply({
                     embeds: [
                         statusEmbed
                             .create("The icon URL must be a valid image URL.\n\n> **Note:** The image host must return a [MIME Type](https://developer.mozilla.org/en-US/docs/Web/HTTP/MIME_types) of `image/*` or `video/*` for the Icon URL to be accepted.", 'Red')
@@ -95,7 +95,7 @@ module.exports = {
         const instructionsEmbed = interaction.message.embeds[1];
 
         if (interaction.message.embeds.length != 2) {
-            return interaction.editReply({
+            return interaction.reply({
                 embeds: [statusEmbed.create("There was an error fetching the embeds, have they been deleted?", 'Red')],
                 flags: MessageFlags.Ephemeral
             });
@@ -104,7 +104,7 @@ module.exports = {
         const existingData = {
             text: customEmbed.footer?.text ?? "",
             iconURL: customEmbed.footer?.iconURL ?? "",
-            timestamp: customEmbed.footer?.timestamp ?? ""
+            timestamp: customEmbed?.timestamp ?? ""
         };
 
         // Check if values have changed
@@ -113,7 +113,7 @@ module.exports = {
         if (enteredData.timestamp === existingData.timestamp) enteredData.timestamp = null;
 
         if (enteredData.text === null && enteredData.image === null && enteredData.timestamp === null) {
-            return interaction.editReply({
+            return interaction.reply({
                 embeds: [statusEmbed.create("There were no changes made, exiting.", 'Yellow')],
                 flags: MessageFlags.Ephemeral
             });
@@ -122,26 +122,49 @@ module.exports = {
         let newEmbed = EmbedBuilder.from(customEmbed);
         let doneEmbed = statusEmbed.create("The footer has been successfully updated.", 'Green');
 
-        const updates = [
-            { isFooter: true, field: "text", setter: "text", value: enteredData.text },
-            { isFooter: true, field: "iconURL", setter: "icon_url", value: enteredData.image },
-            { field: "timestamp", setter: "timestamp", value: enteredData.timestamp }
-        ];
+        const footerData = {
+            text: enteredData.text,
+            icon_url: enteredData.image
+        };
 
-        updates.forEach(({ isFooter, field, setter, value }) => {
-            if (value == null) return;
+        // Handle footer updates
+        if (Object.values(footerData).some(value => value !== null)) {
+            if (!newEmbed.data.footer) newEmbed.data.footer = {};
+            
+            Object.entries(footerData).forEach(([key, value]) => {
+                if (value === null) return;
+                if (value.length < 1) {
+                    delete newEmbed.data.footer[key];
+                } else {
+                    newEmbed.data.footer[key] = value;
+                }
+            });
+        }
 
-            if (isFooter) {
-                if (!newEmbed.data.footer) newEmbed.data.footer = {};
-
-                if (value.length < 1) delete newEmbed.data.footer[setter];
-                else newEmbed.data.footer[setter] = value;
+        // Handle timestamp separately
+        if (enteredData.timestamp !== null) {
+            if (enteredData.timestamp.length < 1) {
+                delete newEmbed.data.timestamp;
             } else {
-                if (value.length < 1) delete newEmbed.data[setter];
-                else newEmbed.data[setter] = value;
-            };
+                newEmbed.data.timestamp = enteredData.timestamp;
+            }
+        }
 
-            doneEmbed.addFields({ name: field.charAt(0).toUpperCase() + field.slice(1), value: value.length ? value : "> Unset", inline: false });
+        // Add fields to status embed
+        const updates = {
+            'Text': enteredData.text,
+            'Icon URL': enteredData.image,
+            'Timestamp': enteredData.timestamp
+        };
+
+        Object.entries(updates).forEach(([field, value]) => {
+            if (value !== null) {
+                doneEmbed.addFields({ 
+                    name: field, 
+                    value: value.length ? value : '> Unset', 
+                    inline: false
+                });
+            }
         });
 
         await interaction.message.edit({ embeds: [newEmbed, instructionsEmbed] });
