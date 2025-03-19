@@ -2,7 +2,7 @@ console.clear();
 
 const { PrismaClient } = require('@prisma/client');
 const { Client, GatewayIntentBits, Partials, Collection } = require("discord.js");
-const { 
+const {
     AutoModerationConfiguration, AutoModerationExecution, DirectMessagePolls, DirectMessageReactions,
     DirectMessages, DirectMessageTyping, GuildExpressions, GuildIntegrations, GuildInvites, GuildMembers,
     GuildMessagePolls, GuildMessageReactions, GuildMessages, GuildMessageTyping, GuildModeration, GuildPresences,
@@ -12,6 +12,7 @@ const { User, Channel, GuildMember, Message, Reaction, GuildScheduledEvent, Thre
 
 const Logger = require('./funcs/util/Logger');
 const { missingSecrets } = require('../../scripts/helpers/env');
+const { loadEvents } = require("./handlers/loadEvents");
 
 require('dotenv').config();
 
@@ -26,6 +27,18 @@ const client = new Client({
         Guilds, GuildScheduledEvents, GuildVoiceStates, GuildWebhooks, MessageContent
     ],
     partials: [User, Channel, GuildMember, Message, Reaction, GuildScheduledEvent, ThreadMember],
+
+    rest: {
+        /** - Enable this if you want to throw an error on certain/all rate limits rather than queueing the request for later.
+        // `rl` - RateLimitData, shorthand for ease of use.
+        rejectOnRateLimit: async (rl) => {
+            // Throw on UPDATES to individual channels
+            if (rl.method == 'PATCH' && rl.route == "/channels/:id" && !rl.global) return true;
+
+            return false;
+        }
+        */
+    },
 });
 
 client.events = new Collection();
@@ -54,9 +67,7 @@ module.exports = client;
 if (missingSecrets.length > 0) {
     Logger.error(`Missing environment variables: ${missingSecrets.join(', ')}`);
     process.exit(1);
-}
-
-const { loadEvents } = require("./handlers/loadEvents");
+};
 
 require("./handlers/loadAntiCrash")(client);
 loadEvents(client);
