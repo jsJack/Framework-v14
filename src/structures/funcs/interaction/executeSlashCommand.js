@@ -94,10 +94,10 @@ async function executeSlashCommand(interaction, client) {
     };
 
     /** Execute the modal */
-    let subcommand = interaction.options.getSubcommand();
+    let subcommand = interaction.options.getSubcommand(false);
     let options = formatInteractionOptions(interaction.options);
 
-    Logger.log(`${interaction.channel.isDMBased() ? `DMs` : `${interaction.guild.name}`} | ${interaction.user.tag} | /${interaction.commandName} ${subcommand ?? ``} ${options ?? ``}`);
+    Logger.log(`${interaction.channel.isDMBased() ? `DMs` : `${interaction.guild.name}`} | ${interaction.user.tag} | /${interaction.commandName}${subcommand ? ` ` + subcommand : ``} ${options ?? ``}`);
     return command.execute(interaction, client);
 };
 
